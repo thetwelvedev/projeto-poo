@@ -1,7 +1,5 @@
-import os
-
 class Endereco:
-    def __init__(self, rua:str = 0, numeroDaCasa:int = 0, bairro:str= '', complemento:str = '', cidade:str = '', estado:str = '', cep:int = 0):
+    def __init__(self, rua: str = '', numeroDaCasa: int = 0, bairro: str = '', complemento: str = '', cidade: str = '', estado: str = '', cep: int = 0):
         self.rua = rua
         self.numeroDaCasa = numeroDaCasa
         self.bairro = bairro
@@ -10,11 +8,8 @@ class Endereco:
         self.estado = estado
         self.cep = cep
 
-    def limparTerminal(self) -> None:
-        os.system('cls' if os.name == 'nt' else 'clear')
-
     def exibirEndereco(self) -> None:
-        cepStr = str(self.cep) #Formatação do CEP
+        cepStr = str(self.cep).zfill(8)  # Garante que o CEP tenha 8 dígitos com zeros à esquerda
         print(f"""Endereço da Agência
 Rua: {self.rua}
 Número da Casa: {self.numeroDaCasa}
@@ -22,68 +17,44 @@ Bairro: {self.bairro}
 Complemento: {self.complemento}
 Cidade: {self.cidade}
 Estado: {self.estado}
-Cep: {cepStr[:5]}-{cepStr[5:]}
+CEP: {cepStr[:5]}-{cepStr[5:]}
 """)
 
-    def alterarEndereco(self) -> None:
-        while True:
-            self.limparTerminal()
-            op = int(input("""Qual dado deseja alterar:
-1 - Rua
-2 - Número da Casa
-3 - Bairro
-4 - Complemento
-5 - Cidade
-6 - Estado
-7 - CEP
-0 - Sair
-Digite sua escolha: """))
-            if op == 0:
-                    print("Edição encerrada.")
-                    break
+    # Setters individuais
+    def setRua(self, rua: str) -> None:
+        self.rua = rua
 
-            match op:
-                case 1:
-                    self.rua = str(input("Digite o novo valor para Rua: "))
-                case 2:
-                    self.numeroDaCasa = int(input("Digite o novo valor para Número da Casa: "))
-                case 3:
-                    self.bairro = str(input("Digite o novo valor para Bairro: "))
-                case 4:
-                    self.complemento = str(input("Digite o novo valor para Complemento: "))
-                case 5:
-                    self.cidade = str(input("Digite o novo valor para Cidade: "))
-                case 6:
-                    self.estado = str(input("Digite o novo valor para Estado: "))
-                case 7:
-                    self.cep = int(input("Digite o novo valor para CEP: "))
-                case _:
-                    print("Opção inválida. Nenhuma alteração foi feita.")
-                    input("Pressione Enter para continuar...")
+    def setNumeroDaCasa(self, numeroDaCasa: int) -> None:
+        self.numeroDaCasa = numeroDaCasa
 
-    def menu(self, endereco) -> None:
-        while True:
-            endereco.limparTerminal()
-            op = int(input("""Escolha uma opção:
-1 - Exibir Endereço
-2 - Alterar Endereço
-0 - Sair
-Digite sua escolha: """))
+    def setBairro(self, bairro: str) -> None:
+        self.bairro = bairro
 
-            match op:
-                case 1:
-                    endereco.exibirEndereco()
-                    input("Pressione Enter para voltar ao menu...")
-                case 2:
-                    endereco.alterarEndereco()
-                case 0:
-                    print("Saindo do sistema...")
-                    break
-                case _:
-                    print("Opção inválida. Nenhuma ação foi realizada.")
-                    input("Pressione Enter para continuar...")
-                
+    def setComplemento(self, complemento: str) -> None:
+        self.complemento = complemento
+
+    def setCidade(self, cidade: str) -> None:
+        self.cidade = cidade
+
+    def setEstado(self, estado: str) -> None:
+        self.estado = estado
+
+    def setCep(self, cep: int) -> None:
+        self.cep = cep
 
 if __name__ == '__main__':
+    # Exemplo de uso
     teste = Endereco('C', 361, 'Cidade Satélite', 'Casa Verde', 'Boa Vista', 'Roraima', 69317584)
-    teste.menu(teste)
+    teste.exibirEndereco()
+
+    # Alterações com setters
+    teste.setRua('Nova Rua')
+    teste.setNumeroDaCasa(123)
+    teste.setBairro('Novo Bairro')
+    teste.setComplemento('Apartamento 201')
+    teste.setCidade('Nova Cidade')
+    teste.setEstado('Novo Estado')
+    teste.setCep(12345678)
+
+    # Exibindo novamente após alterações
+    teste.exibirEndereco()
