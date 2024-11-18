@@ -1,3 +1,5 @@
+###Projeto POO -> Banco - UFRR
+
 ## Funcionalidades em Desenvolvimento
 
 - **Cliente**: Classe para gerenciar informações dos clientes.
@@ -34,4 +36,4 @@ Este projeto foi desenvolvido por **Andersson Silva**, **Alefe Alves**, **Leonar
 - [Andersson Silva](https://github.com/Moab76)  
 - [Alefe Alves](https://github.com/AlefeAlvesC)  
 - [Leonardo Castro](https://github.com/thetwelvedev)  
-- [Arthur Ramos]([https://github.com/arthur](https://github.com/ArthurRamos26))  
+- [Arthur Ramos](https://github.com/ArthurRamos26) 
