@@ -1,4 +1,16 @@
-# Projeto POO -> Banco - UFRR
+<h1>
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Símbolo Python" width="30" style="vertical-align: middle;">
+  Projeto POO -> Banco - UFRR
+</h1>
+
+
+## Índice
+
+1. [Funcionalidades em Desenvolvimento](#funcionalidades-em-desenvolvimento)
+2. [Tecnologias Utilizadas](#tecnologias-utilizadas)
+3. [Experiências do Time](#experiências-do-time)
+4. [Como Executar o Projeto](#como-executar-o-projeto)
+5. [Contribuidores](#contribuidores)
 
 ## Funcionalidades em Desenvolvimento
 
@@ -13,7 +25,7 @@
 
 ## Experiências do Time
 
-Este projeto foi desenvolvido por **Andersson Silva**, **Alefe Alves**, **Leonardo** e **Arthur**. Durante o desenvolvimento, aprendemos sobre:
+Este projeto foi desenvolvido por **Andersson Silva**, **Álefe Alves**, **Leonardo Castro** e **Arthur Ramos**. Durante o desenvolvimento, aprendemos sobre:
 
 - **Colaboração em equipe**: Utilizamos o GitHub para compartilhar código e gerenciar as alterações.
 - **Planejamento e organização**: Dividimos as tarefas e estabelecemos prazos para cada etapa.
@@ -34,6 +46,6 @@ Este projeto foi desenvolvido por **Andersson Silva**, **Alefe Alves**, **Leonar
 ## Contribuidores
 
 - [Andersson Silva](https://github.com/Moab76)  
-- [Alefe Alves](https://github.com/AlefeAlvesC)  
+- [Álefe Alves](https://github.com/AlefeAlvesC)  
 - [Leonardo Castro](https://github.com/thetwelvedev)  
 - [Arthur Ramos](https://github.com/ArthurRamos26) 
