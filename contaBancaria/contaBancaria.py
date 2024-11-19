@@ -1,4 +1,4 @@
-from BD import BD
+from .BD import BD
 
 class ContaBancaria:
     def __init__(self, numeroDaConta:int, tipoDaConta:str, saldo:float, nomeCliente:str, numeroCartao:str):
@@ -126,9 +126,10 @@ class ContaBancaria:
 
 class Extrato:
     def __init__(self, nomeCliente) -> None:
+        self.pasta = "extratosClientes"
         self.dados = BD(
             nomeCliente,
-            "extratosClientes",
+            self.pasta,
             [
                 "Emitente",
                 "Conta origem",
