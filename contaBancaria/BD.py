@@ -39,12 +39,50 @@ class BD:
 
             linhas = list(leitor)
 
-            for i in linhas:
-                if dado == i[0]: return True
-                print(i)
-
+            for linha in linhas:
+                for item in linha:
+                    if dado in item:
+                        return True
             return False
+
         
+
+    def atualizarDado(self, coluna_identificador, valor_identificador, coluna_atualizar, novo_valor):
+        """
+        Atualiza uma linha no arquivo CSV com base em um identificador único.
+
+        :param coluna_identificador: Nome da coluna usada como identificador único.
+        :param valor_identificador: Valor do identificador para localizar a linha.
+        :param coluna_atualizar: Nome da coluna que será atualizada.
+        :param novo_valor: Novo valor para a coluna.
+        """
+        with open(self.caminho, mode="r+", newline="", encoding="utf-8") as arquivo:
+            leitor = csv.DictReader(arquivo)
+            fieldnames = leitor.fieldnames
+
+            # Cria um buffer temporário para armazenar as linhas atualizadas
+            linhas_modificadas = []
+
+            # Lê e modifica as linhas
+            for linha in leitor:
+                if linha[coluna_identificador] == valor_identificador:
+                    linha[coluna_atualizar] = str(novo_valor)  # Atualiza o valor
+                linhas_modificadas.append(linha)
+
+            # Reposiciona o ponteiro no início do arquivo
+            arquivo.seek(0)
+
+            # Escreve as linhas atualizadas no arquivo
+            escritor = csv.DictWriter(arquivo, fieldnames=fieldnames)
+            escritor.writeheader()
+            escritor.writerows(linhas_modificadas)
+
+            # Trunca o conteúdo restante
+            arquivo.truncate()
+
+
+
+            
     def lastIten(self):
         with open(self.caminho, mode="r", newline='') as banco:
             leitor = csv.reader(banco)
