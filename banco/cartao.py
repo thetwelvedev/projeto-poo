@@ -1,21 +1,33 @@
+import random
+import datetime
+
 class Cartao:
-    def __init__(self, numero: int, nome: str, mesDeVencimento: int, anoDeVencimento: int,  codigoDeSeguranca: int):
+    def __init__(self, nome:str):
         
-        self.numero = numero
-        
+        self.numero = None
         self.nome = nome
+        self.dataDeVencimento = None
+        self.codigoDeSeguranca = None
+
+    def gerarNumero(self):
+        numero = ""
+
+        for i in range(1, 16):
+            if i % 4 == 0: numero += ' '
+            numero += str(random.randint(0, 9))
+
+        self.numero = numero
+    
+    def criarMesVencimento(self):
+        self.dataDeVencimento = str(random.randint(1, 12)) + "-" + str(random.randint(24, 40))
+
+    def criarCodigoSeguranca(self):
+        codigoGerado = ""
+
+        for i in range(1, 3):
+            codigoGerado += str(random.randint(0, 9))
         
-        self.mesDeVencimento = mesDeVencimento
-
-        self.anoDeVencimento = anoDeVencimento
-
-        self.codigoDeSeguranca = codigoDeSeguranca
-
-    def solicitarNovoCartao(self) -> None:
-        if self.cartao == 0:
-            pass
-        else:
-            print("Você já possui um cartão ativo!!!")
+        self.codigoDeSeguranca = codigoGerado
 
 
     def cancelarCartao(self) -> None:
