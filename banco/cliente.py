@@ -1,18 +1,19 @@
 class Cliente:
-    def __init__(self, nome: str, endereco: str, senha: int, numeroDaconta: int):
+    def __init__(self, nome: str = "", email:str = '', telefone:str = '', cpf:str = ''  , endereco: object = '', login:str = '', senha: str = ''):
         self.nome = nome
+        self.email = email
+        self.telefone = telefone
+        self.cpf = cpf
         self.endereco = endereco
         self.senha = senha
-        self.numeroDaconta = numeroDaconta
+        self.login = login
 
     def exibirDados(self) -> None:
         print(f"""OS DADOS DO CLIENTE SÃO:
-        ----------------------------------------
-        NOME: {self.nome}
-        ----------------------------------------
-        NÚMERO DA CONTA: {self.numeroDaconta}
-        ----------------------------------------
-        ENDEREÇO: {self.endereco}""")
+----------------------------------------
+NOME: {self.nome}
+----------------------------------------
+ENDEREÇO: {self.endereco}""")
 
     def acessarConta(self) -> None:
         tentativas = 0
