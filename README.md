@@ -1,17 +1,17 @@
-﻿<h1>
+<h1>
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Símbolo Python" width="30" style="vertical-align: middle;">
   Projeto POO -> Banco - UFRR
 </h1>
 
 
-## Índice
+## Sumário
 
-- [Índice](#índice)
-- [Funcionalidades em Desenvolvimento](#funcionalidades-em-desenvolvimento)
-- [Tecnologias Utilizadas](#tecnologias-utilizadas)
-- [Experiências do Time](#experiências-do-time)
-- [Como Executar o Projeto](#como-executar-o-projeto)
-- [Contribuidores](#contribuidores)
+1. [Índice](#índice)  
+2. [Funcionalidades em Desenvolvimento](#funcionalidades-em-desenvolvimento)  
+3. [Tecnologias Utilizadas](#tecnologias-utilizadas)  
+4. [Experiências do Time](#experiências-do-time)  
+5. [Como Executar o Projeto](#como-executar-o-projeto)  
+6. [Contribuidores](#contribuidores)  
 
 ## Funcionalidades em Desenvolvimento
 
