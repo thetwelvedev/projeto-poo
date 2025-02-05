@@ -1,10 +1,9 @@
 <h1>
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Símbolo Python" width="30" style="vertical-align: middle;">
-  Projeto POO -> Banco - UFRR
+  Trave Passagens Aéreas -> Projeto POO
 </h1>
 
-
-## Sumário
+## Índice
 
 1. [Índice](#índice)  
 2. [Funcionalidades em Desenvolvimento](#funcionalidades-em-desenvolvimento)  
@@ -15,9 +14,9 @@
 
 ## Funcionalidades em Desenvolvimento
 
-- **Cliente**: Classe para gerenciar informações dos clientes.
-- **Agência**: Representação das agências bancárias.
-- **Conta Corrente e Conta Poupança**: Classes derivadas de `ContaBancaria`, com funcionalidades específicas.
+<!--
+-
+-->
 
 ## Tecnologias Utilizadas
 
@@ -34,25 +33,18 @@ Este projeto foi desenvolvido por **Andersson Silva**, **Álefe Alves**, **Leona
 - **Trabalho em grupo**: Foi enriquecedor compartilhar conhecimentos e resolver problemas juntos.
 
 ## Como Executar o Projeto
-
+<!--
 1. Clone o repositório:
    ```bash
    git clone <URL_DO_REPOSITORIO>
    ```
-2. Instale os requisitos necessários, incluindo a biblioteca ttkbootstrap:
-   ```bash
-   pip install -r requirements.txt
-   pip install ttkbootstrap
-   ```   
-3. Execute o arquivo principal pata interagir com o sistema: (ainda em desenvolvimento)
-   ```bash
-   python banco.py
-   ```
+-->
 ## Contribuidores
 
 - [Andersson Silva](https://github.com/Moab76)  
 - [Álefe Alves](https://github.com/AlefeAlvesC)  
 - [Leonardo Castro](https://github.com/thetwelvedev)  
 - [Arthur Ramos](https://github.com/ArthurRamos26)
+- [Igor Padilha](https://github.com/igorpadilhaa)
 
 ---
