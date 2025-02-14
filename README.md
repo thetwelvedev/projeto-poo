@@ -21,7 +21,13 @@
 ## Tecnologias Utilizadas
 
 - **Linguagem**: Python
-- **Versionamento**: Git/GitHub
+- **Framework Backend**: Django
+- **Banco de Dados**: SQLite
+- **Frontend**: JavaScript, HTML, CSS
+- **Versionamento de Código**: Git/GitHub
+- **Gerenciamento de Tarefas**: Trello
+- **Comunicação**: Discord
+- **Armazenamento e Documentação**: Google Drive
 
 ## Experiências do Time
 
