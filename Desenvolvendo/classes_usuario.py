@@ -1,27 +1,43 @@
+import hashlib
+
 class Usuario:
-    """Classe referente a pessoa ainda não cadastrada no sistema"""
+    """Classe usuário referente a pessoa com um cadstro básico no sistema.\n
+    Atributos:\n Nome, cpf, email, telefone e senha todos do tipo string\n
+    Métodos:\n Cadastrar, login e visualizar_historico"""
+    
     def __init__(self, nome: str, cpf: str, email: str, telefone: str, senha: str):
-        """ """
+        """Construtor da classe usuários para criar um novo usuário"""
         self.nome = nome
         self.cpf = cpf
         self.email = email
         self.telefone = telefone
-        self.senha = senha
+        self.senha = self._cripitografa_senha(senha)
+
+    def _cripitografa_senha(self, senha):
+        '''Criptografa a senha e depois retorna o sha.'''
+        hash_string  = (self.nome + senha)
+        hash_string = hash_string.encode("utf8")
+        return hashlib.sha256(hash_string).hexdigest()
+
 
     def cadastrar():
         """Método cadastrar"""
         pass
 
     def login():
-        """Métodp login"""
+        """Método login"""
         pass
 
     def visualizar_historico_compras():
         pass
 
 class Cliente(Usuario):
-    """Classe referente a um pessoa cadastrada no sistema que pode realizar a compra e reserva de passagens, além de buscar por voos e cancelar reserva"""
+    """Classe cliente que herda de usuários, refente a pessoa com um cadastro com mais opções no sistema.\n
+    Atributos:\n Nome, cpf, email, telefone, senha herdados de Usuario e cartao_credito e endereço.\n
+    Métodos da classe:\n Compra e reserva de passagens, além de buscar por voos e cancelar reserva"""
+
     def __init__(self, nome, cpf, email, telefone, senha, cartao_credito: str, endereco: str):
+        """Constrututor da classe cliente, que herda de usuarios"""
         super().__init__(nome, cpf, email, telefone, senha)
         self.cartao_credito = cartao_credito
         self.endereco = endereco
@@ -44,7 +60,10 @@ class Cliente(Usuario):
 
 
 class Administrador(Usuario):
-    """Classe referente a pessoa com cadastro de adm, onde está pode realizar funções de manutenção do sistema"""
+    """Classe Administrador que herda de Usuario, referente a pessoa com cadastro de adm.\n
+      Atributos:\n Os herdados de Usuario e codigo_acesso.\n
+      Métodos:\n onde está pode realizar funções de manutenção do sistema."""
+    
     def __init__(self, nome, cpf, email, telefone, senha, codigo_acesso: str):
         super().__init__(nome, cpf, email, telefone, senha)
         self.codigo_acesso = codigo_acesso
