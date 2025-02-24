@@ -32,10 +32,10 @@ class Usuario:
         for usuario in lista_usuarios:
             if(usuario.cpf == cpf or usuario.email == email or usuario.telefone == telefone):
                 print("Já existe um usuário com essas credenciais.")#Implementar uma execção de cadastro já existente
-            else:
-                print("Cadastro realizado com sucesso")
-
-
+                return False
+            
+        print("Cadastro realizado com sucesso")
+        return True
 
     @classmethod
     def login(cls, email, senha, list_usuarios):
@@ -43,13 +43,14 @@ class Usuario:
         Esse método futuramente será melhorado para fazer uma requisição ao banco de dados, 
         afim de verificar se os dados corrrespondem a algum usuário."""
         
-        
         for usuario in list_usuarios:
             if(usuario.email == email and usuario._validar_senha(senha)):
                 print("Acesso bem sucedido.")#Será uma validação enviada para o front-end validando o login
-            else:
-                print("Falha ao realizar login")#Implementar uma execção de erro de login aqui.
-
+                return True
+        
+        print("Falha ao realizar login")#Implementar uma execção de erro de login aqui.
+        return False
+    
     def visualizar_historico_compras():
         pass
 
@@ -83,7 +84,7 @@ class Cliente(Usuario):
 
 class Administrador(Usuario):
     """Classe Administrador que herda de Usuario, referente a pessoa com cadastro de adm.\n
-      Atributos: Os herdados de Usuario e codigo_acesso.\n
+      Atributos:  Os herdados de Usuario e codigo_acesso.\n
       Métodos: Onde está pode realizar funções de manutenção do sistema."""
     
     def __init__(self, nome, cpf, email, telefone, senha, codigo_acesso: str):

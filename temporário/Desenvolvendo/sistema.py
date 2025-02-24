@@ -14,8 +14,9 @@ def cadastrar():
     tel = input("Informe seu telefone: ")
     senha = input("Digite uma senha: ")
 
-    u = Usuario(nome, cpf, email, tel, senha)
-    list_usuarios.append(u)
+    if (Usuario.cadastrar(cpf, email, tel, list_usuarios)):
+        u = Usuario(nome, cpf, email, tel, senha)
+        list_usuarios.append(u)
 
 def login():
     """Função auxiliar do sistema para verificar o acesso de um usuário já criado.
@@ -30,6 +31,8 @@ def login():
 
 #teste das funções
 def sistema():
+    cadastrar()
+    login()
     cadastrar()
     login()
 
