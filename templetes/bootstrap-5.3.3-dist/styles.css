@@ -1,0 +1,219 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+/* Corpo da página */
+body {
+  background: #f2f2f2; /* fundo suave */
+  display: flex;
+  flex-direction: column; /* Para que a navbar fique em cima e o container abaixo */
+  min-height: 100vh;
+}
+.navbar {
+  width: 100%;
+  height: 60px;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px; 
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+
+/* Marca / Logo na barra de navegação */
+.nav-brand h1 {
+  font-size: 1.5rem;
+  align-items: center;
+  color: #004aad; /* Ajuste a cor para sua identidade visual */
+}
+
+/* Seção de busca na navbar */
+.nav-search {
+  display: flex;
+  align-items: center;
+  flex: 1;               /* Permite que a busca cresça, empurrando ícones para a direita */
+  justify-content: end;
+  padding-right: 20px;
+}
+
+.nav-search input {
+  width: 300px;          /* Ajuste conforme necessário */
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px 0 0 4px;
+  outline: none;
+}
+
+.nav-search button {
+  background-color: #004aad;
+  border: none;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+/* Ícones de navegação (lado direito) */
+.nav-icons {
+  display: flex;
+  align-items: center;
+}
+
+.nav-icons a {
+  margin-left: 15px; /* Espaçamento entre ícones */
+  display: flex;
+  padding: 5px;
+  flex-direction: column; /* Ícone em cima, texto embaixo */
+  align-items: center; /* Centraliza os itens */
+  text-decoration: none; /* Remove sublinhado */
+  color: #004aad;
+  font-size: 14px; /* Ajusta tamanho do texto */
+}
+
+.nav-icons img {
+  width: 24px;         /* Tamanho do ícone */
+  height: 24px;
+  object-fit: cover;
+}
+
+.nav-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centraliza os itens na horizontal */
+  text-decoration: none; /* Remove sublinhado */
+  color: inherit; /* Mantém a cor padrão */
+}
+
+.nav-link i {
+  font-size: 24px; /* Tamanho do ícone */
+  margin-bottom: 5px; /* Espaço entre o ícone e o texto */
+}
+
+.nav-link span {
+  font-size: 14px; /* Ajusta o tamanho do texto */
+}
+
+/* Container principal (Login + Imagem) */
+.container {
+  display: flex;
+  width: 900px;       /* Ajuste conforme necessidade */
+  height: 500px;      /* Ajuste conforme necessidade */
+  background: #fff;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 40px auto;  /* Centraliza horizontalmente e dá espaço da navbar */
+}
+
+/* Área de Login (lado esquerdo) */
+.login-area {
+  flex: 1;
+  padding: 40px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  background: #ffffff;
+}
+
+/* Logo interna (opcional, dentro da área de login) */
+.logo h2 {
+  font-size: 1.8rem;
+  color: #004aad;
+  margin-bottom: 20px;
+}
+
+/* Formulário de login */
+.login-form {
+  max-width: 300px;
+}
+
+.login-form h2 {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.input-group {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.input-group label {
+  margin-bottom: 5px;
+  font-weight: 600;
+  color: #555;
+}
+
+.input-group input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+/* Botão Entrar */
+.btn-entrar {
+  width: 100%;
+  padding: 12px;
+  background: #004aad;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+  margin-top: 10px;
+}
+
+.btn-entrar:hover {
+  background: #003080;
+}
+
+/* Link Esqueci a senha */
+.link-esqueci {
+  display: block;
+  text-align: center;
+  margin-top: 10px;
+  color: #004aad;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.link-esqueci:hover {
+  text-decoration: underline;
+}
+
+/* Área de Imagem (lado direito) */
+.imagem-area {
+  flex: 1;
+  background: #f9fafc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.imagem-area img {
+  max-width: 300px;
+  width: 100%;
+  height: auto;
+}
+
+  .link-cadastrar {
+    display: block;
+    text-align: center;
+    margin-top: 10px;
+    color: #004aad;
+    text-decoration: none;
+    font-size: 0.9rem;
+  }  
+
+  .link-cadastrar:hover {
+    text-decoration: underline;
+  }

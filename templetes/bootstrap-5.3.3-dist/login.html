@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Tela de Login</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="css/bootstrap-reboot.rtl.min.css.map">
+  <link rel="stylesheet" href="fontawesome/css/all.css">
+
+</head>
+<body>
+
+  <header class="navbar">
+    <!-- Logo / Nome do sistema -->
+    <div class="nav-brand">
+      <a href="home.html" style="margin-left: 180px;">
+        <img  src="Trave.svg" alt="logo" width="90">
+      </a>
+    </div>
+
+    <!-- Campo de busca -->
+    <div class="nav-search">
+      <input type="text" placeholder="Pesquisar" aria-label="Pesquisar" />
+      <button type="button">
+        <!-- Ícone de busca (pode ser um <img> ou ícone de font library) -->
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </button>
+    </div>
+
+    <!-- Ícones ou links de navegação -->
+    <div class="nav-icons">
+      <a href="#" title="Página Inicial" class="nav-link">
+        <!-- Substitua pelo ícone que desejar -->
+        <i class="fa-solid fa-house" style="font-size: 20px;"></i>
+        <span>Home</span>
+      </a>
+
+      <a href="#" title="Página Inicial" class="nav-link">
+        <!-- Substitua pelo ícone que desejar -->
+        <i class="fa-solid fa-plane" style="font-size: 20px;"></i>
+        <span>Passagens</span>
+      </a>
+
+      <a href="#" title="Página Inicial" class="nav-link" style="margin-right: 180px;">
+        <!-- Substitua pelo ícone que desejar -->
+        <i class="fa-solid fa-user" style="font-size: 20px;"></i>
+        <span >Login</span>
+      </a>
+    </div>
+  </header>
+
+  <div class="container">
+    
+
+    <!-- Lateral esquerda (Login) -->
+    <div class="login-area">
+      <!-- Logo / Título do sistema -->
+      <div>
+        <!-- Ajuste para sua marca ou insira um <img> com o logo -->
+        <img src="Trave.svg" alt="Ícone 3D de usuário" />
+      </div>
+
+      <!-- Formulário de login -->
+      <form class="login-form" action="#" method="POST">
+        <h2>Acesse sua conta</h2>
+
+        <div class="input-group">
+          <label for="usuario">Usuário</label>
+          <input
+            type="text"
+            id="usuario"
+            name="usuario"
+            placeholder="Digite seu usuário"
+            required
+          />
+        </div>
+
+        <div class="input-group">
+          <label for="senha">Senha</label>
+          <input
+            type="password"
+            id="senha"
+            name="senha"
+            placeholder="Digite sua senha"
+            required
+          />
+        </div>
+
+        <button type="submit" class="btn-entrar">Entrar</button>
+
+        <a class="link-esqueci" href="#">
+          Esqueci a senha
+        </a>
+        <a class="link-cadastrar" href="cadastro.html">
+          Fazer Cadastro
+        </a>
+      </form>
+    </div>
+
+    <!-- Lateral direita (Ilustração) -->
+    <div class="imagem-area">
+      <!-- Exemplo de imagem 3D ou ícone -->
+      <img src="icone-3d.png" alt="Ícone 3D de usuário" />
+    </div>
+
+  </div>
+</body>
+</html>
