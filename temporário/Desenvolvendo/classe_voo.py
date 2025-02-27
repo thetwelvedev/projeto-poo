@@ -1,6 +1,6 @@
 class Voo:
     
-    def __innit__(self,codigo_voo:str,origem :str,destino:str,data:str,horario:str, preco:float,assentos_disponiveis:int):
+    def __init__(self,codigo_voo:str,origem :str,destino:str,data:str,horario:str, preco:float,assentos_disponiveis:int):
         self.codigo_voo = codigo_voo
         self.origem = origem 
         self.destino = destino 

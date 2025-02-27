@@ -20,30 +20,3 @@ class Compra:
 
     def emitir_comprovante():
         pass
-
-class Reserva:
-    """ """
-    def __init__(self, codigo_reserva: str, voo: Voo, cliente: Cliente, data_reserva: str):
-        self.codigo_reserva = codigo_reserva 
-        self.voo = voo
-        self.cliente = cliente
-        self.data_reserva = data_reserva
-
-    def confirmar_reserva():
-        pass
-
-    def cancelar_reservar():
-        pass
-
-class Pagamento:
-    """ """
-    def __init__(self, valor: float, metodo: str, status: str):
-        self.valor = valor
-        self.metodo = metodo 
-        self.status = status
-
-    def processar_pagamento():
-        pass
-
-    def emitir_pagamento():
-        pass

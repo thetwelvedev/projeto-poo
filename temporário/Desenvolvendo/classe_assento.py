@@ -3,7 +3,7 @@ from Desenvolvendo import Voo
 
 class Assento:
     
-    def __innit__(self,numero:int ,classe :str,disponivel: bool , voo: Voo):
+    def __init__(self,numero:int ,classe :str,disponivel: bool , voo: Voo):
         self.numero = numero
         self.classe = classe 
         self.disponivel = disponivel
