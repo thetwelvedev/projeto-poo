@@ -20,10 +20,11 @@ class Usuario:
         hash_string = hash_string.encode("utf8")
         return hashlib.sha256(hash_string).hexdigest()
 
-    def _validar_senha(self, senha):
+    @classmethod
+    def _validar_senha(self, usuario, senha):
         """Método para validar se a senha informada corresponde com a senha do usuário"""
-        criptografa_senha = Usuario._cripitografa_senha(senha)
-        return criptografa_senha == self.senha
+        criptografa_senha = self._cripitografa_senha(senha)
+        return usuario.senha == criptografa_senha
 
     @classmethod
     def cadastrar(cls, novo, lista_usuarios):
@@ -44,12 +45,10 @@ class Usuario:
         afim de verificar se os dados corrrespondem a algum usuário."""
         
         for usuario in list_usuarios:
-            if(usuario.email == email and usuario._validar_senha(senha)):
-                print("Acesso bem sucedido.")#Será uma validação enviada para o front-end validando o login
-                return True
+            if(usuario.email == email and cls._validar_senha(usuario, senha)):
+                return usuario, "Acesso bem sucedido" #Será uma validação enviada para o front-end validando o login
         
-        print("Falha ao realizar login")#Implementar uma execção de erro de login aqui.
-        return False
+        return None, "Usuário não encontrado"
     
     def visualizar_historico_compras():
         pass

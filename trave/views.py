@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, reverse
 from django.http import HttpResponseBadRequest
 from urllib.parse import quote_plus
-from .forms import UsuarioForm
+from .forms import UsuarioForm, LoginForm
 
 from servicos.classes_usuario import Usuario as UsuarioService
 from .models import Usuario 
@@ -30,4 +30,23 @@ def usuario_save(request):
     return redirect(reverse('cadastro') + f"?erro={quote_plus(message)}")
 
 def login_view(request):
-    return render(request, 'login.html')
+    if request.method == 'POST':
+        return realizar_login(request)
+
+    erro = request.GET.get('erro', '')
+    return render(request, 'login.html', {'erro': erro})
+
+def realizar_login(request):
+    form = LoginForm(request.POST)
+    if not form.is_valid():
+        return redirect(reverse('login') + f"?erro={quote_plus('Dados inválidos')}")
+    
+    email = form.data.get('email')
+    senha = form.data.get('senha')
+
+    usuario, mensagem = UsuarioService.login(email, senha, Usuario.objects.all())
+    if usuario:
+        request.session['usuario'] = usuario.id
+        return redirect('home')
+
+    return redirect(reverse('login') + f"?erro={quote_plus(mensagem)}")
