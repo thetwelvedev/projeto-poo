@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -5,10 +6,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Cadastro - TRAVE</title>
   
-  <link rel="stylesheet" href="cadastro.css" />
-  <link rel="stylesheet" href="css/bootstrap-reboot.rtl.min.css.map">
-  <link rel="stylesheet" href="fontawesome/css/all.css"/>
-  
+  <!-- Carregando o CSS personalizado -->
+  <link rel="stylesheet" href="{% static 'trave/css/cadastro.css' %}" />
+  <!-- Carregando o CSS do Bootstrap -->
+  <link rel="stylesheet" href="{% static 'trave/bootstrap/bootstrap-reboot.rtl.min.css.map' %}">
+  <!-- Carregando Font Awesome -->
+  <link rel="stylesheet" href="{% static 'trave/fontawesome/css/all.css' %}"/>
 </head>
 <body>
   <!-- Navbar -->
@@ -16,7 +19,7 @@
     <!-- Logo / Nome do sistema -->
     <div class="nav-brand">
       <a href="home.html" style="margin-left: 180px;">
-        <img  src="Trave.svg" alt="logo" width="90">
+        <img src="{% static 'trave/images/Trave.svg' %}" alt="logo" width="90">
       </a>
     </div>
 
@@ -46,7 +49,7 @@
       <a href="#" title="Página Inicial" class="nav-link" style="margin-right: 180px;">
         <!-- Substitua pelo ícone que desejar -->
         <i class="fa-solid fa-user" style="font-size: 20px;"></i>
-        <span >Login</span>
+        <span>Login</span>
       </a>
     </div>
   </header>
@@ -55,7 +58,7 @@
   <div class="container">
     <div class="form-box">
       <div class="imagem">
-        <img  src="Trave.svg" alt="logo" width="200">
+        <img src="{% static 'trave/images/Trave.svg' %}" alt="logo" width="200">
       </div>
       <h2>Preencha os dados</h2>
       <form action="#" method="POST" class="needs-validation" novalidate>
@@ -66,8 +69,6 @@
             <div class="invalid-feedback">
                 O primeiro nome é obrigatório
             </div>
-
-
           </div>
           <div class="input-group">
             <label for="sobreNome" class="form-label">Sobrenome</label>
@@ -114,7 +115,6 @@
             <label for="endreco" class="form-label">Endereço</label>
             <input type="text" class="form-control" id="endereco" placeholder="Rua, número e complemento" required>
             <div class="invalid-feedback">Por favor digite seu endereço</div>
-         
         </div>
 
         <div class="input-row">
@@ -123,7 +123,6 @@
                 <select class="form-select" id="estado" onchange="atualizarCidades()">
                     <option value="">Selecione um estado</option>
                 </select>
-            
             <div class="invalid-feedback">
                 Selecione um estado
             </div>
@@ -140,7 +139,6 @@
           </div>
           <div class="input-group">
             <label for="cep" class="form-label">CEP</label>
-            
             <input type="text" class="form-select" required id="cep" placeholder="00000-000" maxlength="9" oninput="formatarCEP(this)">
             <div class="invalid-feedback">
                 CEP invalido
@@ -154,7 +152,9 @@
     </div>
   </div>
 
-  <script src="scrips.js"></script>
-  <script src="js/bootstrap.bundle.min.js" ></script>
+  <!-- Carregando o JS personalizado -->
+  <script src="{% static 'trave/js/scripts.js' %}"></script>
+  <!-- Carregando o JS do Bootstrap -->
+  <script src="{% static 'trave/bootstrap/bootstrap.bundle.min.js' %}"></script>
 </body>
 </html>

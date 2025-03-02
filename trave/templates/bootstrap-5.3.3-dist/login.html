@@ -1,12 +1,15 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <title>Tela de Login</title>
-  <link rel="stylesheet" href="styles.css" />
-  <link rel="stylesheet" href="css/bootstrap-reboot.rtl.min.css.map">
-  <link rel="stylesheet" href="fontawesome/css/all.css">
-
+  <!-- Carregando o CSS personalizado -->
+  <link rel="stylesheet" href="{% static 'trave/css/styles.css' %}" />
+  <!-- Carregando o CSS do Bootstrap -->
+  <link rel="stylesheet" href="{% static 'trave/bootstrap/bootstrap-reboot.rtl.min.css.map' %}">
+  <!-- Carregando Font Awesome -->
+  <link rel="stylesheet" href="{% static 'trave/fontawesome/css/all.css' %}">
 </head>
 <body>
 
@@ -14,7 +17,7 @@
     <!-- Logo / Nome do sistema -->
     <div class="nav-brand">
       <a href="home.html" style="margin-left: 180px;">
-        <img  src="Trave.svg" alt="logo" width="90">
+        <img src="{% static 'trave/images/Trave.svg' %}" alt="logo" width="90">
       </a>
     </div>
 
@@ -44,20 +47,18 @@
       <a href="#" title="Página Inicial" class="nav-link" style="margin-right: 180px;">
         <!-- Substitua pelo ícone que desejar -->
         <i class="fa-solid fa-user" style="font-size: 20px;"></i>
-        <span >Login</span>
+        <span>Login</span>
       </a>
     </div>
   </header>
 
   <div class="container">
-    
-
     <!-- Lateral esquerda (Login) -->
     <div class="login-area">
       <!-- Logo / Título do sistema -->
       <div>
         <!-- Ajuste para sua marca ou insira um <img> com o logo -->
-        <img src="Trave.svg" alt="Ícone 3D de usuário" />
+        <img src="{% static 'trave/images/Trave.svg' %}" alt="Ícone 3D de usuário" />
       </div>
 
       <!-- Formulário de login -->
@@ -100,9 +101,8 @@
     <!-- Lateral direita (Ilustração) -->
     <div class="imagem-area">
       <!-- Exemplo de imagem 3D ou ícone -->
-      <img src="icone-3d.png" alt="Ícone 3D de usuário" />
+      <img src="{% static 'trave/images/icone-3d.png' %}" alt="Ícone 3D de usuário" />
     </div>
-
   </div>
 </body>
 </html>
