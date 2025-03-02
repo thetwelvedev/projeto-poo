@@ -5,49 +5,34 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Cadastro - TRAVE</title>
-  
-  <!-- Carregando o CSS personalizado -->
   <link rel="stylesheet" href="{% static 'trave/css/cadastro.css' %}" />
-  <!-- Carregando o CSS do Bootstrap -->
   <link rel="stylesheet" href="{% static 'trave/bootstrap/bootstrap-reboot.rtl.min.css.map' %}">
-  <!-- Carregando Font Awesome -->
   <link rel="stylesheet" href="{% static 'trave/fontawesome/css/all.css' %}"/>
 </head>
 <body>
   <!-- Navbar -->
   <header class="navbar">
-    <!-- Logo / Nome do sistema -->
     <div class="nav-brand">
       <a href="home.html" style="margin-left: 180px;">
         <img src="{% static 'trave/images/Trave.svg' %}" alt="logo" width="90">
       </a>
     </div>
-
-    <!-- Campo de busca -->
     <div class="nav-search">
       <input type="text" placeholder="Pesquisar" aria-label="Pesquisar" />
       <button type="button">
-        <!-- Ícone de busca (pode ser um <img> ou ícone de font library) -->
         <i class="fa-solid fa-magnifying-glass"></i>
       </button>
     </div>
-
-    <!-- Ícones ou links de navegação -->
     <div class="nav-icons">
       <a href="#" title="Página Inicial" class="nav-link">
-        <!-- Substitua pelo ícone que desejar -->
         <i class="fa-solid fa-house" style="font-size: 20px;"></i>
         <span>Home</span>
       </a>
-
       <a href="#" title="Página Inicial" class="nav-link">
-        <!-- Substitua pelo ícone que desejar -->
         <i class="fa-solid fa-plane" style="font-size: 20px;"></i>
         <span>Passagens</span>
       </a>
-
       <a href="#" title="Página Inicial" class="nav-link" style="margin-right: 180px;">
-        <!-- Substitua pelo ícone que desejar -->
         <i class="fa-solid fa-user" style="font-size: 20px;"></i>
         <span>Login</span>
       </a>
@@ -64,18 +49,27 @@
       <form action="#" method="POST" class="needs-validation" novalidate>
         <div class="input-row">
           <div class="input-group">
+            <label for="usuario" class="form-label">Usuário:</label>
+            <input type="text" placeholder="Ex: alice123" required value="" class="form-control" id="usuario"/>
+            <div class="invalid-feedback">O nome de usuário é obrigatório</div>
+          </div>
+          <div class="input-group">
+            <label for="senha" class="form-label">Senha:</label>
+            <input type="password" class="form-control" id="senha" placeholder="********" value="" required>
+            <div class="invalid-feedback">A senha é obrigatória</div>
+          </div>
+        </div>
+
+        <div class="input-row">
+          <div class="input-group">
             <label for="primeiroNome" class="form-label">Primeiro Nome:</label>
             <input type="text" placeholder="Ex: Alice" required value="" class="form-control" id="primeiroNome"/>
-            <div class="invalid-feedback">
-                O primeiro nome é obrigatório
-            </div>
+            <div class="invalid-feedback">O primeiro nome é obrigatório</div>
           </div>
           <div class="input-group">
             <label for="sobreNome" class="form-label">Sobrenome:</label>
             <input type="text" class="form-control" id="sobreNome" placeholder="Ex: Silva" value="" required>
-            <div class="invalid-feedback">
-                O sobrenome é obrigatório
-            </div>
+            <div class="invalid-feedback">O sobrenome é obrigatório</div>
           </div>
         </div>
 
@@ -83,66 +77,52 @@
           <div class="input-group">
             <label for="cpf" class="form-label">CPF:</label>
             <input type="text" id="cpf" class="form-control" placeholder="000.000.000-00" maxlength="14" oninput="formatarCPF(this)" required>
-            <div class="invalid-feedback">
-                O CPF é obrigatório
-            </div>
+            <div class="invalid-feedback">O CPF é obrigatório</div>
           </div>
           <div class="input-group">
             <label for="telefone" class="form-label">Telefone:</label>
             <input type="text" id="telefone" class="form-control" placeholder="(00) 00000-0000" maxlength="15" oninput="formatarTelefone(this)" required>
-            <div class="invalid-feedback">
-                O número de telefone é obrigatorio
-            </div>
+            <div class="invalid-feedback">O número de telefone é obrigatório</div>
           </div>
         </div>
 
         <div class="input-group">
-            <label for="cartao" class="form-label">Número do Cartão:</label>
-            <input type="text" id="cartao" class="form-control" placeholder="0000 0000 0000 0000" maxlength="19" oninput="formatarCartao(this)" required>
-            <div class="invalid-feedback">
-              O número do cartão de credito é obrigatório
-            </div>
+          <label for="cartao" class="form-label">Número do Cartão:</label>
+          <input type="text" id="cartao" class="form-control" placeholder="0000 0000 0000 0000" maxlength="19" oninput="formatarCartao(this)" required>
+          <div class="invalid-feedback">O número do cartão de crédito é obrigatório</div>
         </div>
 
         <div class="input-group">
-            <label for="email" class="form-label">Email:</label>
-            <input type="email" class="form-control" id="email" placeholder="Ex: seu-email@trave.com">
-            <div class="invalid-feedback">Digite um email valido, por favor.
-            </div>
+          <label for="email" class="form-label">Email:</label>
+          <input type="email" class="form-control" id="email" placeholder="Ex: seu-email@trave.com">
+          <div class="invalid-feedback">Digite um email válido, por favor.</div>
         </div>
 
         <div class="input-group">
-            <label for="endreco" class="form-label">Endereço:</label>
-            <input type="text" class="form-control" id="endereco" placeholder="Rua, número e complemento" required>
-            <div class="invalid-feedback">Por favor digite seu endereço</div>
+          <label for="endereco" class="form-label">Endereço:</label>
+          <input type="text" class="form-control" id="endereco" placeholder="Rua, número e complemento" required>
+          <div class="invalid-feedback">Por favor digite seu endereço</div>
         </div>
 
         <div class="input-row">
           <div class="input-group">
-            <label for="estado" class="form-label" >Estado:</label>
-                <select class="form-select" id="estado" onchange="atualizarCidades()">
-                    <option value="">Selecione um estado</option>
-                </select>
-            <div class="invalid-feedback">
-                Selecione um estado
-            </div>
+            <label for="estado" class="form-label">Estado:</label>
+            <select class="form-select" id="estado" onchange="atualizarCidades()">
+              <option value="">Selecione um estado</option>
+            </select>
+            <div class="invalid-feedback">Selecione um estado</div>
           </div>
           <div class="input-group">
             <label for="cidade" class="form-label">Cidade:</label>
             <select class="form-select" id="cidade" required>
-                <option value="">Selecione a cidade</option>
-                <option>Selecione um estado primeiro</option>
+              <option value="">Selecione a cidade</option>
             </select>
-            <div class="invalid-feedback">
-                Por favor selecione uma Cidade
-            </div>
+            <div class="invalid-feedback">Por favor selecione uma cidade</div>
           </div>
           <div class="input-group">
             <label for="cep" class="form-label">CEP:</label>
             <input type="text" class="form-select" required id="cep" placeholder="00000-000" maxlength="9" oninput="formatarCEP(this)">
-            <div class="invalid-feedback">
-                CEP invalido
-            </div>
+            <div class="invalid-feedback">CEP inválido</div>
           </div>
         </div>
 
@@ -152,9 +132,58 @@
     </div>
   </div>
 
-  <!-- Carregando o JS personalizado -->
+  <!-- Scripts -->
   <script src="{% static 'trave/js/scripts.js' %}"></script>
-  <!-- Carregando o JS do Bootstrap -->
   <script src="{% static 'trave/bootstrap/bootstrap.bundle.min.js' %}"></script>
+
+  <script>
+    // Função para carregar o JSON de estados e cidades
+    async function carregarDados() {
+      try {
+        const response = await fetch("{% static 'trave/data/cidades-estados.json' %}");
+        const dados = await response.json();
+        return dados;
+      } catch (error) {
+        console.error('Erro ao carregar dados:', error);
+      }
+    }
+
+    // Função para preencher os estados
+    async function preencherEstados() {
+      const dados = await carregarDados();
+      const selectEstado = document.getElementById('estado');
+
+      dados.estados.sort((a, b) => a.nome.localeCompare(b.nome)).forEach(estado => {
+        const option = document.createElement('option');
+        option.value = estado.sigla;
+        option.textContent = estado.nome;
+        selectEstado.appendChild(option);
+      });
+    }
+
+    // Função para atualizar as cidades com base no estado selecionado
+    async function atualizarCidades() {
+      const estadoSelecionado = document.getElementById('estado').value;
+      const selectCidade = document.getElementById('cidade');
+      selectCidade.innerHTML = '<option value="">Selecione a cidade</option>';
+
+      if (estadoSelecionado) {
+        const dados = await carregarDados();
+        const estado = dados.estados.find(estado => estado.sigla === estadoSelecionado);
+
+        if (estado) {
+          estado.cidades.sort((a, b) => a.localeCompare(b)).forEach(cidade => {
+            const option = document.createElement('option');
+            option.value = cidade;
+            option.textContent = cidade;
+            selectCidade.appendChild(option);
+          });
+        }
+      }
+    }
+
+    // Chamada inicial para preencher os estados
+    preencherEstados();
+  </script>
 </body>
 </html>
