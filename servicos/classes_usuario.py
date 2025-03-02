@@ -13,15 +13,16 @@ class Usuario:
         self.telefone = telefone
         self.senha = self._cripitografa_senha(senha)
 
-    def _cripitografa_senha(self, senha):
+    @classmethod
+    def _cripitografa_senha(cls, senha):
         '''Criptografa a senha e depois retorna o sha.'''
-        hash_string  = (self.nome + senha)
+        hash_string  = senha
         hash_string = hash_string.encode("utf8")
         return hashlib.sha256(hash_string).hexdigest()
 
     def _validar_senha(self, senha):
         """Método para validar se a senha informada corresponde com a senha do usuário"""
-        criptografa_senha = self._cripitografa_senha(senha)
+        criptografa_senha = Usuario._cripitografa_senha(senha)
         return criptografa_senha == self.senha
 
     @classmethod

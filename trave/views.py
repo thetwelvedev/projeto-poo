@@ -21,6 +21,7 @@ def usuario_save(request):
 
     lista_usuarios = Usuario.objects.all()
     usuario = form.save(commit=False)
+    usuario.senha = UsuarioService._cripitografa_senha(usuario.senha)
 
     cadastro_sucesso, message = UsuarioService.cadastrar(usuario, lista_usuarios)
     if cadastro_sucesso:
