@@ -1,19 +1,32 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
+from django.http import HttpResponseBadRequest
+from urllib.parse import quote_plus
 from .forms import UsuarioForm
 
-def cadastro_view(request):
-    cadastro_sucesso = False  # Variável para indicar se o cadastro foi bem-sucedido
+from servicos.classes_usuario import Usuario as UsuarioService
+from .models import Usuario 
 
+def cadastro_view(request):
+    erro = request.GET.get('erro', '')
     if request.method == 'POST':
-        form = UsuarioForm(request.POST)
-        if form.is_valid():
-            form.save()  # Salva os dados no banco de dados
-            cadastro_sucesso = True  # Define como True após o cadastro ser bem-sucedido
-            form = UsuarioForm()  # Limpa o formulário após o cadastro
-    else:
-        form = UsuarioForm()
-    
-    return render(request, 'cadastro.html', {'form': form, 'cadastro_sucesso': cadastro_sucesso})
+        return usuario_save(request)
+
+    return render(request, 'cadastro.html', {'erro': erro})
+
+def usuario_save(request):
+    form = UsuarioForm(request.POST)
+
+    if not form.is_valid():
+        return redirect(reverse('cadastro') + f"?erro={quote_plus('Dados inválidos')}")
+
+    lista_usuarios = Usuario.objects.all()
+    usuario = form.save(commit=False)
+
+    cadastro_sucesso, message = UsuarioService.cadastrar(usuario, lista_usuarios)
+    if cadastro_sucesso:
+        return redirect(reverse('login') + f"?mensagem={quote_plus(message)}")
+
+    return redirect(reverse('cadastro') + f"?erro={quote_plus(message)}")
 
 def login_view(request):
     return render(request, 'login.html')

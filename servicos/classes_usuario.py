@@ -25,17 +25,16 @@ class Usuario:
         return criptografa_senha == self.senha
 
     @classmethod
-    def cadastrar(cls, cpf, email, telefone, lista_usuarios):
+    def cadastrar(cls, novo, lista_usuarios):
         """Método para verificar se é possivel realizar um cadastro com as credencias fornecidas.
         Esse método futuramente será uma requisição ao banco de dados para verificar se já existe um usuário com as informações fornecidas."""
 
         for usuario in lista_usuarios:
-            if(usuario.cpf == cpf or usuario.email == email or usuario.telefone == telefone):
-                print("Já existe um usuário com essas credenciais.")#Implementar uma execção de cadastro já existente
-                return False
-            
-        print("Cadastro realizado com sucesso")
-        return True
+            if(usuario.cpf == novo.cpf or usuario.email == novo.email or usuario.telefone == novo.telefone):
+                return False, "Já existe um usuário com essas credenciais."
+                
+        novo.save()
+        return True, "Cadastro realizado com sucesso"
 
     @classmethod
     def login(cls, email, senha, list_usuarios):

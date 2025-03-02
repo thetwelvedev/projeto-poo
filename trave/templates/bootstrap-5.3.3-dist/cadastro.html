@@ -10,6 +10,9 @@
   <link rel="stylesheet" href="{% static 'trave/bootstrap/fontawesome/css/all.css' %}"/>
 </head>
 <body>
+  {% if erro %}
+    <h1>{{erro}}</h1>
+  {% endif %}
   <!-- Navbar -->
   <header class="navbar">
     <div class="nav-brand">
@@ -46,7 +49,7 @@
         <img src="{% static 'trave/images/Trave.svg' %}" alt="logo" width="200">
       </div>
       <h2>Preencha os dados</h2>
-      <form action="{% url 'cadastro' %}" method="POST" class="needs-validation" novalidate>
+      <form action="{% url 'cadastro' %}" method="POST" class="needs-validation">
         {% csrf_token %}
         
         <!-- Renderização manual dos campos do formulário -->
@@ -136,7 +139,6 @@
   </div>
 
   <!-- Scripts -->
-  <script src="{% static 'trave/js/scripts.js' %}"></script>
   <script src="{% static 'trave/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 
   <script>
