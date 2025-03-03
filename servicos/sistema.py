@@ -1,4 +1,6 @@
 from servicos import Usuario
+from servicos import Aeroporto
+from servicos import Voo
 
 list_usuarios = []#
 
@@ -28,13 +30,25 @@ def login():
     senha = input("Informe a senha: ")
 
     Usuario.login(email, senha, list_usuarios)
+    
+def cadastrar_voos():
+    """Função auxiliar para testar implementação básica do cadastro de um voou, que futuramente será implementada para ser realizada por um adm"""
+
+    #Cadastrando aeroportos de exemplo
+    Aeroporto("GRU", "Guarulhos", "São Paulo", "Brasil")
+    Aeroporto("GIG", "Galeão", "Rio de Janeiro", "Brasil")
+
+    #Verificando se os objetos foram criados
+    print("Aeroporto cadastrado?\n ", Aeroporto.aeroportos.buscar_aeroporto("Guarulhos"),"\n" , Aeroporto.aeroportos.buscar_aeroporto("Galeão"))
+
+    #Testando se um voo é criado
+    voo = Voo("LATAM123", "Guarulhos", "Galeão", "2025-03-15", "08:00", 599.99, 180)
+    print(voo)
+
 
 #teste das funções
 def sistema():
-    cadastrar()
-    login()
-    cadastrar()
-    login()
+    cadastrar_voos()
 
 if __name__ == "__main__":
     sistema()
