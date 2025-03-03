@@ -23,7 +23,7 @@ class Usuario(models.Model):
     """
 
     usuario = models.CharField(max_length=50, unique=True)
-    senha = models.CharField(max_length=50)
+    senha = models.CharField(max_length=100)
     primeiro_nome = models.CharField(max_length=50)
     sobrenome = models.CharField(max_length=50)
     cpf = models.CharField(max_length=14, unique=True)  # CPF com 14 caracteres (incluindo pontos e traço)
