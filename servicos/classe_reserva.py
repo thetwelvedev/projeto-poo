@@ -1,5 +1,6 @@
-from Desenvolvendo import Cliente
-from Desenvolvendo import Voo 
+from servicos import Cliente
+from servicos import Voo 
+
 class Reserva:
    
     def __init__(self,codigo_reserva:int,cliente:Cliente,voo:Voo,data_reserva:str,):

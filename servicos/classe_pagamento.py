@@ -1,5 +1,5 @@
-from Desenvolvendo import Cliente
-from Desenvolvendo import Voo
+from servicos import Cliente
+from servicos import Voo
 class Pagamento:
     """ """
     def __init__(self, valor: float, metodo: str, status: str):

@@ -1,4 +1,4 @@
-from Desenvolvendo import Usuario
+from servicos import Usuario
 
 list_usuarios = []#
 

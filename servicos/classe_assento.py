@@ -1,5 +1,5 @@
-from Desenvolvendo import classe_pagamento
-from Desenvolvendo import Voo
+from servicos import classe_pagamento
+from servicos import Voo
 
 class Assento:
     
