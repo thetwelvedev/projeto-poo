@@ -20,20 +20,49 @@ class Assento:
             c = Assento(i, "Economica", True)
             assentos.append(c)
         
-        for i in range(31,60):
+        for i in range(31,45):
+            c = Assento(i, "Executiva", True)
+            assentos.append(c)
+            
+        for i in range(46,60):
             c = Assento(i, "Primeira Classe", True)
             assentos.append(c)
         
         return assentos
+    def get_codigo_assento(self) -> str:
         
+        # Transformar o "numero" em fileira + letra
+        row = (self.numero - 1) // 6 + 1  # fileira começa em 1
+        resto = (self.numero - 1) % 6     # varia de 0 a 5
         
+        # Mapeamento para as letras
+        mapa_letras = {#dicionario das letras dos assentos 
+            0: 'A',
+            1: 'B',
+            2: 'C',
+            3: 'D',
+            4: 'E',
+            5: 'F'
+        }
+        
+        letra = mapa_letras[resto]
+        return f"{row}{letra}"#retorna  o lugar exato 
+    
     def reservar_assento(self):
-        self.disponivel = False
-        self.save()
-
+        if not self.disponivel:
+            print(f"O assento {self.get_codigo_assento()} já está ocupado!")
+        else:
+            self.disponivel = False
+            print(f"O assento {self.get_codigo_assento()} foi reservado.")
+    
     def liberar_assento(self):
-        self.disponivel = True
-        self.save()
-
+        if self.disponivel:
+            print(f"O assento {self.get_codigo_assento()} já está vazio!")
+        else:
+            self.disponivel = True
+            print(f"O assento {self.get_codigo_assento()} foi liberado.")    
+        
     def __str__(self):
-        return f"{self.numero} - {self.voo.codigo} ({'Disponível' if self.disponivel else 'Ocupado'})"
+        estado = "vazio" if self.disponivel else "ocupado"
+        return f"O assento {self.get_codigo_assento()} está {estado}"
+    
