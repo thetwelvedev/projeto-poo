@@ -14,9 +14,8 @@
 
 ## Funcionalidades em Desenvolvimento
 
-<!--
--
--->
+- [x] Autenticação e Cadastro de Usuários
+- [ ] Busca e Reserva de Passagens 
 
 ## Tecnologias Utilizadas
 
