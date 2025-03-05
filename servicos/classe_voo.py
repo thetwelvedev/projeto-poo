@@ -5,6 +5,9 @@ class Voo:
     """Classe Voo referente a um voou que ocorerá futuramente.\n
     Atributos: \n Codigo, origem, destino, data, horario, preco, assentos_disponiveis e um array de objetos assentos pertencente ao Voo"""
 
+    voos = []
+    "Atributo de classe"
+
     def __init__(self, codigo_voo: str, origem: str, destino: str, data:str, horario:str, preco: float, assentos_disponiveis: int):
         self.codigo_voo = codigo_voo
         self.origem = Aeroporto.aeroportos.buscar_aeroporto(origem)
@@ -17,6 +20,9 @@ class Voo:
 
         self.origem.adicionar_novo_voo(1, self)
         self.destino.adicionar_novo_voo(2, self)
+
+        Voo.voos.append(self)
+
         
     def assentos_disponiveis(self) -> int:
         """

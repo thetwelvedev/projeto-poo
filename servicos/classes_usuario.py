@@ -90,8 +90,24 @@ class Administrador(Usuario):
         super().__init__(nome, cpf, email, telefone, senha)
         self.codigo_acesso = codigo_acesso
     
-    def cadastrar_voo():
-        pass
+    def cadastrar_voo(cls, novo, lista_voos):
+        """Método para validar um novo cadastrar de Voo ao sistema.\n
+        Esse método recebe a novo instância de Voo que se deseja cadastrar, e a lista com voos já cadastrados, e é verificado se esta atende aos requisitos para o cadastro."""
+
+        #Verifica se o voo a ser cadastrada não possui um código já cadastrado.
+        for voo in lista_voos:
+            if(voo.codigo_voo == novo.codigo_voo):
+                return False, "Não é possível cadastrar um Voo com código repetido."
+
+        #Verifica se está ligado a um aeroporto cadastrado ao sistema
+        if(novo.origem == None):
+            return False , "Não foi possível cadastrar o novo voo, pois o aeroporto de origem informado não existe."
+
+        if(novo.destino == None):
+            return False , "Não foi possível cadastrar o novo voo, pois o aeroporto de destino informado não existe."
+
+        return True, "Cadastro do novo Voo realizado com sucesso"
+
 
     def editar_voo():
         pass
