@@ -64,6 +64,8 @@ body {
   align-items: center;
 }
 
+
+
 .nav-icons a {
   margin-left: 15px; /* Espaçamento entre ícones */
   display: flex;
@@ -73,6 +75,9 @@ body {
   text-decoration: none; /* Remove sublinhado */
   color: #004aad;
   font-size: 14px; /* Ajusta tamanho do texto */
+}
+.nav-icons a:hover {
+  color: #004aad;
 }
 
 .nav-icons img {
@@ -205,15 +210,19 @@ body {
   height: auto;
 }
 
-  .link-cadastrar {
-    display: block;
-    text-align: center;
-    margin-top: 10px;
-    color: #004aad;
-    text-decoration: none;
-    font-size: 0.9rem;
-  }  
+.link-cadastrar {
+  display: block;
+  text-align: center;
+  margin-top: 10px;
+  color: #004aad;
+  text-decoration: none;
+  font-size: 0.9rem;
+}  
 
-  .link-cadastrar:hover {
-    text-decoration: underline;
-  }
+.link-cadastrar:hover {
+  text-decoration: underline;
+}
+
+.button-pesquisar:hover {
+  color: #004aad;
+}

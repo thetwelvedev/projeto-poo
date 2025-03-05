@@ -50,3 +50,10 @@ def realizar_login(request):
         return redirect('home')
 
     return redirect(reverse('login') + f"?erro={quote_plus(mensagem)}")
+
+def home_view(request):
+    if request.method == 'POST':
+        return realizar_login(request)
+
+    erro = request.GET.get('erro', '')
+    return render(request, 'index.html', {'erro': erro})

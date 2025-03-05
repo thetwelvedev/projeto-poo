@@ -1,0 +1,160 @@
+{
+    "voos": [
+        {
+            "cidade": "Rio Branco",
+            "estado": "Acre",
+            "aeroporto": "Aeroporto Internacional de Rio Branco",
+            "sigla": "RBR"
+        },
+        {
+            "cidade": "Maceió",
+            "estado": "Alagoas",
+            "aeroporto": "Aeroporto Internacional Zumbi dos Palmares",
+            "sigla": "MCZ"
+        },
+        {
+            "cidade": "Manaus",
+            "estado": "Amazonas",
+            "aeroporto": "Aeroporto Internacional Eduardo Gomes",
+            "sigla": "MAO"
+        },
+        {
+            "cidade": "Salvador",
+            "estado": "Bahia",
+            "aeroporto": "Aeroporto Internacional Deputado Luís Eduardo Magalhães",
+            "sigla": "SSA"
+        },
+        {
+            "cidade": "Fortaleza",
+            "estado": "Ceará",
+            "aeroporto": "Aeroporto Internacional Pinto Martins",
+            "sigla": "FOR"
+        },
+        {
+            "cidade": "Brasília",
+            "estado": "Distrito Federal",
+            "aeroporto": "Aeroporto Internacional de Brasília - Presidente Juscelino Kubitschek",
+            "sigla": "BSB"
+        },
+        {
+            "cidade": "Vitória",
+            "estado": "Espírito Santo",
+            "aeroporto": "Aeroporto Internacional de Vitória - Eurico de Aguiar Salles",
+            "sigla": "VIX"
+        },
+        {
+            "cidade": "Goiânia",
+            "estado": "Goiás",
+            "aeroporto": "Aeroporto Internacional de Goiânia - Santa Genoveva",
+            "sigla": "GYN"
+        },
+        {
+            "cidade": "São Luís",
+            "estado": "Maranhão",
+            "aeroporto": "Aeroporto Internacional de São Luís - Marechal Cunha Machado",
+            "sigla": "SLZ"
+        },
+        {
+            "cidade": "Cuiabá",
+            "estado": "Mato Grosso",
+            "aeroporto": "Aeroporto Internacional Marechal Rondon",
+            "sigla": "CGB"
+        },
+        {
+            "cidade": "Campo Grande",
+            "estado": "Mato Grosso do Sul",
+            "aeroporto": "Aeroporto Internacional de Campo Grande",
+            "sigla": "CGR"
+        },
+        {
+            "cidade": "Belo Horizonte",
+            "estado": "Minas Gerais",
+            "aeroporto": "Aeroporto Internacional de Belo Horizonte - Confins",
+            "sigla": "CNF"
+        },
+        {
+            "cidade": "Belém",
+            "estado": "Pará",
+            "aeroporto": "Aeroporto Internacional de Belém - Val-de-Cans",
+            "sigla": "BEL"
+        },
+        {
+            "cidade": "João Pessoa",
+            "estado": "Paraíba",
+            "aeroporto": "Aeroporto Internacional Presidente Castro Pinto",
+            "sigla": "JPA"
+        },
+        {
+            "cidade": "Curitiba",
+            "estado": "Paraná",
+            "aeroporto": "Aeroporto Internacional Afonso Pena",
+            "sigla": "CWB"
+        },
+        {
+            "cidade": "Recife",
+            "estado": "Pernambuco",
+            "aeroporto": "Aeroporto Internacional do Recife - Guararapes",
+            "sigla": "REC"
+        },
+        {
+            "cidade": "Teresina",
+            "estado": "Piauí",
+            "aeroporto": "Aeroporto de Teresina - Senador Petrônio Portella",
+            "sigla": "THE"
+        },
+        {
+            "cidade": "Rio de Janeiro",
+            "estado": "Rio de Janeiro",
+            "aeroporto": "Aeroporto Internacional do Galeão - Tom Jobim",
+            "sigla": "GIG"
+        },
+        {
+            "cidade": "Natal",
+            "estado": "Rio Grande do Norte",
+            "aeroporto": "Aeroporto Internacional de Natal - Governador Aluízio Alves",
+            "sigla": "NAT"
+        },
+        {
+            "cidade": "Porto Alegre",
+            "estado": "Rio Grande do Sul",
+            "aeroporto": "Aeroporto Internacional Salgado Filho",
+            "sigla": "POA"
+        },
+        {
+            "cidade": "Porto Velho",
+            "estado": "Rondônia",
+            "aeroporto": "Aeroporto Internacional de Porto Velho - Governador Jorge Teixeira",
+            "sigla": "PVH"
+        },
+        {
+            "cidade": "Boa Vista",
+            "estado": "Roraima",
+            "aeroporto": "Aeroporto Internacional de Boa Vista - Atlas Brasil Cantanhede",
+            "sigla": "BVB"
+        },
+        {
+            "cidade": "Florianópolis",
+            "estado": "Santa Catarina",
+            "aeroporto": "Aeroporto Internacional Hercílio Luz",
+            "sigla": "FLN"
+        },
+        {
+            "cidade": "São Paulo",
+            "estado": "São Paulo",
+            "aeroporto": "Aeroporto Internacional de São Paulo - Guarulhos",
+            "sigla": "GRU"
+        },
+        {
+            "cidade": "Aracaju",
+            "estado": "Sergipe",
+            "aeroporto": "Aeroporto Internacional de Aracaju - Santa Maria",
+            "sigla": "AJU"
+        },
+        {
+            "cidade": "Palmas",
+            "estado": "Tocantins",
+            "aeroporto": "Aeroporto Brigadeiro Lysias Rodrigues",
+            "sigla": "PMW"
+        }
+    ]
+}

@@ -27,7 +27,7 @@
     <!-- Campo de busca -->
     <div class="nav-search">
       <input type="text" placeholder="Pesquisar" aria-label="Pesquisar" />
-      <button type="button">
+      <button type="button" class="button-pesquisar">
         <!-- Ícone de busca (pode ser um <img> ou ícone de font library) -->
         <i class="fa-solid fa-magnifying-glass"></i>
       </button>
@@ -35,7 +35,7 @@
 
     <!-- Ícones ou links de navegação -->
     <div class="nav-icons">
-      <a href="#" title="Página Inicial" class="nav-link">
+      <a href="{% url 'home' %}" title="Página Inicial" class="nav-link">
         <!-- Substitua pelo ícone que desejar -->
         <i class="fa-solid fa-house" style="font-size: 20px;"></i>
         <span>Home</span>
@@ -47,7 +47,7 @@
         <span>Passagens</span>
       </a>
 
-      <a href="{% url 'login' %}" title="Página Inicial" class="nav-link" style="margin-right: 180px;">
+      <a href="{% url 'login' %}" title="Página Inicial" class="nav-link" style="margin-right: 180px; background-color: #004aad; color: white; border-radius: 10px;  width: 55px; height: 55px;">
         <!-- Substitua pelo ícone que desejar -->
         <i class="fa-solid fa-user" style="font-size: 20px;"></i>
         <span>Login</span>
