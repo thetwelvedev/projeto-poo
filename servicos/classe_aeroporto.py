@@ -29,8 +29,8 @@ class Aeroporto:
         self.nome = nome 
         self.cidade = cidade 
         self.pais = pais
-        self.voos_origem = []
-        self.voos_destino = []
+        self.voos_partida = []
+        self.voos_chegada = []
         Aeroporto.aeroportos.append(self)
 
     def adicionar_novo_voo(self, tipo, voo):
@@ -38,15 +38,27 @@ class Aeroporto:
         Os parametros são o tipo(origem=1 e destino=2) e o objeto Voo a ser colocado na lista.\n
         Futuramente essa função deve enviar essa relação entre Aeroporto e Voos de origem e chegada para o banco de dados"""
         if(tipo == 1):
-            self.voos_origem.append(voo)
+            self.voos_partida.append(voo)
         else:
-            self.voos_destino.append(voo)
+            self.voos_chegada.append(voo)
 
-    def informar_voos_partida():
-        pass
+    def informar_voos_partida(self):
+        if not self.voos_partida:
+            print(f"Não há voos de partida registrados para o aeroporto {self.nome}.")
+        else:
+            print(f"Voos de partida do aeroporto {self.nome}:")
+            for voo in self.voos_partida:
+                print(f"Código: {voo.codigo_voo} | Destino: {voo.destino.nome} | Horário: {voo.horario_partida}")
 
-    def informar_voos_chegada():
-        pass
+
+    def informar_voos_chegada(self):
+        if not self.voos_chegada:
+            print(f"Não há voos de chegada registrados para o aeroporto {self.nome}.")
+        else:
+            print(f"Voos de chegada ao aeroporto {self.nome}:")
+        for voo in self.voos_chegada:
+            print(f"Código: {voo.codigo_voo} \n| Origem: {voo.origem.nome} \n| Horário: {voo.horario_chegada}")
+
     
     def __str__(self):
         return f"{self.nome} - {self.cidade}, {self.pais}"
