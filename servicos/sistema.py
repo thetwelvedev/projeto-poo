@@ -57,6 +57,8 @@ def cadastro_aeroporto():
     #Cadastrando aeroportos de exemplo
     Aeroporto("GRU", "Guarulhos", "São Paulo", "Brasil")
     Aeroporto("GIG", "Galeão", "Rio de Janeiro", "Brasil")
+    Aeroporto("BSB", "Brasília", "Brasília", "Brasil")
+    Aeroporto("POA", "Salgado Filho", "Porto Alegre", "Brasil")
 
     #Verificando se os objetos foram criados
     print("Aeroporto cadastrado: ")
@@ -73,23 +75,43 @@ def cadastrar_voos():
     hora = input("Informe o horario previsto para saída do voo:")
     preco = float(input("Informe o preço do voo: "))
 
-    origem = Aeroporto.aeroportos.buscar_aeroporto(origem)
-    #validando o cadastro
+    #Classe test para auxiliar na visulaização do cadastro
+    class test():
+        pass
+    novo = test()
+    novo.codigo_voo =codigo_voo
+    novo.origem = origem
+    novo.destino = destino
     
     
     #"LATAM123", "Guarulhos", "Galeão", "2025-03-15", "08:00", 599.99, 180
-    if(Administrador.cadastrar_voo({codigo_voo, origem, destino}, Voo.voos)):
+    #"AZUL456", "Brasília", "Salgado Filho", "2025-03-20", "14:30", 450.50, 120
+    #"GOL789", "Galeão", "Brasília", "2025-04-05", "19:45", 380.00, 150
+    #"TAP987", "Salgado Filho", "Guarulhos", "2025-05-10", "06:15", 620.75, 200
+
+    if(Administrador.cadastrar_voo(novo, Voo.voos)):
         voo = Voo(codigo_voo, origem, destino, data, hora, preco, 60)
 
     print("\nVoo cadastrado: ")
     print(voo)
 
+
+def buscar_voos():
+    origem = input("Informe a origem do voo a procura: ")
+    destino = input("Informe a destino do voo a procura: ")
+    preco = float(input("Informe a média de preços do voo que voçê procura: "))
+
+    lista = Cliente.busca_voo(origem, destino, preco, Voo.voos)
+    for voo in lista:
+        print(voo)
+
 #teste das funções
 def sistema():
-    cadastrar()
-    login()
+    #cadastrar()
+    #login()
     cadastro_aeroporto()
     cadastrar_voos()
+    buscar_voos()
 
 
 if __name__ == "__main__":

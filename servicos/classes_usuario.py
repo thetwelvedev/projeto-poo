@@ -64,13 +64,38 @@ class Cliente(Usuario):
         self.cartao_credito = cartao_credito
         self.endereco = endereco
 
-    def busca_voo():
-        """Método buscar voou"""
-        pass
+    @classmethod
+    def busca_voo(cls, origem, destino, preco: float, lista_voos):
+        """Método para buscar voo no sistema. Esse método pode receber informações de origem, destino e preço.
+        Após a pesquisa é retornado uma lista com todos os objetos relevante a pesquisa."""
+        
+        voos_encontrados = []
 
-    def reserva_voo():
-        """Método reservar voou"""
-        pass
+        for voo in lista_voos:
+            #Pesquisa somente com relação aos nomes
+            if (voo.origem.nome.lower() == origem.lower() or voo.destino.nome.lower() == destino.lower()) :
+                
+                #Verifica se o paramentro preço foi passado 
+                if(preco != 0):
+                    #Filtra a pesquisa com relação ao parametro preço passado
+                    if(preco >= voo.preco - 100 and preco <= voo.preco + 100):
+                        voos_encontrados.append(voo)
+                else: 
+                    voos_encontrados.append(voo)
+
+        return voos_encontrados
+
+
+    def reserva_voo(self, voo, numero_assento: int):
+        """Método reservar um assento no voo. Esse método deve receber"""
+
+        if not voo.verificar_disponibilidade():
+            return False, "Não há mais assentos disponíveis para este voo."
+        
+        if voo.reservar_assento(numero_assento):
+            return True, "O assento foi reservado com sucesso."
+        else:
+            return False, "O assento requisitado já está reservado por outro Usuário"
     
     def compra_voo():
         """Método comprar voou"""
@@ -90,6 +115,7 @@ class Administrador(Usuario):
         super().__init__(nome, cpf, email, telefone, senha)
         self.codigo_acesso = codigo_acesso
     
+    @classmethod
     def cadastrar_voo(cls, novo, lista_voos):
         """Método para validar um novo cadastrar de Voo ao sistema.\n
         Esse método recebe a novo instância de Voo que se deseja cadastrar, e a lista com voos já cadastrados, e é verificado se esta atende aos requisitos para o cadastro."""
