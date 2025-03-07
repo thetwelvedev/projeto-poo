@@ -37,3 +37,13 @@ class Usuario(models.Model):
 
     def __str__(self):
         return self.usuario
+   
+class Voo(models.Model):
+    origem = models.CharField(max_length=100)
+    destino = models.CharField(max_length=100)
+    data_partida = models.DateTimeField()
+    data_chegada = models.DateTimeField()
+    preco = models.DecimalField(max_digits=10, decimal_places=2)
+
+    def __str__(self):
+        return f"{self.origem} -> {self.destino} ({self.data_partida})"
