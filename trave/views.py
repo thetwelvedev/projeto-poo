@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect, reverse
 from django.http import HttpResponseBadRequest
 from urllib.parse import quote_plus
-from .forms import UsuarioForm, LoginForm
+from .forms import UsuarioForm, LoginForm, BuscaVooForm
+from .models import Usuario, Voo 
 
 from servicos.classes_usuario import Usuario as UsuarioService
-from .models import Usuario 
 
 def cadastro_view(request):
     erro = request.GET.get('erro', '')
@@ -57,3 +57,20 @@ def home_view(request):
 
     erro = request.GET.get('erro', '')
     return render(request, 'index.html', {'erro': erro})
+
+def buscar_voos(request):
+    """
+    Busca voos com base nos parâmetros fornecidos pelo usuário.
+
+    Parâmetros:
+        request (HttpRequest): Objeto de requisição HTTP que contém os parâmetros de busca.
+
+    Retorna:
+        HttpResponse: Renderiza a página de resultados com a lista de voos encontrados.
+    """
+    origem = request.GET.get('origem', '')
+    destino = request.GET.get('destino', '')
+    preco = float(request.GET.get('preco', 0))
+
+    voos = Voo.objects.filter(origem__nome__icontains=origem, destino__nome__icontains=destino, preco__lte=preco)
+    return render(request, 'resultados.html', {'voos': voos})
