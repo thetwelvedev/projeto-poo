@@ -37,13 +37,46 @@ class Usuario(models.Model):
 
     def __str__(self):
         return self.usuario
-   
+
+class Aeroporto(models.Model):
+    """
+    Modelo que representa um aeroporto no sistema.
+
+    Atributos:
+        codigo_aeroporto (CharField): Código único do aeroporto, com no máximo 10 caracteres.
+        nome (CharField): Nome do aeroporto, com no máximo 100 caracteres.
+        cidade (CharField): Cidade onde o aeroporto está localizado, com no máximo 100 caracteres.
+        pais (CharField): País onde o aeroporto está localizado, com no máximo 100 caracteres.
+    """
+
+    codigo_aeroporto = models.CharField(max_length=10, unique=True)
+    nome = models.CharField(max_length=100)
+    cidade = models.CharField(max_length=100)
+    pais = models.CharField(max_length=100)
+
+    def __str__(self):
+        return f"{self.nome} - {self.cidade}, {self.pais}"
 class Voo(models.Model):
-    origem = models.CharField(max_length=100)
-    destino = models.CharField(max_length=100)
+    """
+    Modelo que representa um voo no sistema.
+
+    Atributos:
+        codigo_voo (CharField): Código único do voo, com no máximo 20 caracteres.
+        origem (ForeignKey): Aeroporto de origem do voo, relacionado ao modelo Aeroporto.
+        destino (ForeignKey): Aeroporto de destino do voo, relacionado ao modelo Aeroporto.
+        data_partida (DateTimeField): Data e hora de partida do voo.
+        data_chegada (DateTimeField): Data e hora de chegada do voo.
+        preco (DecimalField): Preço do voo, com até 10 dígitos e 2 casas decimais.
+        assentos_disponiveis (IntegerField): Número de assentos disponíveis no voo.
+    """
+
+    codigo_voo = models.CharField(max_length=20, unique=True)
+    origem = models.ForeignKey(Aeroporto, on_delete=models.CASCADE, related_name='voos_partida')
+    destino = models.ForeignKey(Aeroporto, on_delete=models.CASCADE, related_name='voos_chegada')
     data_partida = models.DateTimeField()
     data_chegada = models.DateTimeField()
     preco = models.DecimalField(max_digits=10, decimal_places=2)
+    assentos_disponiveis = models.IntegerField()
 
     def __str__(self):
-        return f"{self.origem} -> {self.destino} ({self.data_partida})"
+        return f"{self.codigo_voo} - {self.origem} → {self.destino}"
