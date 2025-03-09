@@ -46,12 +46,14 @@ class Aeroporto(models.Model):
         codigo_aeroporto (CharField): Código único do aeroporto, com no máximo 10 caracteres.
         nome (CharField): Nome do aeroporto, com no máximo 100 caracteres.
         cidade (CharField): Cidade onde o aeroporto está localizado, com no máximo 100 caracteres.
+        estado (CharField): Estado onde o aeroporto está localizado, com no máximo 50 caracteres.
         pais (CharField): País onde o aeroporto está localizado, com no máximo 100 caracteres.
     """
 
     codigo_aeroporto = models.CharField(max_length=10, unique=True)
     nome = models.CharField(max_length=100)
     cidade = models.CharField(max_length=100)
+    estado = models.CharField(max_length=50, default="Desconhecido")  
     pais = models.CharField(max_length=100)
 
     def __str__(self):
