@@ -12,6 +12,7 @@ class Reserva:
         
     def confirmar_reserva(self):
         pass
+    # os metodos dessa classe estao em branco pois ja foram implementados na classe assento
 
     def cancelar_reserva(self):
         pass
