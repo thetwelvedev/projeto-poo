@@ -35,7 +35,7 @@
 
     <!-- Ícones ou links de navegação -->
     <div class="nav-icons">
-      <a href="#" title="Página Inicial" class="nav-link" style="background-color: #004aad; color: white; border-radius: 10px;  width: 55px; height: 55px;"
+      <a href="#" title="Página Inicial" class="nav-link" style="background-color: #004aad; color: white; border-radius: 10px;  width: 55px; height: 55px;">
         <!-- Substitua pelo ícone que desejar -->
         <i class="fa-solid fa-house" style="font-size: 20px;"></i>
         <span>Home</span>
@@ -55,99 +55,103 @@
     </div>
   </header>
   
-    <div class="container">
-        <div class="voo-area">
-            <h1>Seja bem-vindo a Trave. Sua viagem começa aqui.</h1>
-            <h2>Encontre os melhores voos</h2>
-        
-        
-            <div class="form-group">
-                <div class="info-form">
-                    <label>Trecho</label>
-                    <select>
-                        <option>Ida e volta</option>
-                        <option>Apenas ida</option>
-                    </select>
-                </div>
-                
-                <div class="info-form">
-                    <label>Saindo de</label>
-                    <select id="id_partida">
-                        <option>De onde você deseja partir?</option>
-                    </select>
-                </div>
-                
-                <div class="info-form">
-                    <label>Indo para</label>
-                    <select id="id_destino">
-                        <option>Para onde você quer ir?</option>
-                    </select>
-                </div>
-            </div>
-        
-            <div class="form-group">
-                <div class="info-form">
-                    <label>Viajantes</label>
-                    <select>
-                        <option>1 Adulto</option>
-                        <option>2 Adultos</option>
-                        <option>3 Adultos</option>
-                    </select>
-                </div>
-            
-                <div class="info-form">
-                    <label>Data da viagem de ida</label>
-                    <input type="date">
-                </div>
-                <div class="info-form">
-                    <label>Data da viagem de volta</label>
-                    <input type="date">
-                </div>
-            </div>
-            
-            <div class="checkbox-group">
-                <input type="checkbox" id="business">
-                <label for="business">Estou viajando a trabalho</label>
-            </div>
-            
-            <div class="button-enviar">    
-                <button class="btn-search">Buscar Voos</button>
-            </div>  
-        
+  <div class="container">
+    <div class="voo-area">
+      <h1>Seja bem-vindo a Trave. Sua viagem começa aqui.</h1>
+      <h2>Encontre os melhores voos</h2>
+    
+      <div class="form-group">
+        <div class="info-form">
+          <label>Trecho</label>
+          <select>
+            <option>Ida e volta</option>
+            <option>Apenas ida</option>
+          </select>
         </div>
+        
+        <div class="info-form">
+          <label>Saindo de</label>
+          <select id="id_partida">
+            <option>De onde você deseja partir?</option>
+            {% for estado in estados %}
+              <option value="{{ estado }}">{{ estado }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        
+        <div class="info-form">
+          <label>Indo para</label>
+          <select id="id_destino">
+            <option>Para onde você quer ir?</option>
+            {% for estado in estados %}
+              <option value="{{ estado }}">{{ estado }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+    
+      <div class="form-group">
+        <div class="info-form">
+          <label>Viajantes</label>
+          <select>
+            {% for num in numero_viajantes %}
+              <option>{{ num }} Adulto(s)</option>
+            {% endfor %}
+          </select>
+        </div>
+      
+        <div class="info-form">
+          <label>Data da viagem de ida</label>
+          <input type="date">
+        </div>
+        <div class="info-form">
+          <label>Data da viagem de volta</label>
+          <input type="date">
+        </div>
+      </div>
+      
+      <div class="checkbox-group">
+        <input type="checkbox" id="business">
+        <label for="business">Estou viajando a trabalho</label>
+      </div>
+      
+      <div class="button-enviar">    
+        <button class="btn-search">Buscar Voos</button>
+      </div>  
     </div>
-  
-    <script>
-        async function carregarDados() {
-            try {
-                const response = await fetch("{% static 'trave/data/voos.json' %}");
-                const dados = await response.json();
-                return dados;
-            } catch (error) {
-                console.error('Erro ao carregar dados:', error);
-            }
-        }
+  </div>
 
-        // Função para preencher os voos
-        async function preencherVoos() {
-            const dados = await carregarDados();
-            const selectVoo = document.getElementById('id_partida');
-            const selectDestino = document.getElementById('id_destino');
+  <script>
+    async function carregarDados() {
+      try {
+        const response = await fetch("{% static 'trave/data/voos.json' %}");
+        const dados = await response.json();
+        return dados;
+      } catch (error) {
+        console.error('Erro ao carregar dados:', error);
+      }
+    }
 
-            dados.voos.sort((a, b) => a.cidade.localeCompare(b.cidade)).forEach(voo => {
-                const option = document.createElement('option');
-                const option2 = document.createElement('option');
-                option.value = voo.sigla;
-                option.textContent = "✈️   " + voo.cidade + " - " + voo.sigla;
+    // Função para preencher os voos
+    async function preencherVoos() {
+      const dados = await carregarDados();
+      const selectVoo = document.getElementById('id_partida');
+      const selectDestino = document.getElementById('id_destino');
 
-                option2.value = voo.sigla;
-                option2.textContent = "✈️   " + voo.cidade + " - " + voo.sigla;
+      dados.voos.sort((a, b) => a.cidade.localeCompare(b.cidade)).forEach(voo => {
+        const option = document.createElement('option');
+        const option2 = document.createElement('option');
+        option.value = voo.sigla;
+        option.textContent = "✈️   " + voo.cidade + " - " + voo.sigla;
 
-                selectVoo.appendChild(option);
-                selectDestino.appendChild(option2);
-            });
-        }
-        preencherVoos();
-    </script>
+        option2.value = voo.sigla;
+        option2.textContent = "✈️   " + voo.cidade + " - " + voo.sigla;
+
+        selectVoo.appendChild(option);
+        selectDestino.appendChild(option2);
+      });
+    }
+    preencherVoos();
+  </script>
 </body>
 </html>
