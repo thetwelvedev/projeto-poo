@@ -1,6 +1,7 @@
 import os
 import django
 from datetime import datetime, timedelta
+from django.utils import timezone
 
 # Configura o Django
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings')
@@ -51,24 +52,31 @@ def criar_voos():
         for destino in CAPITAIS_BRASIL:
             if origem["codigo_aeroporto"] != destino["codigo_aeroporto"]:
                 # Voos de ida (12h e 23h)
-                Voo.objects.get_or_create(
-                    codigo_voo=f"{origem['codigo_aeroporto']}-{destino['codigo_aeroporto']}-12",
-                    origem=Aeroporto.objects.get(codigo_aeroporto=origem["codigo_aeroporto"]),
-                    destino=Aeroporto.objects.get(codigo_aeroporto=destino["codigo_aeroporto"]),
-                    data_partida=datetime.now() + timedelta(days=1),
-                    data_chegada=datetime.now() + timedelta(days=1, hours=2),
-                    preco=300.00,  # Preço base
-                    assentos_disponiveis=100,
-                )
-                Voo.objects.get_or_create(
-                    codigo_voo=f"{origem['codigo_aeroporto']}-{destino['codigo_aeroporto']}-23",
-                    origem=Aeroporto.objects.get(codigo_aeroporto=origem["codigo_aeroporto"]),
-                    destino=Aeroporto.objects.get(codigo_aeroporto=destino["codigo_aeroporto"]),
-                    data_partida=datetime.now() + timedelta(days=1, hours=11),
-                    data_chegada=datetime.now() + timedelta(days=1, hours=13),
-                    preco=350.00,  # Preço base
-                    assentos_disponiveis=80,
-                )
+                codigo_voo_12 = f"{origem['codigo_aeroporto']}-{destino['codigo_aeroporto']}-12"
+                codigo_voo_23 = f"{origem['codigo_aeroporto']}-{destino['codigo_aeroporto']}-23"
+
+                # Verifica se o voo já existe antes de criar
+                if not Voo.objects.filter(codigo_voo=codigo_voo_12).exists():
+                    Voo.objects.create(
+                        codigo_voo=codigo_voo_12,
+                        origem=Aeroporto.objects.get(codigo_aeroporto=origem["codigo_aeroporto"]),
+                        destino=Aeroporto.objects.get(codigo_aeroporto=destino["codigo_aeroporto"]),
+                        data_partida=timezone.now() + timedelta(days=1),
+                        data_chegada=timezone.now() + timedelta(days=1, hours=2),
+                        preco=300.00,  # Preço base
+                        assentos_disponiveis=100,
+                    )
+
+                if not Voo.objects.filter(codigo_voo=codigo_voo_23).exists():
+                    Voo.objects.create(
+                        codigo_voo=codigo_voo_23,
+                        origem=Aeroporto.objects.get(codigo_aeroporto=origem["codigo_aeroporto"]),
+                        destino=Aeroporto.objects.get(codigo_aeroporto=destino["codigo_aeroporto"]),
+                        data_partida=timezone.now() + timedelta(days=1, hours=11),
+                        data_chegada=timezone.now() + timedelta(days=1, hours=13),
+                        preco=350.00,  # Preço base
+                        assentos_disponiveis=80,
+                    )
 
 if __name__ == "__main__":
     criar_aeroportos()

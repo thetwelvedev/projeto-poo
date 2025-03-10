@@ -35,7 +35,7 @@
 
     <!-- Ícones ou links de navegação -->
     <div class="nav-icons">
-      <a href="#" title="Página Inicial" class="nav-link" style="background-color: #004aad; color: white; border-radius: 10px;  width: 55px; height: 55px;"
+      <a href="#" title="Página Inicial" class="nav-link" style="background-color: #004aad; color: white; border-radius: 10px;  width: 55px; height: 55px;">
         <!-- Substitua pelo ícone que desejar -->
         <i class="fa-solid fa-house" style="font-size: 20px;"></i>
         <span>Home</span>
@@ -95,11 +95,11 @@
       
           <div class="info-form">
               <label>Data da viagem de ida</label>
-              <input type="date">
+              <input type="date" id="data_ida">
           </div>
           <div class="info-form">
               <label for="VoltaViagem">Data da viagem de volta</label>
-              <input type="date" id="VoltaViagem">
+              <input type="date" id="data_volta">
           </div>
       </div>
       
@@ -108,77 +108,25 @@
           <label for="business">Estou viajando a trabalho</label>
       </div>
       
-      <div class="button-enviar"  >    
+      <div class="button-enviar">    
           <button class="btn-search" id="buscarVoos">Buscar Voos</button>
       </div>  
-    
     </div> 
   </div>
 
-
-
-    <div id="carrossel" class="carousel slide" data-bs-ride="carousel">
-      <div class="carousel-indicators">
-        <button type="button" data-bs-target="#carrossel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-        <button type="button" data-bs-target="#carrossel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-        <button type="button" data-bs-target="#carrossel" data-bs-slide-to="2" aria-label="Slide 3"></button>
-      </div>
-    
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <img class="d-block w-100" src="{% static 'trave/images/carrossel1.png' %}" alt="Imagem 1">
-        </div>
-      
-        <div class="carousel-item ">
-          <img class="d-block w-100" src="{% static 'trave/images/carrossel2.png' %}" alt="Imagem 1">
-        </div>
-      
-        <div class="carousel-item ">
-          <img class="d-block w-100" src="{% static 'trave/images/carrossel3.png' %}" alt="Imagem 1">
-        </div>
-      </div>
-      <button class="carousel-control-prev" type="button" data-bs-target="#carrossel" role="button" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Anterior</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#carrossel" role="button" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-         <span class="visually-hidden">Proximo</span>
-
-      </button>
-    </div>
-  
-<script>
+  <script>
     document.getElementById("buscarVoos").addEventListener("click", async function (event) {
-      event.preventDefault();
+        event.preventDefault();
 
-      const origem = document.getElementById("id_partida").value;
-      const destino = document.getElementById("id_destino").value;
-      const dataIda = document.querySelector("input[type='date']").value;
-      const dataVolta = document.getElementById("VoltaViagem").value;
-      const adultos = document.querySelector("select").value;
+        const origem = document.getElementById("id_partida").value;
+        const destino = document.getElementById("id_destino").value;
+        const dataIda = document.getElementById("data_ida").value;
+        const dataVolta = document.getElementById("data_volta").value;
+        const adultos = document.querySelector("select").value;
 
-      const dados = { origem, destino, data_ida: dataIda, data_volta: dataVolta, adultos };
-
-      try {
-          const response = await fetch("{% url 'buscar_voos' %}", {
-              method: "POST",
-              headers: { "Content-Type": "application/json", "X-CSRFToken": "{{ csrf_token }}" },
-              body: JSON.stringify(dados)
-          });
-
-          const data = await response.json();
-
-          if (data.voos.length > 0) {
-              // Redireciona para a página de resultados, passando os dados como parâmetros GET
-              window.location.href = `{% url 'resultados_voos' %}?origem=${origem}&destino=${destino}&data_ida=${dataIda}&data_volta=${dataVolta}&adultos=${adultos}`;
-          } else {
-              alert("Nenhum voo encontrado!");
-          }
-      } catch (error) {
-          console.error("Erro ao buscar voos:", error);
-      }
-  });
+        // Redireciona para a página de resultados com os parâmetros de busca
+        window.location.href = `{% url 'resultados_voos' %}?origem=${origem}&destino=${destino}&data_ida=${dataIda}&data_volta=${dataVolta}&adultos=${adultos}`;
+    });
 
     async function carregarDados() {
         try {
@@ -212,15 +160,7 @@
     preencherVoos();
   </script>
 
-
-
   <script src="{% static 'trave/bootstrap/js/bootstrap.min.js' %}"></script>
   <script src="{% static 'trave/js/buscar_voos.js' %}"></script>
-
- 
-  
-  <script>
-      
-  </script>
-  </body>
-  </html>
+</body>
+</html>
