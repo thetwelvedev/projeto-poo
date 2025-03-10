@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container my-4">
+    <h1>Resultados de Voos</h1>
+    <hr>
+
+    {% if voos %}
+        <div class="row">
+            {% for voo in voos %}
+                <div class="col-md-6 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Voo {{ voo.codigo_voo }}</h5>
+                            <p class="card-text">
+                                <strong>Partida:</strong> {{ voo.data_partida|date:"d/m/Y H:i" }}<br>
+                                <strong>Chegada:</strong> {{ voo.data_chegada|date:"d/m/Y H:i" }}<br>
+                                <strong>Preço:</strong> R$ {{ voo.preco }}<br>
+                                <strong>Assentos disponíveis:</strong> {{ voo.assentos_disponiveis }}
+                            </p>
+                            <a href="#" class="btn btn-primary">Selecionar</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-warning">
+            Nenhum voo de ida encontrado.
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

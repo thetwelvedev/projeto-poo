@@ -1,0 +1,18 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} Trave Passagens Aéreas {% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'trave/css/navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'trave/bootstrap/css/bootstrap-reboot.rtl.min.css.map' %}">
+    <link rel="stylesheet" href="{% static 'trave/bootstrap/fontawesome/css/all.css' %}">
+    <script src="{% static 'trave/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+</head>
+<body>
+</body>
+    {% include 'navbar.html' %}
+    
+    {% block content %}
+    {% endblock %}
+</html>

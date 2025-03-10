@@ -10,6 +10,7 @@ from servicos.classes_usuario import Usuario as UsuarioService
 from servicos.classes_usuario import Cliente
 from datetime import datetime, timedelta
 from django.utils import timezone
+from django.db.models import Q
 import random
 
 def cadastro_view(request):
@@ -300,7 +301,7 @@ def resultados_voos(request):
         "data_ida": data_ida,
         "data_volta": data_volta,
         "adultos": adultos,
-        "trecho": trecho, 
+        "trecho": trecho,
     })
 
 
@@ -381,3 +382,18 @@ def sucesso_view(request):
         return usuario_save(request)
 
     return render(request, 'sucesso.html', {'erro': erro})
+
+
+def consulta(request):
+    busca = request.GET.get('busca', None)
+
+    voos = []
+    if busca is None: 
+        voos = Voo.objects.all()
+    else:
+        voos = Voo.objects.filter(
+            Q(data_partida__gt = datetime.now()) &
+            (Q(destino__nome__contains=busca) | Q(codigo_voo__contains=busca)))
+
+    return render(request, 'busca.html', { 'voos': voos })
+    

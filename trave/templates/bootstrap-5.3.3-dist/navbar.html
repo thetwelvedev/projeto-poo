@@ -9,11 +9,13 @@
 
     <!-- Campo de busca -->
     <div class="nav-search">
-      <input type="search" name="busca" placeholder="Pesquisar" aria-label="Pesquisar" />
-      <button type="button" class="button-pesquisar">
-        <!-- Ícone de busca (pode ser um <img> ou ícone de font library) -->
-        <i class="fa-solid fa-magnifying-glass"></i>
-      </button>
+      <form action="{% url 'busca' %}">
+        <input type="search" name="busca" placeholder="Pesquisar" aria-label="Pesquisar" />
+        <button type="button" class="button-pesquisar">
+          <!-- Ícone de busca (pode ser um <img> ou ícone de font library) -->
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+      </form>
     </div>
 
     <!-- Ícones ou links de navegação -->
