@@ -206,4 +206,12 @@ def resultados_voos(request):
     voos_ida = Voo.objects.filter(origem=origem, destino=destino, data_partida__date=data_ida)
     voos_volta = Voo.objects.filter(origem=destino, destino=origem, data_partida__date=data_volta) if data_volta else []
 
-    return render(request, "resultados.html", {"voos_ida": voos_ida, "voos_volta": voos_volta})
+    return render(request, "resultados.html", {
+    "voos_ida": voos_ida,
+    "voos_volta": voos_volta,
+    "origem": origem,
+    "destino": destino,
+    "data_ida": data_ida,
+    "data_volta": data_volta,
+    "adultos": adultos,
+})
