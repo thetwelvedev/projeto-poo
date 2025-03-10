@@ -1,0 +1,57 @@
+.step-indicator {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+  .step {
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    color: #999;
+    position: relative;
+  }
+  .step .circle {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: #ccc;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 0.5rem;
+  }
+  .step.active .circle {
+    background-color: #004aad; /* Cor de destaque */
+  }
+  .step.active {
+    color: #333;
+  }
+  
+
+  .step:last-child::after {
+    display: none;
+  }
+
+
+  .actives{
+    background-color: #004aad;
+      color: white;
+    }
+
+ 
+
+
+
+
+
+  .dropdown-menu {
+    display: none;
+    position: absolute;
+    will-change: transform;
+}
+
+.dropdown-menu.show {
+   margin-top: 60px;
+    display: block;
+}

@@ -3,7 +3,9 @@ from django.http import HttpResponseBadRequest
 from urllib.parse import quote_plus
 from .forms import UsuarioForm, LoginForm, BuscaVooForm
 from .models import Usuario, Voo, Aeroporto 
-
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import json
 from servicos.classes_usuario import Usuario as UsuarioService
 
 def cadastro_view(request):
@@ -99,3 +101,65 @@ def buscar_voos(request):
 
     voos = Voo.objects.filter(origem__nome__icontains=origem, destino__nome__icontains=destino, preco__lte=preco)
     return render(request, 'resultados.html', {'voos': voos})
+
+
+
+
+@csrf_exempt  # Desativando CSRF apenas para testes (use com cuidado)
+def buscar_voos(request):
+    if request.method == "POST":
+        try:
+            # Pegando os dados da requisição JSON
+            data = json.loads(request.body)
+
+            origem = data.get("origem")
+            destino = data.get("destino")
+            data_ida = data.get("data_ida")
+            data_volta = data.get("data_volta")
+            adultos = data.get("adultos")
+
+            # Filtrando voos no banco de dados
+            voos_disponiveis = Voo.objects.filter(origem=origem, destino=destino, data_partida=data_ida)
+
+            # Se for ida e volta, filtra também a volta
+            if data_volta:
+                voos_disponiveis = voos_disponiveis.filter(data_retorno=data_volta)
+
+            # Criando uma lista de resultados
+            resultado = [
+                {
+                    "companhia": voo.companhia,
+                    "origem": voo.origem,
+                    "destino": voo.destino,
+                    "preco": float(voo.preco),
+                    "data_partida": voo.data_partida.strftime("%Y-%m-%d"),
+                    "data_retorno": voo.data_retorno.strftime("%Y-%m-%d") if voo.data_retorno else "Somente ida"
+                }
+                for voo in voos_disponiveis
+            ]
+
+            return JsonResponse({"voos": resultado})
+
+        except Exception as e:
+            return JsonResponse({"erro": str(e)}, status=400)
+
+    return JsonResponse({"erro": "Método não permitido"}, status=405)
+
+from django.shortcuts import render
+from .models import Voo
+
+def resultados_voos(request):
+    # Obtendo os parâmetros da URL
+    origem = request.GET.get("origem")
+    destino = request.GET.get("destino")
+    data_ida = request.GET.get("data_ida")
+    data_volta = request.GET.get("data_volta")
+    adultos = request.GET.get("adultos")
+
+    # Buscando os voos no banco de dados
+    voos = Voo.objects.filter(origem=origem, destino=destino, data_partida=data_ida)
+
+    if data_volta:
+        voos = voos.filter(data_retorno=data_volta)
+
+    return render(request, "trave/resultados.html", {"voos": voos, "origem": origem, "destino": destino})

@@ -1,0 +1,219 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Tela de Login</title>
+  <!-- Carregando o CSS personalizado -->
+  <link rel="stylesheet" href="{% static 'trave/css/comprar.css' %}" />
+  <!-- Carregando o CSS do Bootstrap -->
+  <link rel="stylesheet" href="{% static 'trave/bootstrap/css/bootstrap.min.css' %}">
+  <!-- Carregando Font Awesome -->
+  <link rel="stylesheet" href="{% static 'trave/bootstrap/fontawesome/css/all.css' %}">
+</head>
+<body>
+  {% if erro %}
+    <h1>{{erro}}</h1>
+  {% endif %}
+  <div class="container my-4">
+    <div class="row">
+      <div class="col w-25 mb-3" >
+        <img src="{% static 'trave/images/Trave.svg' %}" alt="Ícone 3D de usuário" />
+        <hr> 
+      </div>
+    
+    </div>
+    
+    <!-- Passos (Wizard) -->
+    <div class="step-indicator">
+      <div class="step active">
+        <div class="circle">1</div>
+        <span>Escolha seu voo</span>
+      </div>
+      <div class="step">
+        <div class="circle">2</div>
+        <span>Seus dados</span>
+      </div>
+      <div class="step">
+        <div class="circle">3</div>
+        <span>Escolha seu assento</span>
+      </div>
+      <div class="step">
+        <div class="circle">4</div>
+        <span>Personalize sua viagem</span>
+      </div>
+      <div class="step">
+        <div class="circle">5</div>
+        <span>Pagamento</span>
+      </div>
+    </div>
+
+    <!-- Formulário de seleção de voo -->
+    <div class="row">
+        <div class="col-4 ">
+            <div class="btn-group w-100" id="trecho">
+                <button type="button" class="btn dropdown-toggle fs-4" data-bs-toggle="dropdown" aria-expanded="true" id="butao">TRECHO Ida e volta
+                </button>
+                <ul class="dropdown-menu w-100 p-3" style="background-color: #004aad;
+    color: white;">
+                    <li >
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="IdaEVolta"  checked>
+                            <label class="form-check-label w-100 fs-5" for="IdaEVolta">
+                            Ida e volta
+                            </label>
+                        </div>
+                    </li>
+                    <li >
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="IdaOuVolta">
+                        <label class="form-check-label w-100 fs-5" for="IdaOuVolta">
+                          Só ida ou volta
+                        </label>
+                      </div>
+                    </li>
+                </ul>
+            </div>  
+        </div>
+
+        <div class="col-4 ">
+            <div class="btn-group w-100" id="Passageiros">
+              <button type="button" class="btn dropdown-toggle fs-4 "  aria-expanded="true" id="dropdownButton" >PASSAGEIROS 1 Adulto
+              </button>
+              <div id="dropdownMenu" class="dropdown-menu w-100 p-3" style="background-color: #004aad;
+  color: white;">
+                <div class=" p-4" style="max-width: 400px;  background-color: #004aad;
+      color: white;">
+                  <div class="mb-3 ">
+                      <label class="form-label fw-bold">Adulto(s) <br><span class="text-white">+ 18 anos</span></label>
+                      <div class="input-group">
+                          <button class="btn btn-outline-light" type="button" onclick="alterarValor('adultos', -1)">-</button>
+                          <input type="text" id="adultos" class="form-control text-center" value="1" readonly>
+                          <button class="btn btn-outline-light" type="button" onclick="alterarValor('adultos', 1)">+</button>
+                      </div>
+                  </div>
+                  <div class="mb-3">
+                      <label class="form-label fw-bold">Adolescente(s) <br><span class="text-whitw">12 - 17 anos</span></label>
+                      <div class="input-group">
+                          <button class="btn btn-outline-light" type="button" onclick="alterarValor('adolescentes', -1)">-</button>
+                          <input type="text" id="adolescentes" class="form-control text-center" value="0" readonly>
+                          <button class="btn btn-outline-light" type="button" onclick="alterarValor('adolescentes', 1)">+</button>
+                      </div>
+                  </div>
+                  <div class="mb-3">
+                      <label class="form-label fw-bold">Criança(s) <br><span class="text-white">2 - 11 anos</span></label>
+                      <div class="input-group">
+                          <button class="btn btn-outline-light" type="button" onclick="alterarValor('criancas', -1)">-</button>
+                          <input type="text" id="criancas" class="form-control text-center" value="0" readonly>
+                          <button class="btn btn-outline-light" type="button" onclick="alterarValor('criancas', 1)">+</button>
+                      </div>
+                  </div>
+                  <div class="mb-3">
+                      <label class="form-label fw-bold">Bebê(s) <br><span class="text-white">0 - 23 meses</span></label>
+                      <div class="input-group">
+                          <button class="btn btn-outline-light" type="button" onclick="alterarValor('bebes', -1)">-</button>
+                          <input type="text" id="bebes" class="form-control text-center" value="0" readonly>
+                          <button class="btn btn-outline-light" type="button" onclick="alterarValor('bebes', 1)">+</button>
+                      </div>
+                  </div>
+              </div>
+            </div>  
+        </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-md-4">
+        <label for="inputOrigem" class="form-label">Saindo de</label>
+        <select class="form-select" id="inputOrigem">
+          <option selected>Boa Vista - BVB</option>
+          <option>Outro Aeroporto 1</option>
+          <option>Outro Aeroporto 2</option>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <label for="inputDestino" class="form-label">Indo para</label>
+        <select class="form-select" id="inputDestino">
+          <option selected>Brasília - BSB</option>
+          <option>Outro Aeroporto 1</option>
+          <option>Outro Aeroporto 2</option>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <label for="inputDatas" class="form-label">Data da Viagem</label>
+        <input
+          type="text"
+          class="form-control"
+          id="inputDatas"
+          placeholder="14/04/2025 - 23/05/2025"
+        />
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-4 d-flex align-items-end">
+        <button class="btn btn-primary w-100">Buscar Voos</button>
+      </div>
+    </div>
+
+    <hr />
+
+    <!-- Título de seleção de voo -->
+    <h3>Escolha o seu voo de ida 
+      <small class="text-muted">(Todas as nossas tarifas incluem o valor da taxa de embarque)</small>
+    </h3>
+
+    <!-- Navegação entre datas (exemplo simples) -->
+    <div class="d-flex align-items-center my-3">
+      <button class="btn btn-light me-2">
+        <span class="fw-bold">&laquo;</span>
+      </button>
+      <div class="flex-grow-1 text-center">
+        <strong>Domingo, 13/04</strong> 
+        <span class="text-muted">a partir de R$ 1.068,46</span>
+      </div>
+      <div class="mx-3" style="width: 40px; height: 4px; background-color: #f60;"></div>
+      <div class="flex-grow-1 text-center">
+        <strong>Segunda-feira, 14/04</strong>
+        <span class="text-muted">a partir de R$ 1.068,46</span>
+      </div>
+      <div class="mx-3" style="width: 40px; height: 4px; background-color: #f60;"></div>
+      <div class="flex-grow-1 text-center">
+        <strong>Terça-feira, 15/04</strong> 
+        <span class="text-muted">a partir de R$ 3.317,46</span>
+      </div>
+      <button class="btn btn-light ms-2">
+        <span class="fw-bold">&raquo;</span>
+      </button>
+    </div>
+
+    <!-- Lista de voos de ida (exemplo) -->
+    <div class="row mb-4">
+      <div class="col-md-12">
+        <div class="card mb-3">
+          <div class="card-body">
+            <h5 class="card-title">Voo 1</h5>
+            <p class="card-text">Saída: 06:00 - Chegada: 09:00</p>
+            <p class="card-text">A partir de R$ 1.068,46</p>
+            <button class="btn btn-outline-primary">Selecionar</button>
+          </div>
+        </div>
+        <div class="card mb-3">
+          <div class="card-body">
+            <h5 class="card-title">Voo 2</h5>
+            <p class="card-text">Saída: 10:00 - Chegada: 13:00</p>
+            <p class="card-text">A partir de R$ 1.200,00</p>
+            <button class="btn btn-outline-primary">Selecionar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    
+
+  </div>
+
+
+  <script src="{% static 'trave/js/comprar.js' %}"></script>
+  <script src="{% static 'trave/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+</body>
+</html>

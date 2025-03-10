@@ -7,15 +7,30 @@
   <!-- Carregando o CSS personalizado -->
   <link rel="stylesheet" href="{% static 'trave/css/styles.css' %}" />
   <!-- Carregando o CSS do Bootstrap -->
-  <link rel="stylesheet" href="{% static 'trave/bootstrap/css/bootstrap-reboot.rtl.min.css.map' %}">
+  <link rel="stylesheet" href="{% static 'trave/bootstrap/css/bootstrap.min.css' %}">
   <!-- Carregando Font Awesome -->
   <link rel="stylesheet" href="{% static 'trave/bootstrap/fontawesome/css/all.css' %}">
 </head>
 <body>
   {% if erro %}
-    <h1>{{erro}}</h1>
-  {% endif %}
-
+        <div class="modal" tabindex="-1" id="erroModal">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Usuario ou Senha incorreta</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <p>Coloque o usuario e a senha correta.</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Atualizar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        {% endif %}
   <header class="navbar">
     <!-- Logo / Nome do sistema -->
     <div class="nav-brand">
@@ -100,6 +115,9 @@
         <a class="link-cadastrar" href="{% url 'cadastro' %}">
           Fazer Cadastro
         </a>
+
+        
+
       </form>
     </div>
 
@@ -109,5 +127,17 @@
       <img src="{% static 'trave/images/icone-3d.png' %}" alt="Ícone 3D de usuário" />
     </div>
   </div>
+  {% if erro %}
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        var modalEl = document.getElementById('erroModal');
+        var myModal = new bootstrap.Modal(modalEl);
+        myModal.show();
+      });
+    </script>
+  {% endif %}
+
+  
+  <script src="{% static 'trave/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 </body>
 </html>
