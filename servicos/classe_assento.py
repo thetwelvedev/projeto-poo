@@ -14,21 +14,21 @@ class Assento:
     
     @classmethod
     def instanciar_assentos(cls):
-        """Método de classe para criar 60 instacias da classe Assento e retornar essas instancias para determinado objeto Voo"""
+        """Método de classe para criar 60 instâncias da classe Assento e retorná-las."""
         assentos = []
-        for i in range(1,30):
-            c = Assento(i, "Economica", True)
-            assentos.append(c)
         
-        for i in range(31,45):
-            c = Assento(i, "Executiva", True)
-            assentos.append(c)
-            
-        for i in range(46,60):
-            c = Assento(i, "Primeira Classe", True)
-            assentos.append(c)
+        # Criando os assentos corretamente
+        for i in range(1, 31):  # Agora inclui 30
+            assentos.append(Assento(i, "Economica", True))
+
+        for i in range(31, 46):  # Agora inclui 45
+            assentos.append(Assento(i, "Executiva", True))
+
+        for i in range(46, 61):  # Agora inclui 60
+            assentos.append(Assento(i, "Primeira Classe", True))
         
         return assentos
+
     def get_codigo_assento(self) -> str:
         
         # Transformar o "numero" em fileira + letra
@@ -66,3 +66,32 @@ class Assento:
         estado = "vazio" if self.disponivel else "ocupado"
         return f"O assento {self.get_codigo_assento()} está {estado}"
     
+# def testar_classe_assento():
+#     # Criar assentos
+#         assentos =Assento.instanciar_assentos()
+        
+#         # Testar quantidade de assentos
+#         assert len(assentos) == 60, "Erro: Quantidade incorreta de assentos criados"
+        
+#         # Testar códigos de assento
+#         print("Testando códigos de assento:")
+#         for assento in assentos[:10]:  # Testando apenas os primeiros 10
+#             print(f"Número: {assento.numero}, Código: {assento.get_codigo_assento()}")
+        
+#         # Testar reserva de assento
+#         print("\nTestando reserva de assento:")
+#         assento_teste = assentos[0]
+#         assento_teste.reservar_assento()  # Deve reservar
+#         assert not assento_teste.disponivel, "Erro: Assento não foi reservado corretamente"
+#         assento_teste.reservar_assento()  # Deve avisar que já está ocupado
+        
+#         # Testar liberação de assento
+#         print("\nTestando liberação de assento:")
+#         assento_teste.liberar_assento()  # Deve liberar
+#         assert assento_teste.disponivel, "Erro: Assento não foi liberado corretamente"
+#         assento_teste.liberar_assento()  # Deve avisar que já está vazio
+        
+#         print("\nTodos os testes foram concluídos!")
+
+#     # Executar os testes
+# testar_classe_assento()

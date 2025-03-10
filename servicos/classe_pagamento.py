@@ -8,6 +8,7 @@ class Pagamento:
         self.status = status
 
     def processar_pagamento():
+        # os metodos dessa classe etao em branco pois ja foram implementado na classe compra
         pass
 
     def emitir_pagamento():
