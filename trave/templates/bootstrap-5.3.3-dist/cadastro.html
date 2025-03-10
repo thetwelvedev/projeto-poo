@@ -14,33 +14,7 @@
     <h1>{{erro}}</h1>
   {% endif %}
   <!-- Navbar -->
-  <header class="navbar">
-    <div class="nav-brand">
-      <a href="home.html" style="margin-left: 180px;">
-        <img src="{% static 'trave/images/Trave.svg' %}" alt="logo" width="90">
-      </a>
-    </div>
-    <div class="nav-search">
-      <input type="text" placeholder="Pesquisar" aria-label="Pesquisar" />
-      <button type="button">
-        <i class="fa-solid fa-magnifying-glass"></i>
-      </button>
-    </div>
-    <div class="nav-icons">
-      <a href="#" title="Página Inicial" class="nav-link">
-        <i class="fa-solid fa-house" style="font-size: 20px;"></i>
-        <span>Home</span>
-      </a>
-      <a href="#" title="Página Inicial" class="nav-link">
-        <i class="fa-solid fa-plane" style="font-size: 20px;"></i>
-        <span>Passagens</span>
-      </a>
-      <a href="{% url 'login' %}" title="Página Inicial" class="nav-link" style="margin-right: 180px;">
-        <i class="fa-solid fa-user" style="font-size: 20px;"></i>
-        <span>Login</span>
-      </a>
-    </div>
-  </header>
+  {% include 'navbar.html' %}
 
   <!-- Container principal -->
   <div class="container">

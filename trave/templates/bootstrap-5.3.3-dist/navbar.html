@@ -1,0 +1,39 @@
+{% load static %}
+<header class="navbar">
+    <!-- Logo / Nome do sistema -->
+    <div class="nav-brand">
+      <a href="home.html" style="margin-left: 180px;">
+        <img src="{% static 'trave/images/Trave.svg' %}" alt="logo" width="90">
+      </a>
+    </div>
+
+    <!-- Campo de busca -->
+    <div class="nav-search">
+      <input type="search" name="busca" placeholder="Pesquisar" aria-label="Pesquisar" />
+      <button type="button" class="button-pesquisar">
+        <!-- Ícone de busca (pode ser um <img> ou ícone de font library) -->
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </button>
+    </div>
+
+    <!-- Ícones ou links de navegação -->
+    <div class="nav-icons">
+      <a href="{% url 'home' %}" title="Página Inicial" class="nav-link">
+        <!-- Substitua pelo ícone que desejar -->
+        <i class="fa-solid fa-house" style="font-size: 20px;"></i>
+        <span>Home</span>
+      </a>
+
+      <a href="#" title="Página Inicial" class="nav-link">
+        <!-- Substitua pelo ícone que desejar -->
+        <i class="fa-solid fa-plane" style="font-size: 20px;"></i>
+        <span>Passagens</span>
+      </a>
+
+      <a href="{% url 'login' %}" title="Página Inicial" class="nav-link" style="margin-right: 180px; background-color: #004aad; color: white; border-radius: 10px;  width: 55px; height: 55px;">
+        <!-- Substitua pelo ícone que desejar -->
+        <i class="fa-solid fa-user" style="font-size: 20px;"></i>
+        <span>Login</span>
+      </a>
+    </div>
+  </header>
