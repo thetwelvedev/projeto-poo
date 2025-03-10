@@ -148,6 +148,9 @@ def buscar_voos(request):
 from django.shortcuts import render
 from .models import Voo
 
+from django.shortcuts import render
+from .models import Voo
+
 def resultados_voos(request):
     # Obtendo os parâmetros da URL
     origem = request.GET.get("origem")

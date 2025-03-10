@@ -148,6 +148,39 @@
       </button>
     </div>
   
+<script>
+    async function carregarDados() {
+        try {
+            const response = await fetch("{% static 'trave/data/voos.json' %}");
+            const dados = await response.json();
+            return dados;
+        } catch (error) {
+            console.error('Erro ao carregar dados:', error);
+        }
+    }
+
+    // Função para preencher os voos
+    async function preencherVoos() {
+        const dados = await carregarDados();
+        const selectVoo = document.getElementById('id_partida');
+        const selectDestino = document.getElementById('id_destino');
+
+        dados.voos.sort((a, b) => a.cidade.localeCompare(b.cidade)).forEach(voo => {
+            const option = document.createElement('option');
+            const option2 = document.createElement('option');
+            option.value = voo.sigla;
+            option.textContent = "✈️   " + voo.cidade + " - " + voo.sigla;
+
+            option2.value = voo.sigla;
+            option2.textContent = "✈️   " + voo.cidade + " - " + voo.sigla;
+
+            selectVoo.appendChild(option);
+            selectDestino.appendChild(option2);
+        });
+    }
+    preencherVoos();
+  </script>
+
 
 
   <script src="{% static 'trave/bootstrap/js/bootstrap.min.js' %}"></script>
