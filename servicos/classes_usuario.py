@@ -1,5 +1,5 @@
 import hashlib
-from servicos import Reserva
+from .classe_reserva import Reserva
 
 class Usuario:
     """Classe usuário referente a pessoa com um cadstro básico no sistema.\n
