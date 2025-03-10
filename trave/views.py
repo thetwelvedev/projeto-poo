@@ -8,7 +8,9 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 from servicos.classes_usuario import Usuario as UsuarioService
 from servicos.classes_usuario import Cliente
-from datetime import datetime
+from datetime import datetime, timedelta
+from django.utils import timezone
+import random
 
 def cadastro_view(request):
     """
@@ -177,14 +179,37 @@ def buscar_voos(request):
 def resultados_voos(request):
     """
     View para exibir os resultados da busca por voos.
-    
-    Obtém os parâmetros da URL, busca voos de ida e volta e renderiza a página de resultados.
-    
-    Args:
-        request (HttpRequest): Objeto da requisição HTTP.
-    
-    Returns:
-        HttpResponse: Página de resultados renderizada.
+
+    Esta view processa os parâmetros de busca (origem, destino, data de ida, data de volta e número de adultos)
+    e retorna uma lista de voos disponíveis para as datas especificadas. Se não houver voos disponíveis,
+    cria voos dinamicamente com horários e preços aleatórios, garantindo duas opções de voo para cada trecho
+    (ida e volta): um voo no período da manhã/tarde (00:00–16:00) e outro no período da noite (16:00–23:00).
+
+    Parâmetros:
+        request (HttpRequest): Objeto da requisição HTTP contendo os parâmetros de busca:
+            - origem (str): Código do aeroporto de origem.
+            - destino (str): Código do aeroporto de destino.
+            - data_ida (str): Data de ida no formato 'YYYY-MM-DD'.
+            - data_volta (str): Data de volta no formato 'YYYY-MM-DD' (opcional).
+            - adultos (str): Número de adultos (1, 2 ou 3).
+
+    Retorno:
+        HttpResponse: Renderiza a página 'resultados.html' com os seguintes contextos:
+            - voos_ida (list): Lista de voos de ida disponíveis ou criados dinamicamente.
+            - voos_volta (list): Lista de voos de volta disponíveis ou criados dinamicamente (se houver data de volta).
+            - origem (Aeroporto): Objeto Aeroporto representando a origem.
+            - destino (Aeroporto): Objeto Aeroporto representando o destino.
+            - data_ida (date): Data de ida.
+            - data_volta (date): Data de volta (se houver).
+            - adultos (str): Número de adultos.
+
+    Comportamento:
+        1. Valida os parâmetros de busca.
+        2. Busca voos de ida e volta no banco de dados para as datas especificadas.
+        3. Se não houver voos disponíveis, cria voos dinamicamente:
+            - Dois voos de ida: um no período da manhã/tarde e outro no período da noite.
+            - Dois voos de volta (se houver data de volta): um no período da manhã/tarde e outro no período da noite.
+        4. Renderiza a página 'resultados.html' com os voos encontrados ou criados.
     """
     origem_codigo = request.GET.get("origem")
     destino_codigo = request.GET.get("destino")
@@ -196,27 +221,82 @@ def resultados_voos(request):
         return HttpResponseBadRequest("Parâmetros de busca inválidos.")
 
     try:
-        data_ida = datetime.strptime(data_ida_str, "%Y-%m-%d")
-        data_volta = datetime.strptime(data_volta_str, "%Y-%m-%d") if data_volta_str else None
+        data_ida = datetime.strptime(data_ida_str, "%Y-%m-%d").date()
+        data_volta = datetime.strptime(data_volta_str, "%Y-%m-%d").date() if data_volta_str else None
     except ValueError:
         return HttpResponseBadRequest("Formato de data inválido.")
 
     origem = Aeroporto.objects.get(codigo_aeroporto=origem_codigo)
     destino = Aeroporto.objects.get(codigo_aeroporto=destino_codigo)
 
-    voos_disponiveis = Voo.objects.all()
-    voos_ida = Cliente.busca_voo(origem, destino, data_ida, None, voos_disponiveis)
+    # Função para criar um voo com horário e preço aleatórios
+    def criar_voo(origem, destino, data, periodo):
+        if periodo == "manha_tarde":
+            # Horário entre 00:00 e 16:00
+            hora_partida = random.randint(0, 15)
+        else:
+            # Horário entre 16:00 e 23:00
+            hora_partida = random.randint(16, 23)
 
+        minuto_partida = random.choice([0, 15, 30, 45])  # Minutos aleatórios (0, 15, 30, 45)
+
+        # Define a data e hora de partida
+        data_partida = timezone.make_aware(datetime.combine(
+            data,
+            datetime.min.time().replace(hour=hora_partida, minute=minuto_partida)
+        ))
+
+        # Define a data e hora de chegada (2 horas após a partida)
+        data_chegada = data_partida + timedelta(hours=2)
+
+        # Gera um preço aleatório entre 200 e 600 reais
+        preco = round(random.uniform(200, 600), 2)
+
+        # Cria o voo
+        return Voo.objects.create(
+            codigo_voo=f"{origem.codigo_aeroporto}-{destino.codigo_aeroporto}-{periodo.upper()}",
+            origem=origem,
+            destino=destino,
+            data_partida=data_partida,
+            data_chegada=data_chegada,
+            preco=preco,
+            assentos_disponiveis=100,
+        )
+
+    # Verifica se há voos de ida para a data especificada
+    voos_ida = Voo.objects.filter(
+        origem=origem,
+        destino=destino,
+        data_partida__date=data_ida
+    )
+
+    # Se não houver voos de ida, cria dois voos dinamicamente (manhã/tarde e noite)
+    if not voos_ida.exists():
+        voo_manha_tarde = criar_voo(origem, destino, data_ida, "manha_tarde")
+        voo_noite = criar_voo(origem, destino, data_ida, "noite")
+        voos_ida = [voo_manha_tarde, voo_noite]
+
+    # Verifica se há voos de volta para a data especificada (se houver data de volta)
     voos_volta = []
     if data_volta:
-        voos_volta = Cliente.busca_voo(destino, origem, data_volta, None, voos_disponiveis)
+        voos_volta = Voo.objects.filter(
+            origem=destino,
+            destino=origem,
+            data_partida__date=data_volta
+        )
+
+        # Se não houver voos de volta, cria dois voos dinamicamente (manhã/tarde e noite)
+        if not voos_volta.exists():
+            voo_manha_tarde_volta = criar_voo(destino, origem, data_volta, "manha_tarde")
+            voo_noite_volta = criar_voo(destino, origem, data_volta, "noite")
+            voos_volta = [voo_manha_tarde_volta, voo_noite_volta]
 
     return render(request, "resultados.html", {
         "voos_ida": voos_ida,
         "voos_volta": voos_volta,
         "origem": origem,
         "destino": destino,
-        "data_ida": data_ida.date(),
-        "data_volta": data_volta.date(),
+        "data_ida": data_ida,
+        "data_volta": data_volta,
         "adultos": adultos,
     })
