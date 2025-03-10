@@ -149,6 +149,37 @@
     </div>
   
 <script>
+    document.getElementById("buscarVoos").addEventListener("click", async function (event) {
+      event.preventDefault();
+
+      const origem = document.getElementById("id_partida").value;
+      const destino = document.getElementById("id_destino").value;
+      const dataIda = document.querySelector("input[type='date']").value;
+      const dataVolta = document.getElementById("VoltaViagem").value;
+      const adultos = document.querySelector("select").value;
+
+      const dados = { origem, destino, data_ida: dataIda, data_volta: dataVolta, adultos };
+
+      try {
+          const response = await fetch("{% url 'buscar_voos' %}", {
+              method: "POST",
+              headers: { "Content-Type": "application/json", "X-CSRFToken": "{{ csrf_token }}" },
+              body: JSON.stringify(dados)
+          });
+
+          const data = await response.json();
+
+          if (data.voos.length > 0) {
+              // Redireciona para a página de resultados, passando os dados como parâmetros GET
+              window.location.href = `{% url 'resultados_voos' %}?origem=${origem}&destino=${destino}&data_ida=${dataIda}&data_volta=${dataVolta}&adultos=${adultos}`;
+          } else {
+              alert("Nenhum voo encontrado!");
+          }
+      } catch (error) {
+          console.error("Erro ao buscar voos:", error);
+      }
+  });
+
     async function carregarDados() {
         try {
             const response = await fetch("{% static 'trave/data/voos.json' %}");
