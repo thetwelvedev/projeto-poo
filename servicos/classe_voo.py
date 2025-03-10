@@ -47,6 +47,19 @@ class Voo:
                 # Se estiver usando algum tipo de persistência, chame self.save() se necessário.
                 return True
         return False
+    
+    def liberar_assento(self, numero_assento: int) -> bool:
+        """
+        Recebe o número ou id do assento que se deseja liberar.
+       
+        """
+        for assento in self.assentos:
+            if assento.numero == numero_assento and not assento.disponivel:
+                assento.liberar_assento()
+                # Se estiver usando algum tipo de persistência, chame self.save() se necessário.
+                return True
+        return False
+    
 
     def __str__(self):
         return f"{self.codigo_voo} - {self.origem} → {self.destino}"

@@ -1,4 +1,5 @@
 import hashlib
+from servicos import Reserva
 
 class Usuario:
     """Classe usuário referente a pessoa com um cadstro básico no sistema.\n
@@ -63,6 +64,8 @@ class Cliente(Usuario):
         super().__init__(nome, cpf, email, telefone, senha)
         self.cartao_credito = cartao_credito
         self.endereco = endereco
+        self.reservas = []
+        self.compras = []
 
     @classmethod
     def busca_voo(cls, origem, destino, data, preco: float, lista_voos):
@@ -96,6 +99,8 @@ class Cliente(Usuario):
             return False, "Não há mais assentos disponíveis para este voo."
         
         if voo.reservar_assento(numero_assento):
+            nova_reserva = Reserva(self, voo, voo.data, numero_assento)
+            self.reservas.append(nova_reserva)
             return True, "O assento foi reservado com sucesso."
         else:
             return False, "O assento requisitado já está reservado por outro Usuário"
@@ -104,9 +109,14 @@ class Cliente(Usuario):
         """Método comprar voou"""
         pass
 
-    def cancelar_reserva():
+    def cancelar_reserva(self, reserva):
         """Método cancelar reserva"""
-        pass
+        if reserva in self.reservas:
+            reserva.cancelar_reserva()
+            self.reservas.remove(reserva)
+            return True, "A reserva foi cancelada com sucesso."
+        
+        return False, "Não foi encontrado a reserva informada, impossível cancelar."
 
 
 class Administrador(Usuario):
@@ -129,10 +139,10 @@ class Administrador(Usuario):
                 return False, "Não é possível cadastrar um Voo com código repetido."
 
         #Verifica se está ligado a um aeroporto cadastrado ao sistema
-        if(novo.origem == None):
+        if(novo.origem is None):
             return False , "Não foi possível cadastrar o novo voo, pois o aeroporto de origem informado não existe."
 
-        if(novo.destino == None):
+        if(novo.destino is None):
             return False , "Não foi possível cadastrar o novo voo, pois o aeroporto de destino informado não existe."
 
         return True, "Cadastro do novo Voo realizado com sucesso"
