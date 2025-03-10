@@ -59,75 +59,65 @@
     <div class="voo-area">
       <h1>Seja bem-vindo a Trave. Sua viagem começa aqui.</h1>
       <h2>Encontre os melhores voos</h2>
-      <div class="form-group">
-          <div class="info-form">
-              <label>Trecho</label>
-              <select>
-                  <option>Ida e volta</option>
-                  <option>Apenas ida</option>
-              </select>
-          </div>
-          
-          <div class="info-form">
-              <label>Saindo de</label>
-              <select id="id_partida">
-                  <option>De onde você deseja partir?</option>
-              </select>
-          </div>
-          
-          <div class="info-form">
-              <label>Indo para</label>
-              <select id="id_destino">
-                  <option>Para onde você quer ir?</option>
-              </select>
-          </div>
-      </div>
-  
-      <div class="form-group">
-          <div class="info-form">
-              <label>Viajantes</label>
-              <select>
-                  <option>1 Adulto</option>
-                  <option>2 Adultos</option>
-                  <option>3 Adultos</option>
-              </select>
-          </div>
-      
-          <div class="info-form">
-              <label>Data da viagem de ida</label>
-              <input type="date" id="data_ida">
-          </div>
-          <div class="info-form">
-              <label for="VoltaViagem">Data da viagem de volta</label>
-              <input type="date" id="data_volta">
-          </div>
-      </div>
-      
-      <div class="checkbox-group">
-          <input type="checkbox" id="business">
-          <label for="business">Estou viajando a trabalho</label>
-      </div>
-      
-      <div class="button-enviar">    
-          <button class="btn-search" id="buscarVoos">Buscar Voos</button>
-      </div>  
-    </div> 
+      <form action="{% url 'resultados_voos' %}" id="form-busca">
+        <div class="form-group">
+            <div class="info-form">
+                <label>Trecho</label>
+                <select>
+                    <option selected>Ida e volta</option>
+                    <option>Apenas ida</option>
+                </select>
+            </div>
+            
+            <div class="info-form">
+                <label>Saindo de</label>
+                <select id="id_partida" name="origem" required>
+                    <option value="" selected disabled>De onde você deseja partir?</option>
+                </select>
+            </div>
+            
+            <div class="info-form">
+                <label>Indo para</label>
+                <select id="id_destino" name="destino" required>
+                    <option value="" selected disabled>Para onde você quer ir?</option>
+                </select>
+            </div>
+        </div>
+    
+        <div class="form-group">
+            <div class="info-form">
+                <label>Viajantes</label>
+                <select name="adultos" required>
+                    <option value="1">1 Adulto</option>
+                    <option value="2">2 Adultos</option>
+                    <option value="3">3 Adultos</option>
+                </select>
+            </div>
+        
+            <div class="info-form">
+                <label>Data da viagem de ida</label>
+                <input type="date" id="data_ida" name="data_ida" required>
+            </div>
+            <div class="info-form">
+                <label for="VoltaViagem">Data da viagem de volta</label>
+                <input type="date" id="data_volta" name="data_volta">
+            </div>
+        </div>
+        
+        <div class="checkbox-group">
+            <input type="checkbox" id="business">
+            <label for="business">Estou viajando a trabalho</label>
+        </div>
+        
+        <div class="button-enviar">    
+            <button class="btn-search" id="buscarVoos">Buscar Voos</button>
+        </div>  
+      </form>
+    </div>
   </div>
 
-  <script>
-    document.getElementById("buscarVoos").addEventListener("click", async function (event) {
-        event.preventDefault();
-
-        const origem = document.getElementById("id_partida").value;
-        const destino = document.getElementById("id_destino").value;
-        const dataIda = document.getElementById("data_ida").value;
-        const dataVolta = document.getElementById("data_volta").value;
-        const adultos = document.querySelector("select").value;
-
-        // Redireciona para a página de resultados com os parâmetros de busca
-        window.location.href = `{% url 'resultados_voos' %}?origem=${origem}&destino=${destino}&data_ida=${dataIda}&data_volta=${dataVolta}&adultos=${adultos}`;
-    });
-
+  <!-- defer para evitar que objetos do DOM sejam utilizados antes de estarem disponiveis  -->
+  <script defer>
     async function carregarDados() {
         try {
             const response = await fetch("{% static 'trave/data/voos.json' %}");

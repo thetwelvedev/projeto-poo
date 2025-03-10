@@ -7,6 +7,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
 from servicos.classes_usuario import Usuario as UsuarioService
+from servicos.classes_usuario import Cliente
 from datetime import datetime
 
 def cadastro_view(request):
@@ -195,23 +196,27 @@ def resultados_voos(request):
         return HttpResponseBadRequest("Parâmetros de busca inválidos.")
 
     try:
-        data_ida = datetime.strptime(data_ida_str, "%Y-%m-%d").date()
-        data_volta = datetime.strptime(data_volta_str, "%Y-%m-%d").date() if data_volta_str else None
+        data_ida = datetime.strptime(data_ida_str, "%Y-%m-%d")
+        data_volta = datetime.strptime(data_volta_str, "%Y-%m-%d") if data_volta_str else None
     except ValueError:
         return HttpResponseBadRequest("Formato de data inválido.")
 
     origem = Aeroporto.objects.get(codigo_aeroporto=origem_codigo)
     destino = Aeroporto.objects.get(codigo_aeroporto=destino_codigo)
 
-    voos_ida = Voo.objects.filter(origem=origem, destino=destino, data_partida__date=data_ida)
-    voos_volta = Voo.objects.filter(origem=destino, destino=origem, data_partida__date=data_volta) if data_volta else []
+    voos_disponiveis = Voo.objects.all()
+    voos_ida = Cliente.busca_voo(origem, destino, data_ida, None, voos_disponiveis)
+
+    voos_volta = []
+    if data_volta:
+        voos_volta = Cliente.busca_voo(destino, origem, data_volta, None, voos_disponiveis)
 
     return render(request, "resultados.html", {
-    "voos_ida": voos_ida,
-    "voos_volta": voos_volta,
-    "origem": origem,
-    "destino": destino,
-    "data_ida": data_ida,
-    "data_volta": data_volta,
-    "adultos": adultos,
-})
+        "voos_ida": voos_ida,
+        "voos_volta": voos_volta,
+        "origem": origem,
+        "destino": destino,
+        "data_ida": data_ida.date(),
+        "data_volta": data_volta.date(),
+        "adultos": adultos,
+    })

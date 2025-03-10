@@ -65,7 +65,7 @@ class Cliente(Usuario):
         self.endereco = endereco
 
     @classmethod
-    def busca_voo(cls, origem, destino, preco: float, lista_voos):
+    def busca_voo(cls, origem, destino, data, preco: float, lista_voos):
         """Método para buscar voo no sistema. Esse método pode receber informações de origem, destino e preço.
         Após a pesquisa é retornado uma lista com todos os objetos relevante a pesquisa."""
         
@@ -73,14 +73,17 @@ class Cliente(Usuario):
 
         for voo in lista_voos:
             #Pesquisa somente com relação aos nomes
-            if (voo.origem.nome.lower() == origem.lower() or voo.destino.nome.lower() == destino.lower()) :
-                
+            if (voo.origem.id == origem.id and voo.destino.id == destino.id):
+                adicionar = True
+
                 #Verifica se o paramentro preço foi passado 
-                if(preco != 0):
-                    #Filtra a pesquisa com relação ao parametro preço passado
-                    if(preco >= voo.preco - 100 and preco <= voo.preco + 100):
-                        voos_encontrados.append(voo)
-                else: 
+                if preco is not None and preco > voo.preco:
+                    adicionar = False
+
+                if voo.data_partida.timestamp() < data.timestamp():
+                    adicionar = False
+
+                if adicionar:
                     voos_encontrados.append(voo)
 
         return voos_encontrados
