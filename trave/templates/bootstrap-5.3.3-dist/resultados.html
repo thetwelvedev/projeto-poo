@@ -19,7 +19,7 @@
             <p><strong>Origem:</strong> {{ origem.nome }} ({{ origem.codigo_aeroporto }})</p>
             <p><strong>Destino:</strong> {{ destino.nome }} ({{ destino.codigo_aeroporto }})</p>
             <p><strong>Data de Ida:</strong> {{ data_ida }}</p>
-            {% if data_volta %}
+            {% if trecho == "ida_volta" and data_volta %}
                 <p><strong>Data de Volta:</strong> {{ data_volta }}</p>
             {% endif %}
             <p><strong>Passageiros:</strong> {{ adultos }}</p>
@@ -52,8 +52,8 @@
             </div>
         {% endif %}
 
-        <!-- Voos de Volta (se houver data de volta) -->
-        {% if data_volta %}
+        <!-- Voos de Volta (se houver data de volta e o trecho for "ida_volta") -->
+        {% if trecho == "ida_volta" and data_volta %}
             <h2>Voos de Volta</h2>
             {% if voos_volta %}
                 <div class="row">

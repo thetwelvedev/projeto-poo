@@ -216,6 +216,7 @@ def resultados_voos(request):
     data_ida_str = request.GET.get("data_ida")
     data_volta_str = request.GET.get("data_volta")
     adultos = request.GET.get("adultos")
+    trecho = request.GET.get("trecho") 
 
     if not origem_codigo or not destino_codigo or not data_ida_str:
         return HttpResponseBadRequest("Parâmetros de busca inválidos.")
@@ -276,9 +277,9 @@ def resultados_voos(request):
         voo_noite = criar_voo(origem, destino, data_ida, "noite")
         voos_ida = [voo_manha_tarde, voo_noite]
 
-    # Verifica se há voos de volta para a data especificada (se houver data de volta)
+    # Verifica se há voos de volta para a data especificada (se houver data de volta e o trecho for "ida_volta")
     voos_volta = []
-    if data_volta:
+    if trecho == "ida_volta" and data_volta:
         voos_volta = Voo.objects.filter(
             origem=destino,
             destino=origem,
@@ -299,4 +300,5 @@ def resultados_voos(request):
         "data_ida": data_ida,
         "data_volta": data_volta,
         "adultos": adultos,
+        "trecho": trecho, 
     })
