@@ -7,8 +7,21 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
 from servicos.classes_usuario import Usuario as UsuarioService
+from datetime import datetime
 
 def cadastro_view(request):
+    """
+    View responsável pelo cadastro de usuários.
+    
+    Se a requisição for GET, renderiza a página de cadastro.
+    Se for POST, chama a função usuario_save para processar o cadastro.
+    
+    Args:
+        request (HttpRequest): Objeto da requisição HTTP.
+    
+    Returns:
+        HttpResponse: Página de cadastro renderizada ou redirecionamento após o cadastro.
+    """
     erro = request.GET.get('erro', '')
     if request.method == 'POST':
         return usuario_save(request)
@@ -16,6 +29,17 @@ def cadastro_view(request):
     return render(request, 'cadastro.html', {'erro': erro})
 
 def usuario_save(request):
+    """
+    Processa o cadastro de um novo usuário.
+    
+    Valida os dados do formulário, criptografa a senha e tenta cadastrar o usuário.
+    
+    Args:
+        request (HttpRequest): Objeto da requisição HTTP.
+    
+    Returns:
+        HttpResponseRedirect: Redirecionamento para a página de login ou de cadastro com erro.
+    """
     form = UsuarioForm(request.POST)
 
     if not form.is_valid():
@@ -32,6 +56,18 @@ def usuario_save(request):
     return redirect(reverse('cadastro') + f"?erro={quote_plus(message)}")
 
 def login_view(request):
+    """
+    View responsável pela autenticação de usuários.
+    
+    Se a requisição for GET, exibe a página de login.
+    Se for POST, processa a autenticação do usuário.
+    
+    Args:
+        request (HttpRequest): Objeto da requisição HTTP.
+    
+    Returns:
+        HttpResponse: Página de login renderizada ou redirecionamento após autenticação.
+    """
     if request.method == 'POST':
         return realizar_login(request)
 
@@ -39,6 +75,17 @@ def login_view(request):
     return render(request, 'login.html', {'erro': erro})
 
 def realizar_login(request):
+    """
+    Processa a autenticação do usuário.
+    
+    Valida os dados do formulário e verifica as credenciais do usuário.
+    
+    Args:
+        request (HttpRequest): Objeto da requisição HTTP.
+    
+    Returns:
+        HttpResponseRedirect: Redirecionamento para a home em caso de sucesso ou login com erro.
+    """
     form = LoginForm(request.POST)
     if not form.is_valid():
         return redirect(reverse('login') + f"?erro={quote_plus('Dados inválidos')}")
@@ -55,41 +102,46 @@ def realizar_login(request):
 
 def home_view(request):
     """
-    View para renderizar a página inicial (index.html) com os dados necessários.
-
-    Esta view busca os estados disponíveis para os campos "Saindo de" e "Indo para",
-    além de definir o número de viajantes disponíveis para seleção. Se a requisição
-    for do tipo POST, redireciona para a função de login.
-
+    View para renderizar a página inicial.
+    
+    Se a requisição for POST, redireciona para o login.
+    Caso contrário, busca os estados disponíveis e exibe a página inicial.
+    
     Args:
-        request (HttpRequest): Objeto de requisição HTTP.
-
+        request (HttpRequest): Objeto da requisição HTTP.
+    
     Returns:
-        HttpResponse: Renderiza a página index.html com os dados necessários.
+        HttpResponse: Página inicial renderizada.
     """
     if request.method == 'POST':
         return realizar_login(request)
 
-    # Busca os estados distintos dos aeroportos no banco de dados
     estados = Aeroporto.objects.values_list('estado', flat=True).distinct()
-    
-    # Define o número de viajantes disponíveis para seleção
     numero_viajantes = [1, 2, 3]
 
-    # Contexto com os dados que serão passados para o template
     context = {
         'estados': estados,
         'numero_viajantes': numero_viajantes,
-        'erro': request.GET.get('erro', '')  # Mantém a mensagem de erro, se houver
+        'erro': request.GET.get('erro', '')
     }
 
     return render(request, 'index.html', context)
 
 @csrf_exempt
 def buscar_voos(request):
+    """
+    API para buscar voos disponíveis.
+    
+    Recebe uma requisição POST com os parâmetros da busca e retorna uma lista de voos disponíveis.
+    
+    Args:
+        request (HttpRequest): Objeto da requisição HTTP.
+    
+    Returns:
+        JsonResponse: Lista de voos disponíveis ou erro.
+    """
     if request.method == "POST":
         try:
-            # Pegando os dados da requisição JSON
             data = json.loads(request.body)
 
             origem = data.get("origem")
@@ -98,14 +150,10 @@ def buscar_voos(request):
             data_volta = data.get("data_volta")
             adultos = data.get("adultos")
 
-            # Filtrando voos no banco de dados
             voos_disponiveis = Voo.objects.filter(origem__nome=origem, destino__nome=destino, data_partida=data_ida)
-
-            # Se for ida e volta, filtra também a volta
             if data_volta:
                 voos_disponiveis = voos_disponiveis.filter(data_chegada=data_volta)
 
-            # Criando uma lista de resultados
             resultado = [
                 {
                     "companhia": voo.companhia,
@@ -125,41 +173,37 @@ def buscar_voos(request):
 
     return JsonResponse({"erro": "Método não permitido"}, status=405)
 
-from django.shortcuts import render
-from django.http import HttpResponseBadRequest
-from .models import Voo, Aeroporto
-from datetime import datetime
-
 def resultados_voos(request):
-    # Obtendo os parâmetros da URL
+    """
+    View para exibir os resultados da busca por voos.
+    
+    Obtém os parâmetros da URL, busca voos de ida e volta e renderiza a página de resultados.
+    
+    Args:
+        request (HttpRequest): Objeto da requisição HTTP.
+    
+    Returns:
+        HttpResponse: Página de resultados renderizada.
+    """
     origem_codigo = request.GET.get("origem")
     destino_codigo = request.GET.get("destino")
     data_ida_str = request.GET.get("data_ida")
     data_volta_str = request.GET.get("data_volta")
     adultos = request.GET.get("adultos")
 
-    # Verifica se os parâmetros obrigatórios foram fornecidos
     if not origem_codigo or not destino_codigo or not data_ida_str:
-        return HttpResponseBadRequest("Parâmetros de busca inválidos. Certifique-se de fornecer origem, destino e data de ida.")
+        return HttpResponseBadRequest("Parâmetros de busca inválidos.")
 
     try:
-        # Converte as datas de string para objetos datetime
         data_ida = datetime.strptime(data_ida_str, "%Y-%m-%d").date()
         data_volta = datetime.strptime(data_volta_str, "%Y-%m-%d").date() if data_volta_str else None
     except ValueError:
-        return HttpResponseBadRequest("Formato de data inválido. Use o formato YYYY-MM-DD.")
+        return HttpResponseBadRequest("Formato de data inválido.")
 
-    try:
-        # Busca as instâncias de Aeroporto com base nos códigos
-        origem = Aeroporto.objects.get(codigo_aeroporto=origem_codigo)
-        destino = Aeroporto.objects.get(codigo_aeroporto=destino_codigo)
-    except Aeroporto.DoesNotExist:
-        return HttpResponseBadRequest("Aeroporto de origem ou destino não encontrado.")
+    origem = Aeroporto.objects.get(codigo_aeroporto=origem_codigo)
+    destino = Aeroporto.objects.get(codigo_aeroporto=destino_codigo)
 
-    # Buscando os voos no banco de dados
-    voos = Voo.objects.filter(origem=origem, destino=destino, data_partida__date=data_ida)
+    voos_ida = Voo.objects.filter(origem=origem, destino=destino, data_partida__date=data_ida)
+    voos_volta = Voo.objects.filter(origem=destino, destino=origem, data_partida__date=data_volta) if data_volta else []
 
-    if data_volta:
-        voos = voos.filter(data_chegada__date=data_volta)
-
-    return render(request, "resultados.html", {"voos": voos, "origem": origem, "destino": destino})
+    return render(request, "resultados.html", {"voos_ida": voos_ida, "voos_volta": voos_volta})

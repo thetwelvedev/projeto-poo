@@ -2,74 +2,86 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <title>Resultados de Voos</title>
-  <!-- Carregando o CSS personalizado -->
-  <link rel="stylesheet" href="{% static 'trave/css/comprar.css' %}" />
-  <!-- Carregando o CSS do Bootstrap -->
-  <link rel="stylesheet" href="{% static 'trave/bootstrap/css/bootstrap.min.css' %}">
-  <!-- Carregando Font Awesome -->
-  <link rel="stylesheet" href="{% static 'trave/bootstrap/fontawesome/css/all.css' %}">
+    <meta charset="UTF-8">
+    <title>Resultados de Voos</title>
+    <link rel="stylesheet" href="{% static 'trave/css/comprar.css' %}">
+    <link rel="stylesheet" href="{% static 'trave/bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'trave/bootstrap/fontawesome/css/all.css' %}">
 </head>
 <body>
-  {% if erro %}
-    <h1>{{erro}}</h1>
-  {% endif %}
-  <div class="container my-4">
-    <div class="row">
-      <div class="col w-25 mb-3">
-        <img src="{% static 'trave/images/Trave.svg' %}" alt="Ícone 3D de usuário" />
-        <hr> 
-      </div>
-    </div>
-    
-    <!-- Passos (Wizard) -->
-    <div class="step-indicator">
-      <div class="step active">
-        <div class="circle">1</div>
-        <span>Escolha seu voo</span>
-      </div>
-      <div class="step">
-        <div class="circle">2</div>
-        <span>Seus dados</span>
-      </div>
-      <div class="step">
-        <div class="circle">3</div>
-        <span>Escolha seu assento</span>
-      </div>
-      <div class="step">
-        <div class="circle">4</div>
-        <span>Personalize sua viagem</span>
-      </div>
-      <div class="step">
-        <div class="circle">5</div>
-        <span>Pagamento</span>
-      </div>
-    </div>
+    <div class="container my-4">
+        <h1>Resultados de Voos</h1>
+        <hr>
 
-    <!-- Título de seleção de voo -->
-    <h3>Escolha o seu voo de ida 
-      <small class="text-muted">(Todas as nossas tarifas incluem o valor da taxa de embarque)</small>
-    </h3>
-
-    <!-- Lista de voos de ida (exemplo) -->
-    <div class="row mb-4">
-      <div class="col-md-12">
-        {% for voo in voos %}
-        <div class="card mb-3">
-          <div class="card-body">
-            <h5 class="card-title">Voo {{ voo.codigo_voo }}</h5>
-            <p class="card-text">Saída: {{ voo.data_partida }} - Chegada: {{ voo.data_chegada }}</p>
-            <p class="card-text">A partir de R$ {{ voo.preco }}</p>
-            <button class="btn btn-outline-primary">Selecionar</button>
-          </div>
+        <!-- Informações da busca -->
+        <div class="mb-4">
+            <h3>Detalhes da Busca:</h3>
+            <p><strong>Origem:</strong> {{ origem.nome }} ({{ origem.codigo_aeroporto }})</p>
+            <p><strong>Destino:</strong> {{ destino.nome }} ({{ destino.codigo_aeroporto }})</p>
+            <p><strong>Data de Ida:</strong> {{ data_ida }}</p>
+            {% if data_volta %}
+                <p><strong>Data de Volta:</strong> {{ data_volta }}</p>
+            {% endif %}
+            <p><strong>Passageiros:</strong> {{ adultos }}</p>
         </div>
-        {% endfor %}
-      </div>
-    </div>
-  </div>
 
-  <script src="{% static 'trave/js/comprar.js' %}"></script>
-  <script src="{% static 'trave/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+        <!-- Voos de Ida -->
+        <h2>Voos de Ida</h2>
+        {% if voos_ida %}
+            <div class="row">
+                {% for voo in voos_ida %}
+                    <div class="col-md-6 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Voo {{ voo.codigo_voo }}</h5>
+                                <p class="card-text">
+                                    <strong>Partida:</strong> {{ voo.data_partida|date:"d/m/Y H:i" }}<br>
+                                    <strong>Chegada:</strong> {{ voo.data_chegada|date:"d/m/Y H:i" }}<br>
+                                    <strong>Preço:</strong> R$ {{ voo.preco }}<br>
+                                    <strong>Assentos disponíveis:</strong> {{ voo.assentos_disponiveis }}
+                                </p>
+                                <a href="#" class="btn btn-primary">Selecionar</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="alert alert-warning">
+                Nenhum voo de ida encontrado.
+            </div>
+        {% endif %}
+
+        <!-- Voos de Volta (se houver data de volta) -->
+        {% if data_volta %}
+            <h2>Voos de Volta</h2>
+            {% if voos_volta %}
+                <div class="row">
+                    {% for voo in voos_volta %}
+                        <div class="col-md-6 mb-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Voo {{ voo.codigo_voo }}</h5>
+                                    <p class="card-text">
+                                        <strong>Partida:</strong> {{ voo.data_partida|date:"d/m/Y H:i" }}<br>
+                                        <strong>Chegada:</strong> {{ voo.data_chegada|date:"d/m/Y H:i" }}<br>
+                                        <strong>Preço:</strong> R$ {{ voo.preco }}<br>
+                                        <strong>Assentos disponíveis:</strong> {{ voo.assentos_disponiveis }}
+                                    </p>
+                                    <a href="#" class="btn btn-primary">Selecionar</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="alert alert-warning">
+                    Nenhum voo de volta encontrado.
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
+
+    <script src="{% static 'trave/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 </body>
 </html>
