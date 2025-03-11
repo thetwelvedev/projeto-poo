@@ -1,0 +1,228 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seleção de Assento</title>
+    <link rel="stylesheet" href="{% static 'trave/css/comprar.css' %}">
+    <link rel="stylesheet" href="{% static 'trave/bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'trave/bootstrap/fontawesome/css/all.css' %}">
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+    <style>
+         /* Container geral */
+    .plane-container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    /* Grid que representa o avião */
+    .seat-map {
+      display: grid;
+      grid-template-columns: repeat(6, 50px);
+      gap: 10px;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    /* Cada assento */
+    .seat {
+      width: 50px;
+      height: 50px;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-weight: bold;
+      background-color: #f1f1f1; /* Cor de assento disponível */
+      user-select: none; /* Evita seleção de texto ao clicar */
+      transition: background-color 0.2s ease;
+    }
+
+    /* Assento ocupado (não pode ser selecionado) */
+    .occupied {
+      background-color: #444; /* Exemplo: cinza-escuro/preto */
+      color: #fff;
+      cursor: not-allowed;
+    }
+
+    /* Assento selecionado pelo usuário */
+    .selected {
+      background-color: #004aad; /* Exemplo: laranja */
+      color: #fff;
+    }
+
+    /* Exemplo de legenda */
+    .legend {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      margin: 0 10px;
+    }
+    .legend-item span {
+      width: 20px;
+      height: 20px;
+      margin-right: 5px;
+      display: inline-block;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+    .legend-available {
+      background-color: #f1f1f1;
+    }
+    .legend-selected {
+      background-color: #004aad;
+    }
+    .legend-occupied {
+      background-color: #444;
+    }
+    </style>
+</head>
+<body>
+
+<div class="container mt-5">
+
+    <div class="row">
+        <div class="col w-25 mb-3" >
+            <img src="{% static 'trave/images/Trave.svg' %}" alt="Ícone 3D de usuário" />
+            <hr> 
+        </div>
+    </div>
+      
+      <!-- Passos (Wizard) -->
+    <div class="step-indicator mb-3">
+        <div class="step active">
+            <div class="circle">1</div>
+            <span>Escolha seu voo</span>
+        </div>
+        <div class="step active">
+            <div class="circle">2</div>
+            <span>Seus dados</span>
+        </div>
+        <div class="step active">
+            <div class="circle">3</div>
+            <span>Escolha seu assento</span>
+        </div>
+        <div class="step">
+            <div class="circle">4</div>
+            <span>Personalize sua viagem</span>
+        </div>
+        <div class="step">
+            <div class="circle">5</div>
+            <span>Pagamento</span>
+        </div>
+    </div>
+
+    <div class="row align-items-center">
+    <div class="plane-container p-3" >
+        <h1>Selecione seu assento</h1>
+        
+        <!-- Mapa de assentos -->
+        <div class="seat-map "  style="border: #ccc;" id="seatMap">
+          
+        </div>
+      
+        <!-- Legenda de cores -->
+        <div class="legend">
+          <div class="legend-item">
+            <span class="legend-available"></span> Disponível
+          </div>
+          <div class="legend-item">
+            <span class="legend-selected"></span> Selecionado
+          </div>
+          <div class="legend-item">
+            <span class="legend-occupied"></span> Ocupado
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+<script>
+    const maxSeats = 1;
+
+    // Seleciona todos os assentos (exceto os que estão ocupados)
+    const seats = document.querySelectorAll('.seat:not(.occupied)');
+
+    seats.forEach(seat => {
+        seat.addEventListener('click', () => {
+            // Verifica se o assento já está selecionado
+            if (seat.classList.contains('selected')) {
+            // Se já estava selecionado, ao clicar remove a seleção
+            seat.classList.remove('selected');
+            } else {
+            // Se não está selecionado, verifica quantos já foram selecionados
+            const selectedSeats = document.querySelectorAll('.seat.selected').length;
+            if (selectedSeats < maxSeats) {
+                seat.classList.add('selected');
+            } else {
+                alert(`Você só pode selecionar até ${maxSeats} assentos.`);
+            }
+            }
+        });
+    });
+
+    const totalRows = 33;
+    const totalColumns = 6; // Representa colunas A, B, C, D, E, F
+    const seatMapContainer = document.getElementById('seatMap');
+
+    // Função para criar os assentos
+    function createSeats(rows, columns) {
+        for (let row = 1; row <= rows; row++) {
+            for (let col = 0; col < columns; col++) {
+                const seat = document.createElement('div');
+                seat.classList.add('seat');
+                // Define a letra da coluna (A, B, C, ...)
+                const seatLetter = String.fromCharCode(65 + col);
+                // Define o identificador do assento (ex: 1A, 1B, 2A, etc.)
+                const seatNumber = `${row}${seatLetter}`;
+                seat.setAttribute('data-seat', seatNumber);
+                seat.innerText = seatNumber;
+
+                // Adiciona um event listener para selecionar o assento
+                seat.addEventListener('click', () => {
+                    // Apenas alterna seleção se o assento não estiver ocupado
+                    if (!seat.classList.contains('occupied')) {
+                        seat.classList.toggle('selected');
+                    }
+                });
+
+                // Exemplo: marcar alguns assentos como ocupados (opcional)
+                // if (seatNumber === '3C' || seatNumber === '5D') {
+                //   seat.classList.add('occupied');
+                // }
+
+                seatMapContainer.appendChild(seat);
+            }
+        }
+    }
+
+    // Chama a função para gerar os assentos
+    createSeats(totalRows, totalColumns);
+</script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Moment.js -->
+<script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<!-- daterangepicker JS -->
+<script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<script src="{% static 'trave/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+</body>
+</html>

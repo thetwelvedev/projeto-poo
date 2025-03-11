@@ -188,8 +188,8 @@
     </div>
     
     <!-- Lista de voos de ida (exemplo) -->
-    {% if voos_ida %}
-        {% for voo in voos_ida %}
+    {% if voos_volta %}
+        {% for voo in voos_volta %}
             <div class="row mb-2">
             <!-- Botão do dropdown: o card funciona como o toggle -->
             <a class="btn" data-bs-toggle="collapse" href="#collapseExample{{ voo.codigo_voo }}" role="button" aria-expanded="true" aria-controls="collapseExample{{ voo.codigo_voo }}">
