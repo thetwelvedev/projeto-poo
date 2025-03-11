@@ -1,5 +1,6 @@
 #from servicos import classe_pagamento
 #from servicos import Voo
+from random import randint
 
 class Assento:
     """Classe Assento referente aos assentos existentes em um Voo.\n
@@ -19,13 +20,29 @@ class Assento:
         
         # Criando os assentos corretamente
         for i in range(1, 31):  # Agora inclui 30
-            assentos.append(Assento(i, "Economica", True))
+            num = randint(1, 5)
+            if(num==1):
+                assentos.append(Assento(i, "Economica", False))
+            else:
+                assentos.append(Assento(i, "Economica", True))
 
         for i in range(31, 46):  # Agora inclui 45
-            assentos.append(Assento(i, "Executiva", True))
-
+            num = randint(1, 5)
+            if(num==1):
+                assentos.append(Assento(i, "Executiva", False))
+            else:
+                assentos.append(Assento(i, "Executiva", True))
+            
+        
         for i in range(46, 61):  # Agora inclui 60
-            assentos.append(Assento(i, "Primeira Classe", True))
+            num = randint(1, 5)
+            if(num==1):
+                assentos.append(Assento(i, "Primeira Classe", False))
+            else:
+                assentos.append(Assento(i, "Primeira Classe", True))
+            
+        
+            
         
         return assentos
 
