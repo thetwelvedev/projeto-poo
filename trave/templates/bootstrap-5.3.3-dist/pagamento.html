@@ -166,7 +166,7 @@
       e.preventDefault();
       alert("Pagamento confirmado com sucesso!");
       localStorage.removeItem("selectedSeats"); // Limpa os assentos selecionados
-      window.location.href = "sucesso.html"; // Redireciona para uma página de sucesso
+      window.location.href = "{% url 'sucesso' %}"; // Redireciona para uma página de sucesso
     });
   });
 </script>
