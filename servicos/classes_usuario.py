@@ -4,9 +4,29 @@ from .classe_compra import Compra
 from datetime import datetime
 
 class Usuario:
-    """Classe usuário referente a pessoa com um cadstro básico no sistema.\n
-    Atributos:\n Nome, cpf, email, telefone e senha todos do tipo string\n
-    Métodos:\n Cadastrar, login e visualizar_historico"""
+    """
+    Representa um usuário do sistema, armazenando informações básicas de cadastro e fornecendo métodos para autenticação e gerenciamento de conta.
+
+    Atributos:
+        nome (str): Nome completo do usuário.
+        cpf (str): CPF do usuário (deve ser único para cada conta).
+        email (str): Endereço de e-mail do usuário (deve ser único para cada conta).
+        telefone (str): Número de telefone do usuário (deve ser único para cada conta).
+        senha (str): Senha criptografada do usuário para garantir a segurança dos dados.
+
+    Métodos:
+        cadastrar(novo, lista_usuarios):
+            Verifica se os dados do novo usuário já existem no sistema e, se não existirem, efetua o cadastro.
+
+        login(email, senha, lista_usuarios):
+            Valida as credenciais de login e retorna o usuário correspondente, se encontrado.
+
+        _criptografa_senha(senha):
+            Método interno para criptografar a senha do usuário utilizando SHA-256.
+
+        _validar_senha(usuario, senha):
+            Método interno para validar se a senha informada corresponde à senha armazenada.
+    """
 
     def __init__(self, nome: str, cpf: str, email: str, telefone: str, senha: str):
         """Construtor da classe usuários para criar um novo usuário"""
@@ -31,8 +51,10 @@ class Usuario:
 
     @classmethod
     def cadastrar(cls, novo, lista_usuarios):
-        """Método para verificar se é possivel realizar um cadastro com as credencias fornecidas.
-        Esse método futuramente será uma requisição ao banco de dados para verificar se já existe um usuário com as informações fornecidas."""
+        """
+        Método para verificar se é possivel realizar um cadastro com as credencias fornecidas.
+        Esse método futuramente será uma requisição ao banco de dados para verificar se já existe um usuário com as informações fornecidas.
+        """
 
         for usuario in lista_usuarios:
             if(usuario.cpf == novo.cpf or usuario.email == novo.email or usuario.telefone == novo.telefone):
@@ -57,9 +79,36 @@ class Usuario:
         pass
 
 class Cliente(Usuario):
-    """Classe cliente que herda de usuários, refente a pessoa com um cadastro com mais opções no sistema.\n
-    Atributos:\n Nome, cpf, email, telefone, senha herdados de Usuario e cartao_credito e endereço.\n
-    Métodos da classe:\n Compra e reserva de passagens, além de buscar por voos e cancelar reserva"""
+    """
+    Representa um cliente cadastrado no sistema, estendendo a classe Usuario e adicionando funcionalidades específicas relacionadas à compra e reserva de passagens.
+
+    Atributos:
+        nome (str): Nome completo do cliente (herdado de Usuario).
+        cpf (str): CPF do cliente (herdado de Usuario).
+        email (str): Endereço de e-mail do cliente (herdado de Usuario).
+        telefone (str): Número de telefone do cliente (herdado de Usuario).
+        senha (str): Senha criptografada do cliente (herdado de Usuario).
+        cartao_credito (str): Informações do cartão de crédito do cliente para pagamentos.
+        endereco (str): Endereço do cliente para referência de faturamento e notificações.
+        reservas (list): Lista de reservas ativas feitas pelo cliente.
+        compras (list): Lista de passagens adquiridas pelo cliente.
+    
+    Métodos:
+        busca_voo(origem, destino, data, preco, lista_voos):
+            Permite buscar voos disponíveis com base na origem, destino e data informados.
+            O preço pode ser um critério opcional na busca.
+
+        reserva_voo(voo, numero_assento):
+            Reserva um assento disponível em um voo. Retorna uma confirmação da reserva ou um erro caso o assento não esteja disponível.
+
+        compra_voo(voo, numero_assento):
+            Efetua a compra de uma passagem para um assento específico em um voo.
+            Adiciona a compra ao histórico do cliente e retorna uma mensagem de confirmação.
+
+        cancelar_reserva(reserva):
+            Cancela uma reserva feita anteriormente pelo cliente. Remove a reserva da lista de reservas ativas e retorna uma mensagem de confirmação.
+
+    """
 
     def __init__(self, nome, cpf, email, telefone, senha, cartao_credito: str, endereco: str):
         """Constrututor da classe cliente, que herda de usuarios"""
@@ -71,8 +120,10 @@ class Cliente(Usuario):
 
     @classmethod
     def busca_voo(cls, origem, destino, data, preco: float, lista_voos):
-        """Método para buscar voo no sistema. Esse método pode receber informações de origem, destino e preço.
-        Após a pesquisa é retornado uma lista com todos os objetos relevante a pesquisa."""
+        """
+        Método para realizar uma buscar de voos no sistema. Esse método pode receber informações de origem, destino e preço.
+        Após a pesquisa é retornado uma lista com todos os objetos relevante a pesquisa.
+        """
         
         voos_encontrados = []
 
@@ -95,7 +146,7 @@ class Cliente(Usuario):
 
 
     def reserva_voo(self, voo, numero_assento: int):
-        """Método reservar um assento no voo. Esse método deve receber"""
+        """Método para realizar uma reservar de um assento no voo. Esse método deve receber o objeto Voo e o número do assento"""
 
         if not voo.verificar_disponibilidade():
             return False, "Não há mais assentos disponíveis para este voo."
@@ -110,7 +161,7 @@ class Cliente(Usuario):
             return False, "O assento requisitado já está reservado por outro Usuário"
     
     def compra_voo(self, voo, numero_assento: int):
-        """Método comprar uma passagem para o assento de um voo."""
+        """Método realizar a comprar de uma passagem para o assento de um voo. Esse método deve receber o objeto Voo e o numero do assento."""
         if not voo.verificar_disponibilidade():
             return False, "Não há mais assentos disponíveis para este voo"
         
@@ -123,7 +174,7 @@ class Cliente(Usuario):
         return False, "O assento requisitado já está reservado por outro Usuário"
 
     def cancelar_reserva(self, reserva):
-        """Método cancelar reserva"""
+        """Método para cancelar uma reserva já realizada. Deve receber o objeto reserva a ser cancelado."""
         if reserva in self.reservas:
             reserva.cancelar_reserva()
             self.reservas.remove(reserva)
@@ -133,25 +184,46 @@ class Cliente(Usuario):
 
 
 class Administrador(Usuario):
-    """Classe Administrador que herda de Usuario, referente a pessoa com cadastro de adm.\n
-      Atributos:  Os herdados de Usuario e codigo_acesso.\n
-      Métodos: Onde está pode realizar funções de manutenção do sistema."""
+    """
+    Representa um administrador do sistema, que possui privilégios para gerenciar voos e manter o sistema operacional.
+
+    Atributos:
+        nome (str): Nome completo do administrador (herdado de Usuario).
+        cpf (str): CPF do administrador (herdado de Usuario).
+        email (str): Endereço de e-mail do administrador (herdado de Usuario).
+        telefone (str): Número de telefone do administrador (herdado de Usuario).
+        senha (str): Senha criptografada do administrador (herdado de Usuario).
+        codigo_acesso (str): Código de acesso especial que permite ao administrador realizar funções restritas.
+
+    Métodos:
+        cadastrar_voo(novo, lista_voos):
+            Adiciona um novo voo ao sistema, verificando se o código do voo já existe e se os aeroportos informados são válidos.
+
+        editar_voo(lista_voos, codigo_voo, novo_horario=None, nova_origem=None, novo_destino=None):
+            Permite modificar informações de um voo existente, incluindo horário, origem e destino.
+            Retorna uma mensagem de sucesso ou erro caso o voo não seja encontrado.
+
+        remover_voo(codigo_voo, lista_voos):
+            Remove um voo da lista de voos cadastrados no sistema, se ele existir.
+            Retorna uma mensagem confirmando a remoção ou informando que o voo não foi encontrado.
+
+        visualizar_relatorios():
+            Método reservado para implementação futura, onde o administrador poderá visualizar relatórios do sistema.
+    """
     
     def __init__(self, nome, cpf, email, telefone, senha, codigo_acesso: str):
+        """Constrututor da classe administrador, que herda de usuarios"""
         super().__init__(nome, cpf, email, telefone, senha)
         self.codigo_acesso = codigo_acesso
     
     @classmethod
     def cadastrar_voo(cls, novo, lista_voos):
-        """Método para validar um novo cadastrar de Voo ao sistema.\n
+        """Método para validar um novo cadastro de Voo ao sistema.\n
         Esse método recebe a novo instância de Voo que se deseja cadastrar, e a lista com voos já cadastrados, e é verificado se esta atende aos requisitos para o cadastro."""
-
-        #Verifica se o voo a ser cadastrada não possui um código já cadastrado.
         for voo in lista_voos:
             if(voo.codigo_voo == novo.codigo_voo):
                 return False, "Não é possível cadastrar um Voo com código repetido."
 
-        #Verifica se está ligado a um aeroporto cadastrado ao sistema
         if(novo.origem is None):
             return False , "Não foi possível cadastrar o novo voo, pois o aeroporto de origem informado não existe."
 
@@ -161,6 +233,10 @@ class Administrador(Usuario):
         return True, "Cadastro do novo Voo realizado com sucesso"
 
     def editar_voo(self, lista_voos, codigo_voo, novo_horario: str = None, nova_origem: str = None, novo_destino: str = None):
+        """
+        Método para editar um voo já existente no sistema. Esse método tem como paramentros obrigatorios a lista de voos e o código do voo.
+        Paramentros opicionais são o horario, nova origem e o novo destino.
+        """
         for voo in lista_voos:
             if voo.codigo == codigo_voo:
                 if novo_horario:
@@ -174,6 +250,7 @@ class Administrador(Usuario):
         return False, "Erro, Voo não encontrado."
 
     def remover_voo(self, codigo_voo, lista_voo):
+        """Método para remover do sistema um voo. Este método tem como paramentros o código do voo e a lista de voos"""
         for voo in lista_voo:
             if voo.codigo == codigo_voo:
                 lista_voo.remove(voo)
