@@ -103,7 +103,7 @@ class Cliente(Usuario):
         if voo.reservar_assento(numero_assento):
             
             data_reserva = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            nova_reserva = Reserva(self, voo, voo.data, numero_assento)
+            nova_reserva = Reserva(self, voo, data_reserva, numero_assento)
             self.reservas.append(nova_reserva)
             return True, "O assento foi reservado com sucesso."
         else:

@@ -8,14 +8,14 @@ class Voo:
     voos = []
     "Atributo de classe"
 
-    def __init__(self, codigo_voo: str, origem: str, destino: str, data:str, horario:str, preco: float, assentos_disponiveis: int):
+    def __init__(self, codigo_voo: str, origem: str, destino: str, data:str, horario:str, preco: float, num_assentos: int):
         self.codigo_voo = codigo_voo
         self.origem = Aeroporto.aeroportos.buscar_aeroporto(origem)
         self.destino = Aeroporto.aeroportos.buscar_aeroporto(destino)
         self.data = data 
         self.horario = horario 
         self.preco = preco 
-        self.assentos_disponiveis = assentos_disponiveis
+        self.num_assentos = num_assentos
         self.assentos = Assento.instanciar_assentos()
 
         self.origem.adicionar_novo_voo(1, self)
