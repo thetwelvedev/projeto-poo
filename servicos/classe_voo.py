@@ -2,13 +2,62 @@ from servicos import Aeroporto
 from servicos import Assento
 
 class Voo:
-    """Classe Voo referente a um voou que ocorerá futuramente.\n
-    Atributos: \n Codigo, origem, destino, data, horario, preco, assentos_disponiveis e um array de objetos assentos pertencente ao Voo"""
+    """
+    Representa um voo que ocorrerá futuramente, armazenando informações sobre origem, destino, 
+    data, horário, preço e disponibilidade de assentos.
+
+    Atributos:
+    ----------
+    codigo_voo : str
+        Código identificador único do voo.
+    
+    origem : Aeroporto
+        Instância do aeroporto de origem do voo.
+    
+    destino : Aeroporto
+        Instância do aeroporto de destino do voo.
+    
+    data : str
+        Data do voo no formato 'YYYY-MM-DD'.
+    
+    horario : str
+        Horário da partida do voo no formato 'HH:MM'.
+    
+    preco : float
+        Preço da passagem para este voo.
+    
+    num_assentos : int
+        Número total de assentos disponíveis no voo.
+    
+    assentos : list[Assento]
+        Lista de instâncias da classe Assento representando os assentos do voo.
+    
+    voos : list (atributo de classe)
+        Lista contendo todos os voos cadastrados no sistema.
+
+    Métodos:
+    --------
+    assentos_livres() -> int:
+        Retorna a quantidade de assentos disponíveis no voo.
+
+    verificar_disponibilidade() -> bool:
+        Verifica se ainda há assentos disponíveis para reserva.
+
+    reservar_assento(numero_assento: int) -> bool:
+        Tenta reservar um assento pelo número. Retorna True se bem-sucedido, False caso contrário.
+
+    liberar_assento(numero_assento: int) -> bool:
+        Libera um assento previamente reservado pelo número. Retorna True se bem-sucedido, False caso contrário.
+
+    __str__() -> str:
+        Retorna uma representação textual do voo no formato: "Código - Origem → Destino".
+    """
 
     voos = []
-    "Atributo de classe"
+    "Atributo de classe para guardar todos os voos."
 
     def __init__(self, codigo_voo: str, origem: str, destino: str, data:str, horario:str, preco: float, num_assentos: int):
+        """Construtor da classe voo"""
         self.codigo_voo = codigo_voo
         self.origem = Aeroporto.aeroportos.buscar_aeroporto(origem)
         self.destino = Aeroporto.aeroportos.buscar_aeroporto(destino)
