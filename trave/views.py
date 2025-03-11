@@ -7,7 +7,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
 from servicos.classes_usuario import Usuario as UsuarioService
-from servicos.classe_assento import Assento as AssentoService
+from servicos.classe_assento import Assento
 from servicos.classes_usuario import Cliente
 from datetime import datetime, timedelta
 from django.utils import timezone
@@ -241,7 +241,7 @@ def resultados_voos(request):
     trecho = request.GET.get("trecho") 
 
     if not origem_codigo or not destino_codigo or not data_ida_str:
-        return HttpResponseBadRequest("Parâmetros de busca inválidos.")
+        return redirect(reverse('home'))
 
     try:
         data_ida = datetime.strptime(data_ida_str, "%Y-%m-%d").date()
@@ -393,14 +393,16 @@ def assento_view(request):
             return HttpResponseBadRequest('dados de assento inválidos')
 
         request.session['assentos'] = json.loads(assentos)
-        return redirect(reverse('home'))
+        return redirect(reverse('pagamento'))
 
     erro = request.GET.get('erro', '')
-    if request.method == 'POST':
-        return usuario_save(request)
 
-    assentos = AssentoService.instanciar_assentos()
-    voo = Voo.objects.get(id=request.session.get('voo'))
+    assentos = Assento.instanciar_assentos()
+    voo_id = request.session.get('voo', None)
+    if voo_id is None:
+        return redirect(reverse('resultados_voos'))
+
+    voo = Voo.objects.get(id=voo_id)
 
     for a in assentos:
         a.codigo = a.get_codigo_assento()
@@ -421,12 +423,25 @@ def pagamento_view(request):
     Returns:
         HttpResponse: Página de cadastro renderizada ou redirecionamento após o cadastro.
     """
+    usuario = request.session.get('usuario', None)
+    if usuario == None:
+        return redirect(reverse('login'))
+
     erro = request.GET.get('erro', '')
     if request.method == 'POST':
-        request.session.clear();
+        request.session.clear()
+        request.session['usuario'] = usuario
         return redirect(reverse('home'))
 
-    return render(request, 'pagamento.html', {'erro': erro})
+    assentos = request.session.get('assentos', None)
+    if assentos == None or len(assentos) == 0:
+        return redirect('assento')
+
+    selecionados = []
+    for assento in assentos:
+        selecionados.append(Assento(int(assento), None, False).get_codigo_assento())
+
+    return render(request, 'pagamento.html', {'erro': erro, 'assentos': ", ".join(selecionados)})
 
 
 

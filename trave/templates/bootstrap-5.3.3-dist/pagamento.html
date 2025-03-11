@@ -62,7 +62,8 @@
 
   <div class="payment-container">
     <h2 class="text-center">Pagamento</h2>
-    <form id="paymentForm">
+    <form id="paymentForm" action="{% url 'pagamento' %}" method="post">
+      {% csrf_token %}
       <div class="mb-3">
         <label for="cardName" class="form-label">Nome no Cartão</label>
         <input type="text" class="form-control" id="cardName" placeholder="Ex: João da Silva" required>
@@ -86,7 +87,7 @@
 
       <div class="mb-3">
         <label for="seatSelected" class="form-label">Assentos Selecionados</label>
-        <input type="text" class="form-control" id="seatSelected" readonly>
+        <input type="text" class="form-control" id="seatSelected" value="{{ assentos }}">
       </div>
 
       <button type="submit" class="btn btn-primary w-100">Confirmar Pagamento</button>
@@ -142,8 +143,6 @@
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     // Simulação de recuperação dos assentos selecionados
-    const selectedSeats = JSON.parse(localStorage.getItem("selectedSeats")) || [];
-    document.getElementById("seatSelected").value = selectedSeats.join(", ");
 
     // Formatação automática do número do cartão
     document.getElementById("cardNumber").addEventListener("input", function (e) {
@@ -163,10 +162,7 @@
 
     // Envio do formulário
     document.getElementById("paymentForm").addEventListener("submit", function (e) {
-      e.preventDefault();
       alert("Pagamento confirmado com sucesso!");
-      localStorage.removeItem("selectedSeats"); // Limpa os assentos selecionados
-      window.location.href = "{% url 'sucesso' %}"; // Redireciona para uma página de sucesso
     });
   });
 </script>
