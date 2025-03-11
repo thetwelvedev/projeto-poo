@@ -7,6 +7,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
 from servicos.classes_usuario import Usuario as UsuarioService
+from servicos.classe_assento import Assento as AssentoService
 from servicos.classes_usuario import Cliente
 from datetime import datetime, timedelta
 from django.utils import timezone
@@ -212,6 +213,26 @@ def resultados_voos(request):
             - Dois voos de volta (se houver data de volta): um no período da manhã/tarde e outro no período da noite.
         4. Renderiza a página 'resultados.html' com os voos encontrados ou criados.
     """
+    if request.method == 'POST':
+        voo_id = request.POST.get('voo_id', None)
+        adultos = request.POST.get('adultos', None)
+
+        user_id = request.session.get('usuario', None)
+
+        if voo_id is None or adultos is None:
+            return HttpResponseBadRequest("Formulário inválido")
+
+        # verifica se voo existe
+        Voo.objects.get(id=voo_id)
+        
+        if user_id is None:
+            return redirect(reverse('login'))
+
+        request.session['voo'] = voo_id
+        request.session['adultos'] = adultos
+        return redirect(reverse('dados_compra'))
+
+
     origem_codigo = request.GET.get("origem")
     destino_codigo = request.GET.get("destino")
     data_ida_str = request.GET.get("data_ida")
@@ -304,7 +325,6 @@ def resultados_voos(request):
         "trecho": trecho,
     })
 
-
 def dados_view(request):
     """
     View responsável pelo cadastro de usuários.
@@ -318,11 +338,37 @@ def dados_view(request):
     Returns:
         HttpResponse: Página de cadastro renderizada ou redirecionamento após o cadastro.
     """
-    erro = request.GET.get('erro', '')
-    if request.method == 'POST':
-        return usuario_save(request)
 
-    return render(request, 'dados-compra.html', {'erro': erro})
+    usuario_id = request.session.get('usuario', None)
+    voo_id = request.session.get('voo', None)
+    adultos = request.session.get('adultos', None)
+
+    if usuario_id is None:
+        return redirect(reverse('login'))
+
+    if voo_id is None or adultos is None:
+        return redirect(reverse('home'))
+
+    if request.method == 'POST':
+        salvar_passageiros(request)
+        return redirect(reverse('assento'))
+
+    erro = request.GET.get('erro', '')
+    usuario = Usuario.objects.get(id = usuario_id) 
+
+    return render(request, 'dados-compra.html', { 
+        'usuario': usuario, 
+        'adultos': list(range(1, int(adultos)+1))
+    })
+
+def salvar_passageiros(request):
+    primeiro_nome = request.POST.getlist('primeiro_nome[]')
+    sobrenome = request.POST.getlist('sobrenome[]')
+    cpf = request.POST.getlist('cpf[]')
+
+    request.session['primeiro_nome'] = primeiro_nome
+    request.session['nacionalidade'] = sobrenome
+    request.session['cpf'] = cpf
 
 def assento_view(request):
     """
@@ -337,11 +383,30 @@ def assento_view(request):
     Returns:
         HttpResponse: Página de cadastro renderizada ou redirecionamento após o cadastro.
     """
+    usuario_id = request.session.get('usuario', None)
+    if usuario_id is None:
+        return redirect(reverse('login'))
+
+    if request.method == 'POST':
+        assentos = request.POST.get('assentos')
+        if assentos == None:
+            return HttpResponseBadRequest('dados de assento inválidos')
+
+        request.session['assentos'] = json.loads(assentos)
+        return redirect(reverse('home'))
+
     erro = request.GET.get('erro', '')
     if request.method == 'POST':
         return usuario_save(request)
 
-    return render(request, 'assento.html', {'erro': erro})
+    assentos = AssentoService.instanciar_assentos()
+    voo = Voo.objects.get(id=request.session.get('voo'))
+
+    for a in assentos:
+        a.codigo = a.get_codigo_assento()
+
+    passageiros = request.session.get('passageiros', [])
+    return render(request, 'assento.html', {'qtd': len(passageiros[0]), 'erro': erro, 'assentos': assentos, 'voo': voo})
 
 def pagamento_view(request):
     """

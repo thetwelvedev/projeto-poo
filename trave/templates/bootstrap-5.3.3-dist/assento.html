@@ -135,7 +135,10 @@
         
         <!-- Mapa de assentos -->
         <div class="seat-map "  style="border: #ccc;" id="seatMap">
-          
+          {% for assento in assentos %}
+            <div class="seat {% if assento.disponivel == False %} occupied {% endif %}" 
+              data-seat="{{assento.numero}}">{{ assento.codigo }}</div>
+          {% endfor %}
         </div>
       
         <!-- Legenda de cores -->
@@ -150,33 +153,24 @@
             <span class="legend-occupied"></span> Ocupado
           </div>
         </div>
+        
+        <form action="{% url 'assento' %}" method="post">
+          {% csrf_token %}
+          <input type="hidden" id="assentos" name="assentos" value="[]">
+          <button id="continuar" class="btn btn-primary">Continuar</button>
+        </form>
       </div>
     </div>
 </div>
 
-<script>
-    const maxSeats = 1;
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script defer>
+    const maxSeats = {{qtd}};
 
     // Seleciona todos os assentos (exceto os que estão ocupados)
     const seats = document.querySelectorAll('.seat:not(.occupied)');
-
-    seats.forEach(seat => {
-        seat.addEventListener('click', () => {
-            // Verifica se o assento já está selecionado
-            if (seat.classList.contains('selected')) {
-            // Se já estava selecionado, ao clicar remove a seleção
-            seat.classList.remove('selected');
-            } else {
-            // Se não está selecionado, verifica quantos já foram selecionados
-            const selectedSeats = document.querySelectorAll('.seat.selected').length;
-            if (selectedSeats < maxSeats) {
-                seat.classList.add('selected');
-            } else {
-                alert(`Você só pode selecionar até ${maxSeats} assentos.`);
-            }
-            }
-        });
-    });
 
     const totalRows = 33;
     const totalColumns = 6; // Representa colunas A, B, C, D, E, F
@@ -198,9 +192,16 @@
                 // Adiciona um event listener para selecionar o assento
                 seat.addEventListener('click', () => {
                     // Apenas alterna seleção se o assento não estiver ocupado
-                    if (!seat.classList.contains('occupied')) {
-                        seat.classList.toggle('selected');
+                    if (seat.classList.contains('occupied')) {
+                      return
+                    } 
+
+                    selecionado = seat.classList.contains('selected');
+                    if (!selecionado && maxSeats <= document.querySelectorAll('.seat.selected').length) {
+                      console.log('limite atigindo')
+                      return
                     }
+                    seat.classList.toggle('selected')
                 });
 
                 // Exemplo: marcar alguns assentos como ocupados (opcional)
@@ -213,11 +214,36 @@
         }
     }
 
-    // Chama a função para gerar os assentos
-    createSeats(totalRows, totalColumns);
-</script>
+    document.querySelectorAll('.seat').forEach(seat => {
+      seat.addEventListener('click', () => {
+        // Apenas alterna seleção se o assento não estiver ocupado
+        if (seat.classList.contains('occupied')) {
+          return
+        } 
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        selecionado = seat.classList.contains('selected');
+        if (!selecionado && maxSeats <= document.querySelectorAll('.seat.selected').length) {
+          console.log('limite atigindo')
+          return
+        }
+        seat.classList.toggle('selected')
+      });
+    })
+
+    // Chama a função para gerar os assentos
+    //createSeats(totalRows, totalColumns);
+
+    $('#continuar').click(event => {
+      const elements = document.querySelectorAll('.seat.selected')
+      
+      const assentos = []
+      elements.forEach(e => {
+        assentos.push(e.dataset.seat)
+      })
+      console.log(JSON.stringify(assentos))
+      $("#assentos").val(JSON.stringify(assentos))
+    })
+</script>
 <!-- Moment.js -->
 <script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <!-- daterangepicker JS -->

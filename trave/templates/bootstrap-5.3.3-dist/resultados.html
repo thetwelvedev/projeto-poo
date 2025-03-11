@@ -230,7 +230,12 @@
             </a>
             <!-- Itens do dropdown com opções de escolha -->
             <div class="collapse text-center p-3" id="collapseExample{{ voo.codigo_voo }}" >
-                <a href="" class="btn btn-primary">Escolher</a>
+                <form method="post" action="{% url 'resultados_voos' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="adultos" value="{{ adultos }}">
+                    <input type="hidden" name="voo_id" value="{{ voo.id }}">
+                    <button href="" class="btn btn-primary">Escolher</button>
+                </form>
             </div>
             </div>
         {% endfor %}

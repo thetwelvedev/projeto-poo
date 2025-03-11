@@ -58,11 +58,11 @@
                     <div class="row g-3">
                         <div class="col-md-4 ">
                             <label for="nomeTitular" class="form-label">Nome <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control rounded-0" id="nomeTitular" placeholder="Nome para contato" />
+                            <input type="text" class="form-control rounded-0" id="nomeTitular" placeholder="Nome para contato" value="{{ usuario.primeiro_nome }}"/>
                         </div>
                         <div class="col-md-4">
                             <label for="emailTitular" class="form-label">E-mail <span class="text-danger">*</span></label>
-                            <input type="email" class="form-control rounded-0" id="emailTitular" placeholder="exemplo@usuario.com.br" />
+                            <input type="email" class="form-control rounded-0" id="emailTitular" placeholder="exemplo@usuario.com.br" value="{{ usuario.email }}"" />
                         </div>
                         <div class="col-md-4 ">
                             <label for="telefoneTitular" class="form-label">Telefone <span class="text-danger">*</span></label>
@@ -71,6 +71,7 @@
                             class="form-control rounded-0"
                             id="telefoneTitular"
                             placeholder="+55-BR (00) 00000-0000"
+                            value="{{ usuario.telefone }}"
                             />
                         </div>
                     </div>
@@ -80,106 +81,82 @@
 
         <!-- Seção de Dados do Viajante -->
         <div class="card rounded-0">
-            <div class="card-body">
-            <h4 class="card-title">Viajante 1 (Adulto)</h4>
-            <div class="form-check mb-3">
-                <input class="form-check-input" type="checkbox" id="checkSemCPF" />
-                <label class="form-check-label" for="checkSemCPF">
-                Não possui CPF
-                </label>
-            </div>
-
-            <form>
-                <div class="row g-3">
-                <div class="col-md-4">
-                    <label for="cpfViajante" class="form-label">CPF</label>
-                    <input
-                    type="text"
-                    class="form-control"
-                    id="cpfViajante"
-                    placeholder="000.000.000-00"
-                    />
-                </div>
-                <div class="col-md-4">
-                    <label for="nacionalidadeViajante" class="form-label">Nacionalidade</label>
-                    <select class="form-select" id="nacionalidadeViajante">
-                    <option selected>Brasil</option>
-                    <option value="1">Argentina</option>
-                    <option value="2">Estados Unidos</option>
-                    <option value="3">Portugal</option>
-                    </select>
-                </div>
-                <div class="col-md-4">
-                    <label for="nascimentoViajante" class="form-label">Data de Nascimento <span class="text-danger">*</span></label>
-                    <input
-                    type="text"
-                    class="form-control"
-                    id="nascimentoViajante"
-                    placeholder="00/00/0000"
-                    />
-                </div>
-
-                <div class="col-md-4">
-                    <label for="primeiroNomeViajante" class="form-label">Primeiro Nome <span class="text-danger">*</span></label>
-                    <input
-                    type="text"
-                    class="form-control"
-                    id="primeiroNomeViajante"
-                    placeholder="Exemplo: Francisca"
-                    />
-                </div>
-                <div class="col-md-4">
-                    <label for="sobrenomeViajante" class="form-label">Último Sobrenome</label>
-                    <input
-                    type="text"
-                    class="form-control"
-                    id="sobrenomeViajante"
-                    placeholder="Exemplo: Fernandes"
-                    />
-                </div>
-                <div class="col-md-4">
-                    <label for="generoViajante" class="form-label">Gênero <span class="text-danger">*</span></label>
-                    <select class="form-select" id="generoViajante">
-                    <option selected>Escolha uma opção</option>
-                    <option value="1">Feminino</option>
-                    <option value="2">Masculino</option>
-                    <option value="3">Prefiro não informar</option>
-                    </select>
-                </div>
-
-                <div class="col-md-4">
-                    <label for="programaMilhagem" class="form-label">Programa de Milhagem</label>
-                    <select class="form-select" id="programaMilhagem">
-                    <option selected>Não selecionado</option>
-                    <option value="1">Programa 1</option>
-                    <option value="2">Programa 2</option>
-                    </select>
-                </div>
-                <div class="col-md-4">
-                    <label for="numeroMilhagem" class="form-label">Número</label>
-                    <input
-                    type="text"
-                    class="form-control"
-                    id="numeroMilhagem"
-                    placeholder="000000001"
-                    />
-                </div>
-            </div>
-
-            <div class="row mt-4">
-            <div class="col-6">
-                <button type="button" class="btn btn-outline-secondary w-100 rounded-0">
-                <i class="bi bi-person-check rounded-0"></i>
-                Necessita de assistência especial?
-                </button>
-            </div>
-            <div class="col-6">
-                <button type="button " class="btn btn-outline-secondary w-100 rounded-0">
-                <i class="bi bi-briefcase rounded-0"></i>
-                Inserir VoeBiz
-                </button>
-            </div>
-            </div>
+            <form id="passageiros" action="{% url 'dados_compra' %}" method="post">
+                {% for i in adultos %}
+                    <div class="base-form">
+                        <div class="card-body">
+                        <h4 class="card-title">Viajante {{i}}</h4>
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <label for="cpfViajante" class="form-label">CPF</label>
+                                <input
+                                required
+                                type="text"
+                                class="form-control"
+                                name="cpf[]"
+                                id="cpfViajante"
+                                placeholder="000.000.000-00"
+                                />
+                            </div>
+                            <div class="col-md-4">
+                                <label for="nacionalidadeViajante" class="form-label">Nacionalidade</label>
+                                <select class="form-select" required name="nacionalidade[]" id="nacionalidadeViajante">
+                                <option selected>Brasil</option>
+                                <option value="1">Argentina</option>
+                                <option value="2">Estados Unidos</option>
+                                <option value="3">Portugal</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="nascimentoViajante" class="form-label">Data de Nascimento <span class="text-danger">*</span></label>
+                                <input
+                                name="nascimento[]"
+                                required
+                                type="date"
+                                class="form-control"
+                                id="nascimentoViajante"
+                                placeholder="00/00/0000"
+                                />
+                            </div>
+            
+                            <div class="col-md-4">
+                                <label for="primeiroNomeViajante" class="form-label">Primeiro Nome <span class="text-danger">*</span></label>
+                                <input
+                                name="primeiro_nome[]"
+                                required
+                                type="text"
+                                class="form-control"
+                                id="primeiroNomeViajante"
+                                placeholder="Exemplo: Francisca"
+                                />
+                            </div>
+                            <div class="col-md-4">
+                                <label for="sobrenomeViajante" class="form-label">Último Sobrenome</label>
+                                <input
+                                name="sobrenome[]"
+                                required
+                                type="text"
+                                class="form-control"
+                                id="sobrenomeViajante"
+                                placeholder="Exemplo: Fernandes"
+                                />
+                            </div>
+                            <div class="col-md-4">
+                                <label for="generoViajante" class="form-label">Gênero <span class="text-danger">*</span></label>
+                                <select class="form-select" required name="genero[]" id="generoViajante">
+                                    <option value="1">Feminino</option>
+                                    <option value="2">Masculino</option>
+                                    <option value="3" selected>Prefiro não informar</option>
+                                </select>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                {% csrf_token %}
+                <input type="hidden" name="voo_id" value="{{ voo.id }}">
+                <button class="btn btn-primary">Continuar</button>
+            </form>
         </form>
         </div>
     </div>
@@ -238,5 +215,18 @@
     <!-- daterangepicker JS -->
     <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <script src="{% static 'trave/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+    <script defer>
+        const form = $("#passageiros")
+
+        $("#adicionar").click(function() {
+            console.log('click')
+
+            const last = $('.base-form:last')
+            const newForm = last.clone()
+            newForm.find('input').val('')
+            last.after(newForm)
+        });
+    </script>
 </body>
 </html>

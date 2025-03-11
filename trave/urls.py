@@ -6,10 +6,10 @@ urlpatterns = [
     path('login/', login_view, name='login'),
     path('', home_view, name='home'),
     path('buscar-voos/', buscar_voos, name='buscar_voos'),
-    path('resultados_voos/',resultados_voos, name='resultados_voos'),
+    path('voo/busca/',resultados_voos, name='resultados_voos'),
     path('busca/', consulta, name='busca'),
-    path('dados_compra/',dados_view , name='dados_compra'),
-    path('assento/', assento_view, name='assento'),
+    path('voo/dados/',dados_view , name='dados_compra'),
+    path('voo/assento/', assento_view, name='assento'),
     path('pagamento/', pagamento_view, name='pagameto'),
     path('sucesso/', sucesso_view, name='sucesso') 
 ]
