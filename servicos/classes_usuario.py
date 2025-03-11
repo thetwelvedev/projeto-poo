@@ -160,12 +160,26 @@ class Administrador(Usuario):
 
         return True, "Cadastro do novo Voo realizado com sucesso"
 
+    def editar_voo(self, lista_voos, codigo_voo, novo_horario: str = None, nova_origem: str = None, novo_destino: str = None):
+        for voo in lista_voos:
+            if voo.codigo == codigo_voo:
+                if novo_horario:
+                    voo.horario = novo_horario
+                if nova_origem:
+                    voo.origem = nova_origem
+                if novo_destino:
+                    voo.destino = novo_destino
+                return True, "Voo atualizado com sucesso!"
+                
+        return False, "Erro, Voo não encontrado."
 
-    def editar_voo():
-        pass
-
-    def remover_voo():
-        pass
+    def remover_voo(self, codigo_voo, lista_voo):
+        for voo in lista_voo:
+            if voo.codigo == codigo_voo:
+                lista_voo.remove(voo)
+                return True, "Voo removido com sucesso!"
+        
+        return False, "Erro, Voo  não encontrado."
             
     def visualizar_relatorios():
         pass
