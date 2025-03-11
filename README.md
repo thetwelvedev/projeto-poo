@@ -31,7 +31,7 @@
 
 ## Experiências do Time
 
-Este projeto foi desenvolvido por **Andersson Silva**, **Álefe Alves**, **Leonardo Castro** e **Arthur Ramos**. Durante o desenvolvimento, aprendemos sobre:
+Este projeto foi desenvolvido por **Andersson Silva**, **Álefe Alves**, **Leonardo Castro**, **Arthur Ramos**, **Igor Padilha**. Durante o desenvolvimento, aprendemos sobre:
 
 - **Colaboração em equipe**: Utilizamos o GitHub para compartilhar código e gerenciar as alterações.
 - **Planejamento e organização**: Dividimos as tarefas e estabelecemos prazos para cada etapa.
