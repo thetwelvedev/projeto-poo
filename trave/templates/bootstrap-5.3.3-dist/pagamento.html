@@ -1,0 +1,181 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pagamento - Escolha de Assentos</title>
+  <link rel="stylesheet" href="{% static 'trave/css/comprar.css' %}">
+  <link rel="stylesheet" href="{% static 'trave/bootstrap/css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'trave/bootstrap/fontawesome/css/all.css' %}">
+
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .payment-container {
+      max-width: 500px;
+      margin: 50px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col w-25 mb-3" >
+            <img src="{% static 'trave/images/Trave.svg' %}" alt="Ícone 3D de usuário" />
+            <hr> 
+        </div>
+    </div>
+      
+      <!-- Passos (Wizard) -->
+    <div class="step-indicator mb-3">
+        <div class="step active">
+            <div class="circle">1</div>
+            <span>Escolha seu voo</span>
+        </div>
+        <div class="step active">
+            <div class="circle">2</div>
+            <span>Seus dados</span>
+        </div>
+        <div class="step active">
+            <div class="circle">3</div>
+            <span>Escolha seu assento</span>
+        </div>
+        <div class="step active">
+            <div class="circle">4</div>
+            <span>Personalize sua viagem</span>
+        </div>
+        <div class="step active">
+            <div class="circle">5</div>
+            <span>Pagamento</span>
+        </div>
+    </div>
+
+
+  <div class="payment-container">
+    <h2 class="text-center">Pagamento</h2>
+    <form id="paymentForm">
+      <div class="mb-3">
+        <label for="cardName" class="form-label">Nome no Cartão</label>
+        <input type="text" class="form-control" id="cardName" placeholder="Ex: João da Silva" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="cardNumber" class="form-label">Número do Cartão</label>
+        <input type="text" class="form-control" id="cardNumber" placeholder="**** **** **** ****" maxlength="19" required>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label for="cardExpiry" class="form-label">Validade</label>
+          <input type="text" class="form-control" id="cardExpiry" placeholder="MM/AA" maxlength="5" required>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="cardCVC" class="form-label">CVC</label>
+          <input type="text" class="form-control" id="cardCVC" placeholder="***" maxlength="3" required>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="seatSelected" class="form-label">Assentos Selecionados</label>
+        <input type="text" class="form-control" id="seatSelected" readonly>
+      </div>
+
+      <button type="submit" class="btn btn-primary w-100">Confirmar Pagamento</button>
+    </form>
+  </div>
+  <footer class="row row-cols-1 row-cols-sm-2 row-cols-md-5 py-5 my-5 border-top">
+    <div class="col mb-3">
+        <a href="/" class="d-flex mb-3 link-body-emphasis text-decoration-none" >
+            <img src="{% static 'trave/images/Trave.svg' %}" alt="Ícone 3D de usuário" style="width: 100px;"/>
+        </a>
+      <p class="text-body-secondary">&copy; 2024</p>
+    </div>
+
+    <div class="col mb-3">
+
+    </div>
+
+    <div class="col mb-3">
+      <h5>Section</h5>
+      <ul class="nav flex-column">
+        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Home</a></li>
+        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Features</a></li>
+        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Pricing</a></li>
+        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">FAQs</a></li>
+        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">About</a></li>
+      </ul>
+    </div>
+
+    <div class="col mb-3">
+      <h5>Section</h5>
+      <ul class="nav flex-column">
+        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Home</a></li>
+        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Features</a></li>
+        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Pricing</a></li>
+        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">FAQs</a></li>
+        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">About</a></li>
+      </ul>
+    </div>
+
+    <div class="col mb-3">
+      <h5>Section</h5>
+      <ul class="nav flex-column">
+        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Home</a></li>
+        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Features</a></li>
+        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Pricing</a></li>
+        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">FAQs</a></li>
+        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">About</a></li>
+      </ul>
+    </div>
+  </footer>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Simulação de recuperação dos assentos selecionados
+    const selectedSeats = JSON.parse(localStorage.getItem("selectedSeats")) || [];
+    document.getElementById("seatSelected").value = selectedSeats.join(", ");
+
+    // Formatação automática do número do cartão
+    document.getElementById("cardNumber").addEventListener("input", function (e) {
+      let value = e.target.value.replace(/\D/g, ""); // Remove tudo que não for número
+      value = value.replace(/(\d{4})/g, "$1 ").trim(); // Formata de 4 em 4 dígitos
+      e.target.value = value;
+    });
+
+    // Formatação automática da validade
+    document.getElementById("cardExpiry").addEventListener("input", function (e) {
+      let value = e.target.value.replace(/\D/g, "");
+      if (value.length > 2) {
+        value = value.slice(0, 2) + "/" + value.slice(2, 4);
+      }
+      e.target.value = value;
+    });
+
+    // Envio do formulário
+    document.getElementById("paymentForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      alert("Pagamento confirmado com sucesso!");
+      localStorage.removeItem("selectedSeats"); // Limpa os assentos selecionados
+      window.location.href = "sucesso.html"; // Redireciona para uma página de sucesso
+    });
+  });
+</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Moment.js -->
+<script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<!-- daterangepicker JS -->
+<script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<script src="{% static 'trave/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+</body>
+</html>
