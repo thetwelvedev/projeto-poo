@@ -1,5 +1,7 @@
 import hashlib
 from .classe_reserva import Reserva
+from .classe_compra import Compra
+from datetime import datetime
 
 class Usuario:
     """Classe usuário referente a pessoa com um cadstro básico no sistema.\n
@@ -99,15 +101,26 @@ class Cliente(Usuario):
             return False, "Não há mais assentos disponíveis para este voo."
         
         if voo.reservar_assento(numero_assento):
+            
+            data_reserva = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             nova_reserva = Reserva(self, voo, voo.data, numero_assento)
             self.reservas.append(nova_reserva)
             return True, "O assento foi reservado com sucesso."
         else:
             return False, "O assento requisitado já está reservado por outro Usuário"
     
-    def compra_voo():
-        """Método comprar voou"""
-        pass
+    def compra_voo(self, voo, numero_assento: int):
+        """Método comprar uma passagem para o assento de um voo."""
+        if not voo.verificar_disponibilidade():
+            return False, "Não há mais assentos disponíveis para este voo"
+        
+        if voo.reservar_assento(numero_assento):
+            data_compra = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            nova_compra = Compra(self, voo, voo.preco, data_compra, "Pendente", "PIX")
+            self.compras.append(nova_compra)
+            return True, "A passagem foi comprada com sucesso"
+        
+        return False, "O assento requisitado já está reservado por outro Usuário"
 
     def cancelar_reserva(self, reserva):
         """Método cancelar reserva"""

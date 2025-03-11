@@ -1,16 +1,21 @@
-from servicos import Cliente
-from servicos import Voo
+from random import randint, choice
+import string
 
 class Compra:
     """ """
-    def __init__(self, codigo_compra: str, cliente: Cliente, voo: Voo, valor_total: float, data_compra: str, status: str, metodo_pagamento: str):
-        self.codigo_compra = codigo_compra 
+    def __init__(self, cliente, voo, valor_total: float, data_compra: str, status: str, metodo_pagamento: str):
+        self.codigo_compra = self._gerar_codigo_compra() 
         self.cliente = cliente
         self.voo = voo
         self.valor_total = valor_total
         self.data_compra = data_compra
         self.status = status
         self.metodo_pagamento = metodo_pagamento
+    
+    @staticmethod
+    def _gerar_codigo_compra():
+        """Gera um código de reserva no formato 'NNL' (2 números + 1 letra maiúscula)."""
+        return f"CP{randint(10, 99)}{choice(string.ascii_uppercase)}"    
 
     def realizar_compra(self):
         if self.status.lower() == 'pendente':

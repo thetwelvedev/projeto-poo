@@ -24,7 +24,7 @@ class Voo:
         Voo.voos.append(self)
 
         
-    def assentos_disponiveis(self) -> int:
+    def assentos_livres(self) -> int:
         """
         Retorna a quantidade real de assentos livres
         """
