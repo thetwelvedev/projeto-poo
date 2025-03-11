@@ -341,3 +341,43 @@ def assento_view(request):
         return usuario_save(request)
 
     return render(request, 'assento.html', {'erro': erro})
+
+def pagamento_view(request):
+    """
+    View responsável pelo cadastro de usuários.
+    
+    Se a requisição for GET, renderiza a página de cadastro.
+    Se for POST, chama a função usuario_save para processar o cadastro.
+    
+    Args:
+        request (HttpRequest): Objeto da requisição HTTP.
+    
+    Returns:
+        HttpResponse: Página de cadastro renderizada ou redirecionamento após o cadastro.
+    """
+    erro = request.GET.get('erro', '')
+    if request.method == 'POST':
+        return usuario_save(request)
+
+    return render(request, 'pagamento.html', {'erro': erro})
+
+
+
+def sucesso_view(request):
+    """
+    View responsável pelo cadastro de usuários.
+    
+    Se a requisição for GET, renderiza a página de cadastro.
+    Se for POST, chama a função usuario_save para processar o cadastro.
+    
+    Args:
+        request (HttpRequest): Objeto da requisição HTTP.
+    
+    Returns:
+        HttpResponse: Página de cadastro renderizada ou redirecionamento após o cadastro.
+    """
+    erro = request.GET.get('erro', '')
+    if request.method == 'POST':
+        return usuario_save(request)
+
+    return render(request, 'sucesso.html', {'erro': erro})
