@@ -405,8 +405,8 @@ def assento_view(request):
     for a in assentos:
         a.codigo = a.get_codigo_assento()
 
-    passageiros = request.session.get('passageiros', [])
-    return render(request, 'assento.html', {'qtd': len(passageiros[0]), 'erro': erro, 'assentos': assentos, 'voo': voo})
+    primeiro_nome = request.session['primeiro_nome']
+    return render(request, 'assento.html', {'qtd': len(primeiro_nome[0]), 'erro': erro, 'assentos': assentos, 'voo': voo})
 
 def pagamento_view(request):
     """
@@ -423,7 +423,8 @@ def pagamento_view(request):
     """
     erro = request.GET.get('erro', '')
     if request.method == 'POST':
-        return usuario_save(request)
+        request.session.clear();
+        return redirect(reverse('home'))
 
     return render(request, 'pagamento.html', {'erro': erro})
 
@@ -442,11 +443,7 @@ def sucesso_view(request):
     Returns:
         HttpResponse: Página de cadastro renderizada ou redirecionamento após o cadastro.
     """
-    erro = request.GET.get('erro', '')
-    if request.method == 'POST':
-        return usuario_save(request)
-
-    return render(request, 'sucesso.html', {'erro': erro})
+    return render(request, 'sucesso.html')
 
 
 def consulta(request):
