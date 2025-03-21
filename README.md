@@ -2,21 +2,24 @@
 
 ## Índice
 
-1. [Funcionalidades em Desenvolvimento](#funcionalidades-em-desenvolvimento)  
-2. [Tecnologias Utilizadas](#tecnologias-utilizadas)  
-3. [Experiências do Time](#experiências-do-time)  
-4. [Como Executar o Projeto](#como-executar-o-projeto)  
-5. [Contribuidores](#contribuidores)  
+- [ Trave Passagens Aéreas -\> Projeto POO](#-trave-passagens-aéreas---projeto-poo)
+  - [Índice](#índice)
+  - [Funcionalidades em Desenvolvimento](#funcionalidades-em-desenvolvimento)
+    - [Backlog](#backlog)
+  - [Tecnologias Utilizadas](#tecnologias-utilizadas)
+  - [Experiências do Time](#experiências-do-time)
+  - [Como Executar o Projeto](#como-executar-o-projeto)
+  - [Contribuidores](#contribuidores)
 
 ## Funcionalidades em Desenvolvimento
 
 ### Backlog
 - [x] Autenticação e Cadastro de Usuários
 - [x] Busca e Reserva de Passagens
-- [ ] Escolher Voo
-- [ ] Escolher Bagagem
-- [ ] Pagamento e Confirmação
-- [ ] Ver passagem comprada e informações
+- [x] Escolher Voo
+- [x] Escolher Bagagem
+- [x] Pagamento e Confirmação
+- [x] Ver passagem comprada e informações
 
 ## Tecnologias Utilizadas
 
@@ -47,27 +50,35 @@ Este projeto foi desenvolvido por **Andersson Silva**, **Álefe Alves**, **Leona
    ```
 
 2. **Crie e ative um ambiente virtual:**
+
+**No Linux:** 
+
    ```bash
    python -m venv venv
    source venv/bin/activate  # No Windows: venv\Scripts\activate
    ```
+**No Windows:**
 
-3. **Instale as dependências:**
+   ```bash
+   python -m venv venv
+   source venv\Scripts\activate
+   ```
+1. **Instale as dependências:**
    ```bash
    pip install -r requirements.txt
    ```
 
-4. **Execute as migrações do banco de dados:**
+2. **Execute as migrações do banco de dados:**
    ```bash
    python manage.py migrate
    ```
 
-5. **Inicie o servidor Django:**
+3. **Inicie o servidor Django:**
    ```bash
    python manage.py runserver
    ```
 
-6. **Acesse o sistema pelo navegador:**
+4. **Acesse o sistema pelo navegador:**
    ```
    http://127.0.0.1:8000/login/
    ```
