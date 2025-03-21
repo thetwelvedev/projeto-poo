@@ -431,7 +431,7 @@ def pagamento_view(request):
     if request.method == 'POST':
         request.session.clear()
         request.session['usuario'] = usuario
-        return redirect(reverse('home'))
+        return redirect(reverse('sucesso'))
 
     assentos = request.session.get('assentos', None)
     if assentos == None or len(assentos) == 0:
